@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "pokemon-battle-rpi": {
+      "hosting": {
+        "pokemon-battles": [
+          "pokemon-battle-rpi"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "pokemon-battle-rpi"
+  }
+}
