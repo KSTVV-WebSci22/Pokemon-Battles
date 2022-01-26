@@ -1,0 +1,26 @@
+:root {
+    --blue: #2a3050;
+    --lightblue: #007BE2;
+    --light: #FFFFFF;
+    --dark: #000000;
+    --yellow: #FEC902;
+    --pokemon: 'pokemon', sans-serif;
+    --classic: 'classic', sans-serif;
+    --museo: 'museo-sans', sans-serif;
+}
+
+
+@font-face {
+    font-family: 'pokemon';
+    src: url('./fonts/Ketchum.otf') format("opentype");
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'classic';
+    src: url('./fonts/ClassicPokemon.ttf') format("truetype");
+    font-weight: normal;
+}
+
+
+
