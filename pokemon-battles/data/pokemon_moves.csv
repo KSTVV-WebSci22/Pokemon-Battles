@@ -1,114 +1,114 @@
 id,name,type,power,pp,accuracy,priority,target,damage_class_id,effect_id,effect_chance,flavor_text,stat_change_name,stat_change_value,effect
 0,,,,,,,,,,,,,,
-1,pound,Normal,40,35,100,0,Slelected Pokemon,physical,1,,Pounds with forelegs or tail.,,,Inflicts regular damage with no additional effect.
-2,karate-chop,Fighting,50,25,100,0,Slelected Pokemon,physical,44,,Has a high critical hit ratio.,,,Has an increased chance for a critical hit.
-3,double-slap,Normal,15,10,85,0,Slelected Pokemon,physical,30,,Repeatedly slaps 2-5 times.,,,Hits 2-5 times in one turn.
-4,comet-punch,Normal,18,15,85,0,Slelected Pokemon,physical,30,,Repeatedly punches 2-5 times.,,,Hits 2-5 times in one turn.
-5,mega-punch,Normal,80,20,85,0,Slelected Pokemon,physical,1,,A powerful punch thrown very hard.,,,Inflicts regular damage with no additional effect.
-6,pay-day,Normal,40,20,100,0,Slelected Pokemon,physical,35,,Throws coins. Gets them back later.,,,Scatters money on the ground worth five times the user's level.
-7,fire-punch,Fire,75,15,100,0,Slelected Pokemon,physical,5,10,A fiery punch. May cause a burn.,,,Has a $effect_chance% chance to [burn]{mechanic:burn} the target.
-8,ice-punch,Ice,75,15,100,0,Slelected Pokemon,physical,6,10,An icy punch. May cause freezing.,,,Has a $effect_chance% chance to [freeze]{mechanic:freeze} the target.
-9,thunder-punch,Electric,75,15,100,0,Slelected Pokemon,physical,7,10,An electric punch. It may paralyze.,,,Has a $effect_chance% chance to [paralyze]{mechanic:paralysis} the target.
-10,scratch,Normal,40,35,100,0,Slelected Pokemon,physical,1,,Scratches with sharp claws.,,,Inflicts regular damage with no additional effect.
-11,vice-grip,Normal,55,30,100,0,Slelected Pokemon,physical,1,,Grips with power ful pincers.,,,Inflicts regular damage with no additional effect.
-12,guillotine,Normal,,5,30,0,Slelected Pokemon,physical,39,,"A one-hit KO, pincer attack.",,,Causes a one-hit KO.
+1,pound,Normal,40,35,100,0,Selected Pokemon,physical,1,,Pounds with forelegs or tail.,,,Inflicts regular damage with no additional effect.
+2,karate-chop,Fighting,50,25,100,0,Selected Pokemon,physical,44,,Has a high critical hit ratio.,,,Has an increased chance for a critical hit.
+3,double-slap,Normal,15,10,85,0,Selected Pokemon,physical,30,,Repeatedly slaps 2-5 times.,,,Hits 2-5 times in one turn.
+4,comet-punch,Normal,18,15,85,0,Selected Pokemon,physical,30,,Repeatedly punches 2-5 times.,,,Hits 2-5 times in one turn.
+5,mega-punch,Normal,80,20,85,0,Selected Pokemon,physical,1,,A powerful punch thrown very hard.,,,Inflicts regular damage with no additional effect.
+6,pay-day,Normal,40,20,100,0,Selected Pokemon,physical,35,,Throws coins. Gets them back later.,,,Scatters money on the ground worth five times the user's level.
+7,fire-punch,Fire,75,15,100,0,Selected Pokemon,physical,5,10,A fiery punch. May cause a burn.,,,Has a $effect_chance% chance to [burn]{mechanic:burn} the target.
+8,ice-punch,Ice,75,15,100,0,Selected Pokemon,physical,6,10,An icy punch. May cause freezing.,,,Has a $effect_chance% chance to [freeze]{mechanic:freeze} the target.
+9,thunder-punch,Electric,75,15,100,0,Selected Pokemon,physical,7,10,An electric punch. It may paralyze.,,,Has a $effect_chance% chance to [paralyze]{mechanic:paralysis} the target.
+10,scratch,Normal,40,35,100,0,Selected Pokemon,physical,1,,Scratches with sharp claws.,,,Inflicts regular damage with no additional effect.
+11,vice-grip,Normal,55,30,100,0,Selected Pokemon,physical,1,,Grips with power ful pincers.,,,Inflicts regular damage with no additional effect.
+12,guillotine,Normal,,5,30,0,Selected Pokemon,physical,39,,"A one-hit KO, pincer attack.",,,Causes a one-hit KO.
 13,razor-wind,Normal,80,10,100,0,All opponents,special,40,,1st turn: Prepare 2nd turn: Attack,,,Requires a turn to charge before attacking.
 14,swords-dance,Normal,,20,,0,User,status,51,,A dance that in creases ATTACK.,attack,2,Raises the user's Attack by two stages.
-15,cut,Normal,50,30,95,0,Slelected Pokemon,physical,1,,"Cuts using claws, scythes, etc.",,,Inflicts regular damage with no additional effect.
-16,gust,Flying,40,35,100,0,Slelected Pokemon,special,150,,Whips up a strong gust of wind.,,,Inflicts regular damage and can hit Pokemon in the air.
-17,wing-attack,Flying,60,35,100,0,Slelected Pokemon,physical,1,,Strikes the target with wings.,,,Inflicts regular damage with no additional effect.
-18,whirlwind,Normal,,20,,-6,Slelected Pokemon,status,29,,Blows away the foe & ends battle.,,,Immediately ends wild battles.  Forces trainers to switch Pokémon.
-19,fly,Flying,90,15,95,0,Slelected Pokemon,physical,156,,1st turn: Fly 2nd turn: Attack,,,"User flies high into the air, dodging all attacks, and hits next turn."
-20,bind,Normal,15,20,85,0,Slelected Pokemon,physical,43,100,Binds the target for 2-5 turns.,,,Prevents the target from fleeing and inflicts damage for 2-5 turns.
-21,slam,Normal,80,20,75,0,Slelected Pokemon,physical,1,,"Slams the foe with a tail, vine, etc.",,,Inflicts regular damage with no additional effect.
-22,vine-whip,Grass,45,25,100,0,Slelected Pokemon,physical,1,,Whips the foe with slender vines.,,,Inflicts regular damage with no additional effect.
-23,stomp,Normal,65,20,100,0,Slelected Pokemon,physical,151,30,An attack that may cause flinching.,,,Has a $effect_chance% chance to make the target flinch.
-24,double-kick,Fighting,30,30,100,0,Slelected Pokemon,physical,45,,A double kicking attack.,,,Hits twice in one turn.
-25,mega-kick,Normal,120,5,75,0,Slelected Pokemon,physical,1,,A powerful kicking attack.,,,Inflicts regular damage with no additional effect.
-26,jump-kick,Fighting,100,10,95,0,Slelected Pokemon,physical,46,,"May miss, damaging the user.",,,"""If the user misses"
-27,rolling-kick,Fighting,60,15,85,0,Slelected Pokemon,physical,32,30,"A fast, spinning kick.",,,Has a $effect_chance% chance to make the target flinch.
-28,sand-attack,Ground,,15,100,0,Slelected Pokemon,status,24,,Reduces accuracy by throwing sand.,accuracy,-1,Lowers the target's accuracy by one stage.
-29,headbutt,Normal,70,15,100,0,Slelected Pokemon,physical,32,30,An attack that may make foe flinch.,,,Has a $effect_chance% chance to make the target flinch.
-30,horn-attack,Normal,65,25,100,0,Slelected Pokemon,physical,1,,An attack using a horn to jab.,,,Inflicts regular damage with no additional effect.
-31,fury-attack,Normal,15,20,85,0,Slelected Pokemon,physical,30,,Jabs the target 2-5 times.,,,Hits 2-5 times in one turn.
-32,horn-drill,Normal,,5,30,0,Slelected Pokemon,physical,39,,"A one-hit KO, drill attack.",,,Causes a one-hit KO.
-33,tackle,Normal,40,35,100,0,Slelected Pokemon,physical,1,,A full-body charge attack.,,,Inflicts regular damage with no additional effect.
-34,body-slam,Normal,85,15,100,0,Slelected Pokemon,physical,7,30,An attack that may cause paralysis.,,,Has a $effect_chance% chance to [paralyze]{mechanic:paralysis} the target.
-35,wrap,Normal,15,20,90,0,Slelected Pokemon,physical,43,100,Squeezes the foe for 2-5 turns.,,,Prevents the target from fleeing and inflicts damage for 2-5 turns.
-36,take-down,Normal,90,20,85,0,Slelected Pokemon,physical,49,,A tackle that also hurts the user.,,,User receives 1/4 the damage it inflicts in recoil.
+15,cut,Normal,50,30,95,0,Selected Pokemon,physical,1,,"Cuts using claws, scythes, etc.",,,Inflicts regular damage with no additional effect.
+16,gust,Flying,40,35,100,0,Selected Pokemon,special,150,,Whips up a strong gust of wind.,,,Inflicts regular damage and can hit Pokemon in the air.
+17,wing-attack,Flying,60,35,100,0,Selected Pokemon,physical,1,,Strikes the target with wings.,,,Inflicts regular damage with no additional effect.
+18,whirlwind,Normal,,20,,-6,Selected Pokemon,status,29,,Blows away the foe & ends battle.,,,Immediately ends wild battles.  Forces trainers to switch Pokémon.
+19,fly,Flying,90,15,95,0,Selected Pokemon,physical,156,,1st turn: Fly 2nd turn: Attack,,,"User flies high into the air, dodging all attacks, and hits next turn."
+20,bind,Normal,15,20,85,0,Selected Pokemon,physical,43,100,Binds the target for 2-5 turns.,,,Prevents the target from fleeing and inflicts damage for 2-5 turns.
+21,slam,Normal,80,20,75,0,Selected Pokemon,physical,1,,"Slams the foe with a tail, vine, etc.",,,Inflicts regular damage with no additional effect.
+22,vine-whip,Grass,45,25,100,0,Selected Pokemon,physical,1,,Whips the foe with slender vines.,,,Inflicts regular damage with no additional effect.
+23,stomp,Normal,65,20,100,0,Selected Pokemon,physical,151,30,An attack that may cause flinching.,,,Has a $effect_chance% chance to make the target flinch.
+24,double-kick,Fighting,30,30,100,0,Selected Pokemon,physical,45,,A double kicking attack.,,,Hits twice in one turn.
+25,mega-kick,Normal,120,5,75,0,Selected Pokemon,physical,1,,A powerful kicking attack.,,,Inflicts regular damage with no additional effect.
+26,jump-kick,Fighting,100,10,95,0,Selected Pokemon,physical,46,,"May miss, damaging the user.",,,"""If the user misses"
+27,rolling-kick,Fighting,60,15,85,0,Selected Pokemon,physical,32,30,"A fast, spinning kick.",,,Has a $effect_chance% chance to make the target flinch.
+28,sand-attack,Ground,,15,100,0,Selected Pokemon,status,24,,Reduces accuracy by throwing sand.,accuracy,-1,Lowers the target's accuracy by one stage.
+29,headbutt,Normal,70,15,100,0,Selected Pokemon,physical,32,30,An attack that may make foe flinch.,,,Has a $effect_chance% chance to make the target flinch.
+30,horn-attack,Normal,65,25,100,0,Selected Pokemon,physical,1,,An attack using a horn to jab.,,,Inflicts regular damage with no additional effect.
+31,fury-attack,Normal,15,20,85,0,Selected Pokemon,physical,30,,Jabs the target 2-5 times.,,,Hits 2-5 times in one turn.
+32,horn-drill,Normal,,5,30,0,Selected Pokemon,physical,39,,"A one-hit KO, drill attack.",,,Causes a one-hit KO.
+33,tackle,Normal,40,35,100,0,Selected Pokemon,physical,1,,A full-body charge attack.,,,Inflicts regular damage with no additional effect.
+34,body-slam,Normal,85,15,100,0,Selected Pokemon,physical,7,30,An attack that may cause paralysis.,,,Has a $effect_chance% chance to [paralyze]{mechanic:paralysis} the target.
+35,wrap,Normal,15,20,90,0,Selected Pokemon,physical,43,100,Squeezes the foe for 2-5 turns.,,,Prevents the target from fleeing and inflicts damage for 2-5 turns.
+36,take-down,Normal,90,20,85,0,Selected Pokemon,physical,49,,A tackle that also hurts the user.,,,User receives 1/4 the damage it inflicts in recoil.
 37,thrash,Normal,120,10,100,0,Random opponent,physical,28,,Works 2-3 turns and confuses user.,,,"""Hits every turn for 2-3 turns"
-38,double-edge,Normal,120,15,100,0,Slelected Pokemon,physical,199,,A tackle that also hurts the user.,,,User receives 1/3 the damage inflicted in recoil.
+38,double-edge,Normal,120,15,100,0,Selected Pokemon,physical,199,,A tackle that also hurts the user.,,,User receives 1/3 the damage inflicted in recoil.
 39,tail-whip,Normal,,30,100,0,All opponents,status,20,,Lowers the foe's DEFENSE.,defense,-1,Lowers the target's Defense by one stage.
-40,poison-sting,Poison,15,35,100,0,Slelected Pokemon,physical,3,30,An attack that may poison the target.,,,Has a $effect_chance% chance to [poison]{mechanic:poison} the target.
-41,twineedle,Bug,25,20,100,0,Slelected Pokemon,physical,78,20,Jabs the foe twice using stingers.,,,Hits twice in the same turn.  Has a $effect_chance% chance to poison the target.
-42,pin-missile,Bug,25,20,95,0,Slelected Pokemon,physical,30,,Fires pins that strike 2-5 times.,,,Hits 2-5 times in one turn.
+40,poison-sting,Poison,15,35,100,0,Selected Pokemon,physical,3,30,An attack that may poison the target.,,,Has a $effect_chance% chance to [poison]{mechanic:poison} the target.
+41,twineedle,Bug,25,20,100,0,Selected Pokemon,physical,78,20,Jabs the foe twice using stingers.,,,Hits twice in the same turn.  Has a $effect_chance% chance to poison the target.
+42,pin-missile,Bug,25,20,95,0,Selected Pokemon,physical,30,,Fires pins that strike 2-5 times.,,,Hits 2-5 times in one turn.
 43,leer,Normal,,30,100,0,All opponents,status,20,100,Reduces the foe's DEFENSE.,defense,-1,Lowers the target's Defense by one stage.
-44,bite,Dark,60,25,100,0,Slelected Pokemon,physical,32,30,An attack that may cause flinching.,,,Has a $effect_chance% chance to make the target flinch.
+44,bite,Dark,60,25,100,0,Selected Pokemon,physical,32,30,An attack that may cause flinching.,,,Has a $effect_chance% chance to make the target flinch.
 45,growl,Normal,,40,100,0,All opponents,status,19,,Reduces the foe's ATTACK.,attack,-1,Lowers the target's Attack by one stage.
-46,roar,Normal,,20,,-6,Slelected Pokemon,status,29,,Scares wild foes to end battle.,,,Immediately ends wild battles.  Forces trainers to switch Pokémon.
-47,sing,Normal,,15,55,0,Slelected Pokemon,status,2,,May cause the foe to fall asleep.,,,Puts the target to sleep.
-48,supersonic,Normal,,20,55,0,Slelected Pokemon,status,50,,Sound waves that cause confusion.,,,Confuses the target.
-49,sonic-boom,Normal,,20,90,0,Slelected Pokemon,special,131,,Always inflicts 20HP damage.,,,Inflicts 20 points of damage.
-50,disable,Normal,,20,100,0,Slelected Pokemon,status,87,,Disables the foe's most recent move.,,,Disables the target's last used move for 1-8 turns.
+46,roar,Normal,,20,,-6,Selected Pokemon,status,29,,Scares wild foes to end battle.,,,Immediately ends wild battles.  Forces trainers to switch Pokémon.
+47,sing,Normal,,15,55,0,Selected Pokemon,status,2,,May cause the foe to fall asleep.,,,Puts the target to sleep.
+48,supersonic,Normal,,20,55,0,Selected Pokemon,status,50,,Sound waves that cause confusion.,,,Confuses the target.
+49,sonic-boom,Normal,,20,90,0,Selected Pokemon,special,131,,Always inflicts 20HP damage.,,,Inflicts 20 points of damage.
+50,disable,Normal,,20,100,0,Selected Pokemon,status,87,,Disables the foe's most recent move.,,,Disables the target's last used move for 1-8 turns.
 51,acid,Poison,40,30,100,0,All opponents,special,73,10,An attack that may lower DEFENSE.,special-defense,-1,Has a $effect_chance% chance to lower the target's Special Defense by one stage.
-52,ember,Fire,40,25,100,0,Slelected Pokemon,special,5,10,An attack that may inflict a burn.,,,Has a $effect_chance% chance to [burn]{mechanic:burn} the target.
-53,flamethrower,Fire,90,15,100,0,Slelected Pokemon,special,5,10,An attack that may inflict a burn.,,,Has a $effect_chance% chance to [burn]{mechanic:burn} the target.
+52,ember,Fire,40,25,100,0,Selected Pokemon,special,5,10,An attack that may inflict a burn.,,,Has a $effect_chance% chance to [burn]{mechanic:burn} the target.
+53,flamethrower,Fire,90,15,100,0,Selected Pokemon,special,5,10,An attack that may inflict a burn.,,,Has a $effect_chance% chance to [burn]{mechanic:burn} the target.
 54,mist,Ice,,30,,0,User's field,status,47,,Prevents stat reduction.,,,Protects the user's stats from being changed by enemy moves.
-55,water-gun,Water,40,25,100,0,Slelected Pokemon,special,1,,Squirts water to attack.,,,Inflicts regular damage with no additional effect.
-56,hydro-pump,Water,110,5,80,0,Slelected Pokemon,special,1,,A powerful water- type attack.,,,Inflicts regular damage with no additional effect.
+55,water-gun,Water,40,25,100,0,Selected Pokemon,special,1,,Squirts water to attack.,,,Inflicts regular damage with no additional effect.
+56,hydro-pump,Water,110,5,80,0,Selected Pokemon,special,1,,A powerful water- type attack.,,,Inflicts regular damage with no additional effect.
 57,surf,Water,90,15,100,0,All other Pokemon,special,258,,A strong water- type attack.,,,Inflicts regular damage and can hit Dive users.
-58,ice-beam,Ice,90,10,100,0,Slelected Pokemon,special,6,10,An attack that may freeze the foe.,,,Has a $effect_chance% chance to [freeze]{mechanic:freeze} the target.
+58,ice-beam,Ice,90,10,100,0,Selected Pokemon,special,6,10,An attack that may freeze the foe.,,,Has a $effect_chance% chance to [freeze]{mechanic:freeze} the target.
 59,blizzard,Ice,110,5,70,0,All opponents,special,261,10,An attack that may freeze the foe.,,,Has a $effect_chance% chance to freeze the target.
-60,psybeam,Psychic,65,20,100,0,Slelected Pokemon,special,77,10,An attack that may confuse the foe.,,,Has a $effect_chance% chance to confuse the target.
-61,bubble-beam,Water,65,20,100,0,Slelected Pokemon,special,71,10,An attack that may lower SPEED.,speed,-1,Has a $effect_chance% chance to lower the target's Speed by one stage.
-62,aurora-beam,Ice,65,20,100,0,Slelected Pokemon,special,69,10,An attack that may lower ATTACK.,attack,-1,Has a $effect_chance% chance to lower the target's Attack by one stage.
-63,hyper-beam,Normal,150,5,90,0,Slelected Pokemon,special,81,,1st turn: Attack 2nd turn: Rest,,,User foregoes its next turn to recharge.
-64,peck,Flying,35,35,100,0,Slelected Pokemon,physical,1,,"Jabs the foe with a beak, etc.",,,Inflicts regular damage with no additional effect.
-65,drill-peck,Flying,80,20,100,0,Slelected Pokemon,physical,1,,"A strong, spin ning-peck attack.",,,Inflicts regular damage with no additional effect.
-66,submission,Fighting,80,20,80,0,Slelected Pokemon,physical,49,,An attack that al so hurts the user.,,,User receives 1/4 the damage it inflicts in recoil.
-67,low-kick,Fighting,,20,100,0,Slelected Pokemon,physical,197,,An attack that may cause flinching.,,,"Inflicts more damage to heavier targets, with a maximum of 120 power."
+60,psybeam,Psychic,65,20,100,0,Selected Pokemon,special,77,10,An attack that may confuse the foe.,,,Has a $effect_chance% chance to confuse the target.
+61,bubble-beam,Water,65,20,100,0,Selected Pokemon,special,71,10,An attack that may lower SPEED.,speed,-1,Has a $effect_chance% chance to lower the target's Speed by one stage.
+62,aurora-beam,Ice,65,20,100,0,Selected Pokemon,special,69,10,An attack that may lower ATTACK.,attack,-1,Has a $effect_chance% chance to lower the target's Attack by one stage.
+63,hyper-beam,Normal,150,5,90,0,Selected Pokemon,special,81,,1st turn: Attack 2nd turn: Rest,,,User foregoes its next turn to recharge.
+64,peck,Flying,35,35,100,0,Selected Pokemon,physical,1,,"Jabs the foe with a beak, etc.",,,Inflicts regular damage with no additional effect.
+65,drill-peck,Flying,80,20,100,0,Selected Pokemon,physical,1,,"A strong, spin ning-peck attack.",,,Inflicts regular damage with no additional effect.
+66,submission,Fighting,80,20,80,0,Selected Pokemon,physical,49,,An attack that al so hurts the user.,,,User receives 1/4 the damage it inflicts in recoil.
+67,low-kick,Fighting,,20,100,0,Selected Pokemon,physical,197,,An attack that may cause flinching.,,,"Inflicts more damage to heavier targets, with a maximum of 120 power."
 68,counter,Fighting,,20,100,-5,Specific move,physical,90,,Returns a physical blow double.,,,Inflicts twice the damage the user received from the last physical hit it took.
-69,seismic-toss,Fighting,,20,100,0,Slelected Pokemon,physical,88,,The user's level equals damage HP.,,,Inflicts damage equal to the user's level.
-70,strength,Normal,80,15,100,0,Slelected Pokemon,physical,1,,A powerful physi cal attack.,,,Inflicts regular damage with no additional effect.
-71,absorb,Grass,20,25,100,0,Slelected Pokemon,special,4,,Steals 1/2 of the damage inflicted.,,,Drains half the damage inflicted to heal the user.
-72,mega-drain,Grass,40,15,100,0,Slelected Pokemon,special,4,,Steals 1/2 of the damage inflicted.,,,Drains half the damage inflicted to heal the user.
-73,leech-seed,Grass,,10,90,0,Slelected Pokemon,status,85,,Steals HP from the foe on every turn.,,,"Seeds the target, stealing HP from it every turn."
+69,seismic-toss,Fighting,,20,100,0,Selected Pokemon,physical,88,,The user's level equals damage HP.,,,Inflicts damage equal to the user's level.
+70,strength,Normal,80,15,100,0,Selected Pokemon,physical,1,,A powerful physi cal attack.,,,Inflicts regular damage with no additional effect.
+71,absorb,Grass,20,25,100,0,Selected Pokemon,special,4,,Steals 1/2 of the damage inflicted.,,,Drains half the damage inflicted to heal the user.
+72,mega-drain,Grass,40,15,100,0,Selected Pokemon,special,4,,Steals 1/2 of the damage inflicted.,,,Drains half the damage inflicted to heal the user.
+73,leech-seed,Grass,,10,90,0,Selected Pokemon,status,85,,Steals HP from the foe on every turn.,,,"Seeds the target, stealing HP from it every turn."
 74,growth,Normal,,20,,0,User,status,317,,Raises the SPCL. ATK rating.,attack,1,Raises the user's Attack and Special Attack by one stage.
 75,razor-leaf,Grass,55,25,95,0,All opponents,physical,44,,Has a high critical hit ratio.,,,Has an increased chance for a critical hit.
-76,solar-beam,Grass,120,10,100,0,Slelected Pokemon,special,152,,1st turn: Prepare 2nd turn: Attack,,,Requires a turn to charge before attacking.
-77,poison-powder,Poison,,35,75,0,Slelected Pokemon,status,67,,A move that may poison the foe.,,,Poisons the target.
-78,stun-spore,Grass,,30,75,0,Slelected Pokemon,status,68,,A move that may paralyze the foe.,,,Paralyzes the target.
-79,sleep-powder,Grass,,15,75,0,Slelected Pokemon,status,2,,May cause the foe to fall asleep.,,,Puts the target to sleep.
+76,solar-beam,Grass,120,10,100,0,Selected Pokemon,special,152,,1st turn: Prepare 2nd turn: Attack,,,Requires a turn to charge before attacking.
+77,poison-powder,Poison,,35,75,0,Selected Pokemon,status,67,,A move that may poison the foe.,,,Poisons the target.
+78,stun-spore,Grass,,30,75,0,Selected Pokemon,status,68,,A move that may paralyze the foe.,,,Paralyzes the target.
+79,sleep-powder,Grass,,15,75,0,Selected Pokemon,status,2,,May cause the foe to fall asleep.,,,Puts the target to sleep.
 80,petal-dance,Grass,120,10,100,0,Random opponent,special,28,,Works 2-3 turns and confuses user.,,,"""Hits every turn for 2-3 turns"
 81,string-shot,Bug,,40,95,0,All opponents,status,61,,A move that lowers the foe's SPEED.,speed,-2,Lowers the target's Speed by two stages.
-82,dragon-rage,Dragon,,10,100,0,Slelected Pokemon,special,42,,Always inflicts 40HP damage.,,,Inflicts 40 points of damage.
-83,fire-spin,Fire,35,15,85,0,Slelected Pokemon,special,43,100,Traps foe in fire for 2-5 turns.,,,Prevents the target from fleeing and inflicts damage for 2-5 turns.
-84,thunder-shock,Electric,40,30,100,0,Slelected Pokemon,special,7,10,An attack that may cause paralysis.,,,Has a $effect_chance% chance to [paralyze]{mechanic:paralysis} the target.
-85,thunderbolt,Electric,90,15,100,0,Slelected Pokemon,special,7,10,An attack that may cause paralysis.,,,Has a $effect_chance% chance to [paralyze]{mechanic:paralysis} the target.
-86,thunder-wave,Electric,,20,90,0,Slelected Pokemon,status,68,,A move that may cause paralysis.,,,Paralyzes the target.
-87,thunder,Electric,110,10,70,0,Slelected Pokemon,special,153,30,An attack that may cause paralysis.,,,Has a $effect_chance% chance to paralyze the target.
-88,rock-throw,Rock,50,15,90,0,Slelected Pokemon,physical,1,,Drops rocks on the enemy.,,,Inflicts regular damage with no additional effect.
+82,dragon-rage,Dragon,,10,100,0,Selected Pokemon,special,42,,Always inflicts 40HP damage.,,,Inflicts 40 points of damage.
+83,fire-spin,Fire,35,15,85,0,Selected Pokemon,special,43,100,Traps foe in fire for 2-5 turns.,,,Prevents the target from fleeing and inflicts damage for 2-5 turns.
+84,thunder-shock,Electric,40,30,100,0,Selected Pokemon,special,7,10,An attack that may cause paralysis.,,,Has a $effect_chance% chance to [paralyze]{mechanic:paralysis} the target.
+85,thunderbolt,Electric,90,15,100,0,Selected Pokemon,special,7,10,An attack that may cause paralysis.,,,Has a $effect_chance% chance to [paralyze]{mechanic:paralysis} the target.
+86,thunder-wave,Electric,,20,90,0,Selected Pokemon,status,68,,A move that may cause paralysis.,,,Paralyzes the target.
+87,thunder,Electric,110,10,70,0,Selected Pokemon,special,153,30,An attack that may cause paralysis.,,,Has a $effect_chance% chance to paralyze the target.
+88,rock-throw,Rock,50,15,90,0,Selected Pokemon,physical,1,,Drops rocks on the enemy.,,,Inflicts regular damage with no additional effect.
 89,earthquake,Ground,100,10,100,0,All other Pokemon,physical,148,,Tough but useless vs. flying foes.,,,Inflicts regular damage and can hit Dig users.
-90,fissure,Ground,,5,30,0,Slelected Pokemon,physical,39,,"A ground-type, one-hit KO attack.",,,Causes a one-hit KO.
-91,dig,Ground,80,10,100,0,Slelected Pokemon,physical,257,,1st turn: Burrow 2nd turn: Attack,,,"User digs underground, dodging all attacks, and hits next turn."
-92,toxic,Poison,,10,90,0,Slelected Pokemon,status,34,,A poison move with increasing damage.,,,"Badly poisons the target, inflicting more damage every turn."
-93,confusion,Psychic,50,25,100,0,Slelected Pokemon,special,77,10,An attack that may cause confusion.,,,Has a $effect_chance% chance to confuse the target.
-94,psychic,Psychic,90,10,100,0,Slelected Pokemon,special,73,10,An attack that may lower SPCL.DEF.,special-defense,-1,Has a $effect_chance% chance to lower the target's Special Defense by one stage.
-95,hypnosis,Psychic,,20,60,0,Slelected Pokemon,status,2,,May put the foe to sleep.,,,Puts the target to sleep.
+90,fissure,Ground,,5,30,0,Selected Pokemon,physical,39,,"A ground-type, one-hit KO attack.",,,Causes a one-hit KO.
+91,dig,Ground,80,10,100,0,Selected Pokemon,physical,257,,1st turn: Burrow 2nd turn: Attack,,,"User digs underground, dodging all attacks, and hits next turn."
+92,toxic,Poison,,10,90,0,Selected Pokemon,status,34,,A poison move with increasing damage.,,,"Badly poisons the target, inflicting more damage every turn."
+93,confusion,Psychic,50,25,100,0,Selected Pokemon,special,77,10,An attack that may cause confusion.,,,Has a $effect_chance% chance to confuse the target.
+94,psychic,Psychic,90,10,100,0,Selected Pokemon,special,73,10,An attack that may lower SPCL.DEF.,special-defense,-1,Has a $effect_chance% chance to lower the target's Special Defense by one stage.
+95,hypnosis,Psychic,,20,60,0,Selected Pokemon,status,2,,May put the foe to sleep.,,,Puts the target to sleep.
 96,meditate,Psychic,,40,,0,User,status,11,,Raises the user's ATTACK.,attack,1,Raises the user's Attack by one stage.
 97,agility,Psychic,,30,,0,User,status,53,,Sharply increases the user's SPEED.,speed,2,Raises the user's Speed by two stages.
-98,quick-attack,Normal,40,30,100,1,Slelected Pokemon,physical,104,,Lets the user get in the first hit.,,,Inflicts regular damage with no additional effect.
-99,rage,Normal,20,20,100,0,Slelected Pokemon,physical,82,,Raises ATTACK if the user is hit.,,,"If the user is hit after using this move, its Attack rises by one stage."
+98,quick-attack,Normal,40,30,100,1,Selected Pokemon,physical,104,,Lets the user get in the first hit.,,,Inflicts regular damage with no additional effect.
+99,rage,Normal,20,20,100,0,Selected Pokemon,physical,82,,Raises ATTACK if the user is hit.,,,"If the user is hit after using this move, its Attack rises by one stage."
 100,teleport,Psychic,,20,,0,User,status,154,,A move for fleeing from battle.,,,Immediately ends wild battles. No effect otherwise.
-101,night-shade,Ghost,,15,100,0,Slelected Pokemon,special,88,,The user's level equals damage HP.,,,Inflicts damage equal to the user's level.
-102,mimic,Normal,,10,,0,Slelected Pokemon,status,83,,Copies a move used by the foe.,,,Copies the target's last used move.
-103,screech,Normal,,40,85,0,Slelected Pokemon,status,60,,Sharply reduces the foe's DEFENSE.,defense,-2,Lowers the target's Defense by two stages.
+101,night-shade,Ghost,,15,100,0,Selected Pokemon,special,88,,The user's level equals damage HP.,,,Inflicts damage equal to the user's level.
+102,mimic,Normal,,10,,0,Selected Pokemon,status,83,,Copies a move used by the foe.,,,Copies the target's last used move.
+103,screech,Normal,,40,85,0,Selected Pokemon,status,60,,Sharply reduces the foe's DEFENSE.,defense,-2,Lowers the target's Defense by two stages.
 104,double-team,Normal,,15,,0,User,status,17,,Heightens evasive ness.,evasion,1,Raises the user's evasion by one stage.
 105,recover,Normal,,10,,0,User,status,33,,Restores HP by 1/2 the max HP.,,,Heals the user by half its max HP.
 106,harden,Normal,,30,,0,User,status,12,,Raises the user's DEFENSE.,defense,1,Raises the user's Defense by one stage.
 107,minimize,Normal,,10,,0,User,status,109,,Heightens evasive ness.,evasion,2,Raises the user's evasion by two stages.
-108,smokescreen,Normal,,20,100,0,Slelected Pokemon,status,24,,Lowers the foe's accuracy.,accuracy,-1,Lowers the target's accuracy by one stage.
-109,confuse-ray,Ghost,,10,100,0,Slelected Pokemon,status,50,,A move that causes confusion.,,,Confuses the target.
+108,smokescreen,Normal,,20,100,0,Selected Pokemon,status,24,,Lowers the foe's accuracy.,accuracy,-1,Lowers the target's accuracy by one stage.
+109,confuse-ray,Ghost,,10,100,0,Selected Pokemon,status,50,,A move that causes confusion.,,,Confuses the target.
 110,withdraw,Water,,40,,0,User,status,12,,Heightens the user's DEFENSE.,defense,1,Raises the user's Defense by one stage.
 111,defense-curl,Normal,,40,,0,User,status,157,,Heightens the user's DEFENSE.,defense,1,Raises user's Defense by one stage.
 112,barrier,Psychic,,20,,0,User,status,52,,Sharply increases user's DEFENSE.,defense,2,Raises the user's Defense by two stages.
@@ -118,49 +118,49 @@ id,name,type,power,pp,accuracy,priority,target,damage_class_id,effect_id,effect_
 116,focus-energy,Normal,,30,,0,User,status,48,,Raises the critical hit ratio.,,,Increases the user's chance to score a critical hit.
 117,bide,Normal,,10,,1,User,physical,27,,Waits 2-3 turns & hits back double.,,,"User waits for two turns, then hits back for twice the damage it took."
 118,metronome,Normal,,10,,0,User,status,84,,Randomly uses any POKéMON move.,,,Randomly selects and uses any move in the game.
-119,mirror-move,Flying,,20,,0,Slelected Pokemon,status,10,,Counters with the same move.,,,Uses the target's last used move.
+119,mirror-move,Flying,,20,,0,Selected Pokemon,status,10,,Counters with the same move.,,,Uses the target's last used move.
 120,self-destruct,Normal,200,5,100,0,All other Pokemon,physical,8,,Powerful but makes the user faint.,,,User faints.
-121,egg-bomb,Normal,100,10,75,0,Slelected Pokemon,physical,1,,Eggs are hurled at the foe.,,,Inflicts regular damage with no additional effect.
-122,lick,Ghost,30,30,100,0,Slelected Pokemon,physical,7,30,An attack that may cause paralysis.,,,Has a $effect_chance% chance to [paralyze]{mechanic:paralysis} the target.
-123,smog,Poison,30,20,70,0,Slelected Pokemon,special,3,40,An attack that may poison the foe.,,,Has a $effect_chance% chance to [poison]{mechanic:poison} the target.
-124,sludge,Poison,65,20,100,0,Slelected Pokemon,special,3,30,An attack that may poison the foe.,,,Has a $effect_chance% chance to [poison]{mechanic:poison} the target.
-125,bone-club,Ground,65,20,85,0,Slelected Pokemon,physical,32,10,An attack that may cause flinching.,,,Has a $effect_chance% chance to make the target flinch.
-126,fire-blast,Fire,110,5,85,0,Slelected Pokemon,special,5,10,An attack that may cause a burn.,,,Has a $effect_chance% chance to [burn]{mechanic:burn} the target.
-127,waterfall,Water,80,15,100,0,Slelected Pokemon,physical,32,20,An aquatic charge attack.,,,Has a $effect_chance% chance to make the target flinch.
-128,clamp,Water,35,15,85,0,Slelected Pokemon,physical,43,100,Traps the foe for 2-5 turns.,,,Prevents the target from fleeing and inflicts damage for 2-5 turns.
+121,egg-bomb,Normal,100,10,75,0,Selected Pokemon,physical,1,,Eggs are hurled at the foe.,,,Inflicts regular damage with no additional effect.
+122,lick,Ghost,30,30,100,0,Selected Pokemon,physical,7,30,An attack that may cause paralysis.,,,Has a $effect_chance% chance to [paralyze]{mechanic:paralysis} the target.
+123,smog,Poison,30,20,70,0,Selected Pokemon,special,3,40,An attack that may poison the foe.,,,Has a $effect_chance% chance to [poison]{mechanic:poison} the target.
+124,sludge,Poison,65,20,100,0,Selected Pokemon,special,3,30,An attack that may poison the foe.,,,Has a $effect_chance% chance to [poison]{mechanic:poison} the target.
+125,bone-club,Ground,65,20,85,0,Selected Pokemon,physical,32,10,An attack that may cause flinching.,,,Has a $effect_chance% chance to make the target flinch.
+126,fire-blast,Fire,110,5,85,0,Selected Pokemon,special,5,10,An attack that may cause a burn.,,,Has a $effect_chance% chance to [burn]{mechanic:burn} the target.
+127,waterfall,Water,80,15,100,0,Selected Pokemon,physical,32,20,An aquatic charge attack.,,,Has a $effect_chance% chance to make the target flinch.
+128,clamp,Water,35,15,85,0,Selected Pokemon,physical,43,100,Traps the foe for 2-5 turns.,,,Prevents the target from fleeing and inflicts damage for 2-5 turns.
 129,swift,Normal,60,20,,0,All opponents,special,18,,An attack that never misses.,,,Never misses.
-130,skull-bash,Normal,130,10,100,0,Slelected Pokemon,physical,146,100,1st turn: Prepare 2nd turn: Attack,,,Raises the user's Defense by one stage. User charges for one turn before attacking.
-131,spike-cannon,Normal,20,15,100,0,Slelected Pokemon,physical,30,,Fires spikes to hit 2-5 times.,,,Hits 2-5 times in one turn.
-132,constrict,Normal,10,35,100,0,Slelected Pokemon,physical,71,10,An attack that may lower SPEED.,speed,-1,Has a $effect_chance% chance to lower the target's Speed by one stage.
+130,skull-bash,Normal,130,10,100,0,Selected Pokemon,physical,146,100,1st turn: Prepare 2nd turn: Attack,,,Raises the user's Defense by one stage. User charges for one turn before attacking.
+131,spike-cannon,Normal,20,15,100,0,Selected Pokemon,physical,30,,Fires spikes to hit 2-5 times.,,,Hits 2-5 times in one turn.
+132,constrict,Normal,10,35,100,0,Selected Pokemon,physical,71,10,An attack that may lower SPEED.,speed,-1,Has a $effect_chance% chance to lower the target's Speed by one stage.
 133,amnesia,Psychic,,20,,0,User,status,55,,Sharply raises the user's SPCL.DEF.,special-defense,2,Raises the user's Special Defense by two stages.
-134,kinesis,Psychic,,15,80,0,Slelected Pokemon,status,24,,Reduces the foe's accuracy.,accuracy,-1,Lowers the target's accuracy by one stage.
+134,kinesis,Psychic,,15,80,0,Selected Pokemon,status,24,,Reduces the foe's accuracy.,accuracy,-1,Lowers the target's accuracy by one stage.
 135,soft-boiled,Normal,,10,,0,User,status,33,,Restores HP by 1/2 the user's max HP.,,,Heals the user by half its max HP.
-136,high-jump-kick,Fighting,130,10,90,0,Slelected Pokemon,physical,46,,May miss and hurt the user.,,,"""If the user misses"
-137,glare,Normal,,30,100,0,Slelected Pokemon,status,68,,A move that may cause paralysis.,,,Paralyzes the target.
-138,dream-eater,Psychic,100,15,100,0,Slelected Pokemon,special,9,,Steals HP from a sleeping victim.,,,Only works on sleeping Pokémon.  Drains half the damage inflicted to heal the user.
+136,high-jump-kick,Fighting,130,10,90,0,Selected Pokemon,physical,46,,May miss and hurt the user.,,,"""If the user misses"
+137,glare,Normal,,30,100,0,Selected Pokemon,status,68,,A move that may cause paralysis.,,,Paralyzes the target.
+138,dream-eater,Psychic,100,15,100,0,Selected Pokemon,special,9,,Steals HP from a sleeping victim.,,,Only works on sleeping Pokémon.  Drains half the damage inflicted to heal the user.
 139,poison-gas,Poison,,40,90,0,All opponents,status,67,,A move that may poison the foe.,,,Poisons the target.
-140,barrage,Normal,15,20,85,0,Slelected Pokemon,physical,30,,Throws orbs to hit 2-5 times.,,,Hits 2-5 times in one turn.
-141,leech-life,Bug,80,10,100,0,Slelected Pokemon,physical,4,,Steals 1/2 of the damage inflicted.,,,Drains half the damage inflicted to heal the user.
-142,lovely-kiss,Normal,,10,75,0,Slelected Pokemon,status,2,,May cause the foe to fall asleep.,,,Puts the target to sleep.
-143,sky-attack,Flying,140,5,90,0,Slelected Pokemon,physical,76,30,1st turn: Prepare 2nd turn: Attack,,,User charges for one turn before attacking.  Has a $effect_chance% chance to make the target flinch.
-144,transform,Normal,,10,,0,Slelected Pokemon,status,58,,The user assumes the foe's guise.,,,User becomes a copy of the target until it leaves battle.
+140,barrage,Normal,15,20,85,0,Selected Pokemon,physical,30,,Throws orbs to hit 2-5 times.,,,Hits 2-5 times in one turn.
+141,leech-life,Bug,80,10,100,0,Selected Pokemon,physical,4,,Steals 1/2 of the damage inflicted.,,,Drains half the damage inflicted to heal the user.
+142,lovely-kiss,Normal,,10,75,0,Selected Pokemon,status,2,,May cause the foe to fall asleep.,,,Puts the target to sleep.
+143,sky-attack,Flying,140,5,90,0,Selected Pokemon,physical,76,30,1st turn: Prepare 2nd turn: Attack,,,User charges for one turn before attacking.  Has a $effect_chance% chance to make the target flinch.
+144,transform,Normal,,10,,0,Selected Pokemon,status,58,,The user assumes the foe's guise.,,,User becomes a copy of the target until it leaves battle.
 145,bubble,Water,40,30,100,0,All opponents,special,71,10,An attack that may reduce SPEED.,speed,-1,Has a $effect_chance% chance to lower the target's Speed by one stage.
-146,dizzy-punch,Normal,70,10,100,0,Slelected Pokemon,physical,77,20,An attack that may cause confusion.,,,Has a $effect_chance% chance to confuse the target.
-147,spore,Grass,,15,100,0,Slelected Pokemon,status,2,,A move that induces sleep.,,,Puts the target to sleep.
-148,flash,Normal,,20,100,0,Slelected Pokemon,status,24,,Blinds the foe to reduce accuracy.,accuracy,-1,Lowers the target's accuracy by one stage.
-149,psywave,Psychic,,15,100,0,Slelected Pokemon,special,89,,An attack with variable power.,,,Inflicts damage between 50% and Inflicts regular damage and can hit Pokémon in the air.% of the user's level.
+146,dizzy-punch,Normal,70,10,100,0,Selected Pokemon,physical,77,20,An attack that may cause confusion.,,,Has a $effect_chance% chance to confuse the target.
+147,spore,Grass,,15,100,0,Selected Pokemon,status,2,,A move that induces sleep.,,,Puts the target to sleep.
+148,flash,Normal,,20,100,0,Selected Pokemon,status,24,,Blinds the foe to reduce accuracy.,accuracy,-1,Lowers the target's accuracy by one stage.
+149,psywave,Psychic,,15,100,0,Selected Pokemon,special,89,,An attack with variable power.,,,Inflicts damage between 50% and Inflicts regular damage and can hit Pokémon in the air.% of the user's level.
 150,splash,Normal,,40,,0,User,status,86,,Has no effect whatsoever.,,,Does nothing.
 151,acid-armor,Poison,,20,,0,User,status,52,,Sharply raises the user's DEFENSE.,defense,2,Raises the user's Defense by two stages.
-152,crabhammer,Water,100,10,90,0,Slelected Pokemon,physical,44,,Has a high critical hit ratio.,,,Has an increased chance for a critical hit.
+152,crabhammer,Water,100,10,90,0,Selected Pokemon,physical,44,,Has a high critical hit ratio.,,,Has an increased chance for a critical hit.
 153,explosion,Normal,250,5,100,0,All other Pokemon,physical,8,,Very powerful but makes user faint.,,,User faints.
-154,fury-swipes,Normal,18,15,80,0,Slelected Pokemon,physical,30,,Quickly scratches 2-5 times.,,,Hits 2-5 times in one turn.
-155,bonemerang,Ground,50,10,90,0,Slelected Pokemon,physical,45,,An attack that strikes twice.,,,Hits twice in one turn.
+154,fury-swipes,Normal,18,15,80,0,Selected Pokemon,physical,30,,Quickly scratches 2-5 times.,,,Hits 2-5 times in one turn.
+155,bonemerang,Ground,50,10,90,0,Selected Pokemon,physical,45,,An attack that strikes twice.,,,Hits twice in one turn.
 156,rest,Psychic,,10,,0,User,status,38,,Sleep for 2 turns to fully recover.,,,"User sleeps for two turns, , completely healing itself."
 157,rock-slide,Rock,75,10,90,0,All opponents,physical,32,30,An attack that may cause flinching.,,,Has a $effect_chance% chance to make the target flinch.
-158,hyper-fang,Normal,80,15,90,0,Slelected Pokemon,physical,32,10,An attack that may cause flinching.,,,Has a $effect_chance% chance to make the target flinch.
+158,hyper-fang,Normal,80,15,90,0,Selected Pokemon,physical,32,10,An attack that may cause flinching.,,,Has a $effect_chance% chance to make the target flinch.
 159,sharpen,Normal,,30,,0,User,status,11,,A move that raises the user's ATTACK.,attack,1,Raises the user's Attack by one stage.
 160,conversion,Normal,,30,,0,User,status,31,,Change user's type to a move's type.,,,User's type changes to the type of one of its moves at random.
-161,tri-attack,Normal,80,10,100,0,Slelected Pokemon,special,37,20,Fires three kinds of beams at once.,,,"""Has a $effect_chance% chance to [burn]{mechanic:burn}"
-162,super-fang,Normal,,10,90,0,Slelected Pokemon,physical,41,,Cuts the foe's HP by 1/2.,,,Inflicts damage equal to half the target's HP.
-163,slash,Normal,70,20,100,0,Slelected Pokemon,physical,44,,Has a high critical hit ratio.,,,Has an increased chance for a critical hit.
+161,tri-attack,Normal,80,10,100,0,Selected Pokemon,special,37,20,Fires three kinds of beams at once.,,,"""Has a $effect_chance% chance to [burn]{mechanic:burn}"
+162,super-fang,Normal,,10,90,0,Selected Pokemon,physical,41,,Cuts the foe's HP by 1/2.,,,Inflicts damage equal to half the target's HP.
+163,slash,Normal,70,20,100,0,Selected Pokemon,physical,44,,Has a high critical hit ratio.,,,Has an increased chance for a critical hit.
 164,substitute,Normal,,10,,0,User,status,80,,Makes a decoy with 1/4 user's max HP.,,,"Transfers 1/4 of the user's max HP into a doll, protecting the user from further damage or status changes until it breaks."
