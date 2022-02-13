@@ -1,13 +1,8 @@
 #welcome {
-    background-color: var(--blue) !important;
-    width: 100vw;
-    height: 100vh;
-    color: var(--light);
     text-align: center;
     display: flex;
     align-items: center;
     flex-direction: column;
-    overflow: hidden;
     background-image: url('../../img/items/pokestop.png');
     background-size: cover;
     background-repeat: no-repeat;
@@ -49,7 +44,7 @@ h3 {
     margin-bottom: 3em !important;
 }
 
-button {
+#login-button button {
     background-color: var(--yellow);
     padding: .5em;
     border: none;
@@ -62,7 +57,7 @@ button {
 
 }
 
-button:hover {
+#login-button button:hover {
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
     transform: scale(1.1);
 }

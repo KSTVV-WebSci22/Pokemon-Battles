@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 const Home = () => {
     return ( 
-        <div id="welcome">
+        <div id="welcome" className='full-screen'>
             <div id="intro">
                 <h3>Welcome to</h3>
                 <img src={pokemon} alt="" />

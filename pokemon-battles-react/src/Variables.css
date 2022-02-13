@@ -2,11 +2,34 @@
     --blue: #2a3050;
     --lightblue: #007BE2;
     --light: #FFFFFF;
-    --dark: #000000;
+    --black: #000000;
+    --gray: #4a4a4a;
     --yellow: #FEC902;
     --pokemon: 'pokemon', sans-serif;
     --classic: 'classic', sans-serif;
-    --museo: 'museo-sans', sans-serif;
+    --museo: 'museo', sans-serif;
+    --danger: #DD1E24;
+
+    /* Pokemon Power Colors */
+    --bug: #3B9950;
+    --dark: #5A5979;
+    --dragon: #61CAD7;
+    --electric: #b1b12b;
+    --fairy: #EA1369;
+    --fighting: #EF6138;
+    --fire: #FD4B5A;
+    --flying: #6F808E;
+    --ghost: #906790;
+    --grass: #28C950;
+    --ground: #6E491F;
+    --ice: #BEE7F5;
+    --normal: #C899A7;
+    --poision: #9B69D9;
+    --psychic: #F81C91;
+    --rock: #8B3E21;
+    --steal: #43BD94;
+    --water: #86A8FC;
+
 }
 
 
@@ -23,4 +46,17 @@
 }
 
 
+@font-face {
+    font-family: 'museo';
+    src: url('./fonts/MuseoSans.otf') format("opentype");
+    font-weight: normal;
+}
 
+
+.full-screen {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: var(--blue) !important;
+    color: var(--light);
+}
