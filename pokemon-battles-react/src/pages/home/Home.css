@@ -1,4 +1,4 @@
-#welcome {
+#home {
     text-align: center;
     display: flex;
     align-items: center;
@@ -11,7 +11,7 @@
     text-shadow: -1px 2px 3px #3d3d3d6b, 0px 0px;
 }
 
-#welcome > img {
+#home > img {
     height: auto;
     max-height: 250px;
 }
@@ -22,6 +22,10 @@ h2 {
 
 #intro {
     font-weight: bold;
+}
+
+#login-button a {
+    color: var(--dark) !important;
 }
 
 #intro h2 {
@@ -40,23 +44,6 @@ h3 {
     padding: 1em;
 }
 
-#login-button {
-    margin-bottom: 3em !important;
-}
-
-#login-button button {
-    background-color: var(--yellow);
-    padding: .5em;
-    border: none;
-    border-radius: 10px !important;
-    font-weight: bold;
-    font-family: var(--classic) !important;
-    margin-bottom: 1em !important;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
-    transition: all ease-in-out .2s;
-
-}
-
 #login-button button:hover {
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
     transform: scale(1.1);
@@ -70,3 +57,27 @@ h3 {
 #login:hover {
     color: var(--lightblue);
 }
+
+#disclaimer {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 80vw;
+    max-width: 400px;
+    background-color: black;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+#disclaimer h3 {
+    color: var(--yellow);
+    font-family: var(--pokemon);
+}
+
+input {
+    background-color: var(--dark) !important;
+}
+
+
