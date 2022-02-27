@@ -140,12 +140,12 @@ const Battle = () => {
 
             {pokemon && 
                 <div id="battle-options" className='battle-bottom'>
-                    <button className="pokemon-select">1</button>
-                    <button className="pokemon-select">2</button>
-                    <button className="pokemon-select">3</button>
-                    <button className="pokemon-select">4</button> 
-                    <button className="pokemon-select">5</button> 
-                    <button className="pokemon-select">6</button> 
+                    {
+                        [1,2,3,4,5,6].map((item)=>{
+                            return <button className="pokemon-select">{item}</button>
+                        })
+                    }
+                    
                     <button 
                         className="pokemon-select"
                         onClick={()=>{setPokemon(false)}}

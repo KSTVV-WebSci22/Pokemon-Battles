@@ -25,7 +25,6 @@ const Moves = ({url}) => {
     return ( 
         <>
             {move.type && 
-            
                 <button className="moves shadow">
                     <div className="move-name">{move.name}</div>
                     <div 
@@ -36,10 +35,9 @@ const Moves = ({url}) => {
                         <div>{move.pp}/{move.pp}</div>
                     </div>
                 </button>
-        
             }
         </>
-     );
+     ); 
 }
  
 export default Moves;
