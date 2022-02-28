@@ -24,11 +24,11 @@ const Welcome = () => {
       <img src={pokeball} alt="pokeball"/> 
       Random Match
     </Link>
-    <div id="friends" className='menu-item'>
+    <Link to='/friends' id="friends-link" className='menu-item'>
       <img src={pikachu} alt="pikachu"/> 
       <img src={pikachu} alt="pikachu"/> 
       Friends
-    </div>
+    </Link>
     <div id="top-players" className='menu-item'>
       <img src={fist} alt="phone"/> 
       <img src={fist} alt="phone"/> 
