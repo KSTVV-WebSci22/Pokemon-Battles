@@ -1,6 +1,7 @@
 import './Welcome.css'
 import pikachu from './pikachu.png'
 import pokeball from './pokeball.png'
+import shopImg from './shop.png'
 import phone from './phone.png'
 import fist from './fist.png'
 import Sound from 'react-sound'
@@ -33,6 +34,11 @@ const Welcome = () => {
       <img src={fist} alt="phone"/> 
       <img src={fist} alt="phone"/> 
       Top Players
+    </div>
+    <div id="shop" className='menu-item'>
+      <img src={shopImg} alt="phone"/> 
+      <img src={shopImg} alt="phone"/> 
+      Shop
     </div>
     <div id="settings" className='menu-item'>
       <img src={phone} alt="phone"/> 
