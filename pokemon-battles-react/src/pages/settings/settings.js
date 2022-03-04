@@ -1,13 +1,17 @@
 import { useState, useEffect, useRef, useContext } from 'react';
 import './settings.css'
-import fist from '../welcome/fist.png'
-import ash from '../../img/people/ashketchum.png'
-import { FloatingLabel, Form, Card} from 'react-bootstrap'
+import { Card} from 'react-bootstrap'
 import { ClientContext } from '../../context/ClientContext';
-
+import RangeSlider from 'react-bootstrap-range-slider';
 
 const Settings = () => {
     const{mute,setMute} = useContext(ClientContext);
+   
+    const [ value, setValue ] = useState(0);
+    
+  const onChange = (e) => {
+    setValue(e.target.value);
+  }
     return (
 <div id ="set" className='full-screen'>
  <Card className="card bg-transparent text-white mb-3" >
@@ -15,8 +19,8 @@ const Settings = () => {
        <h1 className="title">SETTINGS</h1>   
     </div>
     <div className="card-body">
-    <div className="divider">
-    <p>Music</p>
+     <div className="divider">
+     <p>Music</p>
         {mute?  
          <button 
             className="music" 
@@ -31,7 +35,14 @@ const Settings = () => {
          >Off</button>
         }
       </div>
-    </div>
+      <div class="divider">
+         <p id="volume">Volume</p>
+         <RangeSlider value={value} id="vol-slider" min={0} max={100} onChange={onChange} tooltip='auto' />
+      </div>
+     </div>
+     <div class="card-footer">
+        <button class="music" id="logout">Log Out</button>
+      </div>
   </Card>
 </div>
      );
