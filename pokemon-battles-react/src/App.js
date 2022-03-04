@@ -6,7 +6,8 @@ import Battle from './pages/battle/Battle';
 import Welcome from './pages/welcome/Welcome';
 import Players from './pages/players/players';
 import Party from './pages/party/party';
-import Friends from './pages/friends/Friends'
+import Friends from './pages/friends/Friends';
+import Shop from './pages/shop/Shop';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path='/players' element={<Players/>} />
         <Route path='/party' element={<Party/>} />
         <Route path='/friends' element={<Friends/>} />
+        <Route path='/shop' element={<Shop/>} />
       </Routes>
     </Router>
   );

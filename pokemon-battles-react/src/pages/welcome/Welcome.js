@@ -40,6 +40,11 @@ const Welcome = () => {
       <img src={fist} alt="fist"/> 
       Top Players
     </Link>
+    <Link to='/shop' id="shop-link" className='menu-item'>
+      <img src={shopImg} alt="shop"/> 
+      <img src={shopImg} alt="shop"/> 
+      Shop
+    </Link>
     <div id="settings" className='menu-item'>
       <img src={phone} alt="phone"/> 
       <img src={phone} alt="phone"/> 
