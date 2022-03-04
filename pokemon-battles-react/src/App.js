@@ -24,26 +24,28 @@ function App() {
       mute, setMute,
       volume, setVolume,
       song, setSong
-    }}
-    >
+    }}>
 
     {/* Sound Manager */}
     <SoundManager song={song}/>
 
-    {/* Routes */}
-    <Router>
-      <Routes>
-        <Route path='/' element={<Home/>} />
-        <Route path='/battle' element={<Battle/>} />
-        <Route path='/welcome' element={<Welcome/>} />
-        <Route path='/players' element={<Players/>} />
-        <Route path='/party' element={<Party/>} />
-        <Route path='/friends' element={<Friends/>} />
-        <Route path='/shop' element={<Shop/>} />
-        <Route path='/settings' element={<Settings/>} />
-      </Routes>
-    </Router>
+    <div className='full-screen'>
+      {/* Routes */}
+      <Router>
+        <Routes>
+          <Route path='/' element={<Home/>} />
+          <Route path='/battle' element={<Battle/>} />
+          <Route path='/welcome' element={<Welcome/>} />
+          <Route path='/players' element={<Players/>} />
+          <Route path='/party' element={<Party/>} />
+          <Route path='/friends' element={<Friends/>} />
+          <Route path='/shop' element={<Shop/>} />
+          <Route path='/settings' element={<Settings/>} />
+        </Routes>
+      </Router>
+    </div>
     </ClientContext.Provider>
+    
   );
 }
 

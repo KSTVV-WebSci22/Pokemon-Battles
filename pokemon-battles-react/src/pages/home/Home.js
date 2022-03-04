@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect, Suspense } from 'react';
 import './Home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import pokemon from '../../img/items/Pokemon3.png';
@@ -6,18 +6,24 @@ import ash from '../../img/people/ashketchum.png';
 import { Link } from 'react-router-dom';
 import { FloatingLabel, Form} from 'react-bootstrap'
 import { ClientContext } from '../../context/ClientContext';
+import Loading from '../../components/Loading';
 
 const Home = () => {
+    // Context
+    const{ setSong } = useContext(ClientContext);
 
     const{ mute, setMute} = useContext(ClientContext);
-
-
     const [disclaimer, setDisclaimer] = useState(true);
     const [login, setLogin] = useState(false);
     const [createAccount, setCreateAccount] = useState(false);
     
+    useEffect(()=>{
+        setSong(1)
+    }, [])
+    
     return ( 
         <div id="home" className='full-screen'>
+            
             { disclaimer ?
             <>
                 <div id="disclaimer">
@@ -26,7 +32,7 @@ const Home = () => {
                     <button 
                         className='sbutton'
                         onClick={()=>{
-                            setMute(!mute)
+                            setMute(true)
                             setDisclaimer(false)
                         }}
                     >I Understand</button>  
@@ -95,6 +101,7 @@ const Home = () => {
                 }
             </>
             }
+            
         </div>    
     );
 }

@@ -3,6 +3,7 @@ import './Battle.css'
 import axios from 'axios'
 import Moves from './components/Moves';
 import { ClientContext } from '../../context/ClientContext';
+import Loading from '../../components/Loading';
 
 const Battle = () => {
 
@@ -11,11 +12,18 @@ const Battle = () => {
     const [pokemons, setPokemons] = useState([])
     const [myPokemons, setMyPokemons] = useState([])
     const signatureRef = useRef(null);
+    const [loading, setLoading] = useState(true)
 
     const{ setSong } = useContext(ClientContext);
 
     useEffect(()=>{
       setSong(3)
+    }, [])
+
+    useEffect(()=>{
+        setTimeout(()=>{
+            setLoading(false)
+        }, 2000)
     }, [])
 
     const getPokemon=(number)=>{
@@ -57,99 +65,103 @@ const Battle = () => {
         getMyPokemon(3)
     }, []);
 
-    return ( <>
+    return ( 
+        <>
+        {loading ?
+            <Loading/>
+            :
+            <div id="battle" className="full-screen">
+                {console.log("test rendering")}
+                {/* Top View */}
+                <div id="battle-view" className='battle-top'>
 
-        <div id="battle" className="full-screen">
-            {console.log("test rendering")}
-            {/* Top View */}
-            <div id="battle-view" className='battle-top'>
-
-                {/* Opponent Players Pokemon */}
-                <div id="opponent-pokemon-box">
-                    <div id="opponent-pokemon">
+                    {/* Opponent Players Pokemon */}
+                    <div id="opponent-pokemon-box">
+                        <div id="opponent-pokemon">
+                            {pokemons[0] && 
+                                <>
+                                <div id="opponent-pokemon-name">
+                                    {pokemons[0].name}
+                                    <span id="opponent-pokemon-stats">Lv. 70</span>
+                                </div>
+                                <div id="opponent-pokemon-health">
+                                    health bar goes here
+                                </div>
+                                </>
+                            }
+                        </div>
+                    </div>
+                    <div id="opponent-pokemon-img">
                         {pokemons[0] && 
-                            <>
-                            <div id="opponent-pokemon-name">
-                                {pokemons[0].name}
-                                <span id="opponent-pokemon-stats">Lv. 70</span>
-                            </div>
-                            <div id="opponent-pokemon-health">
-                                health bar goes here
-                            </div>
-                            </>
+                            <img src={pokemons[0].sprites.front_default} alt="" />
                         }
                     </div>
-                </div>
-                <div id="opponent-pokemon-img">
-                    {pokemons[0] && 
-                        <img src={pokemons[0].sprites.front_default} alt="" />
-                    }
+
+                    {/* Players Pokemon */}
+                    <div id="player-pokemon-img">
+                        {myPokemons[0] && 
+                            <img src={myPokemons[0].sprites.back_default} alt="" />
+                        }
+                    </div>
+                    <div id="player-pokemon-box">
+                        <div id="player-pokemon">
+                            {myPokemons[0] &&
+                                <>
+                                <div id="my-pokemon-name">
+                                    {myPokemons[0].name} 
+                                    <span id="my-pokemon-stats">Lv. 68</span>
+                                </div>
+                                <div id="player-pokemon-health">
+                                    Health bar goes here
+                                </div>
+                                </>
+                            }
+                        </div>
+                    </div>
                 </div>
 
-                {/* Players Pokemon */}
-                <div id="player-pokemon-img">
-                    {myPokemons[0] && 
-                        <img src={myPokemons[0].sprites.back_default} alt="" />
-                    }
-                </div>
-                <div id="player-pokemon-box">
-                    <div id="player-pokemon">
-                        {myPokemons[0] &&
-                            <>
-                            <div id="my-pokemon-name">
-                                {myPokemons[0].name} 
-                                <span id="my-pokemon-stats">Lv. 68</span>
-                            </div>
-                            <div id="player-pokemon-health">
-                                Health bar goes here
-                            </div>
-                            </>
-                        }
+                {/* Battle Menu */}
+                {!battle && !pokemon && 
+                    <div id="battle-buttons" className='battle-bottom'>
+                        <button 
+                            onClick={()=>{setBattle(true)}}
+                            id="move-selection"
+                        >Fight</button>
+                        <button 
+                            id="pokemon-selection"
+                            onClick={()=>{setPokemon(true)}}
+                        >Pokemon</button>
                     </div>
-                </div>
+                }
+
+                {battle && 
+                    <div id="battle-options" className='battle-bottom'>
+                        {myPokemons[0] && myPokemons[0].moves.slice(0,4).map(i => {
+                            return <Moves url={i.move.url}/>
+                        })}
+                        <button 
+                            className="moves cancel shadow"
+                            onClick={()=>{setBattle(false)}}
+                        ><div>Cancel</div></button> 
+                    </div>   
+                }
+
+                {pokemon && 
+                    <div id="battle-options" className='battle-bottom'>
+                        {
+                            [1,2,3,4,5,6].map((item)=>{
+                                return <button className="pokemon-select">{item}</button>
+                            })
+                        }
+                        
+                        <button 
+                            className="pokemon-select"
+                            onClick={()=>{setPokemon(false)}}
+                        ><span>Cancel</span></button> 
+                    </div>   
+                }
             </div>
-
-            {/* Battle Menu */}
-            {!battle && !pokemon && 
-                <div id="battle-buttons" className='battle-bottom'>
-                    <button 
-                        onClick={()=>{setBattle(true)}}
-                        id="move-selection"
-                    >Fight</button>
-                    <button 
-                        id="pokemon-selection"
-                        onClick={()=>{setPokemon(true)}}
-                    >Pokemon</button>
-                </div>
-            }
-
-            {battle && 
-                <div id="battle-options" className='battle-bottom'>
-                    {myPokemons[0] && myPokemons[0].moves.slice(0,4).map(i => {
-                        return <Moves url={i.move.url}/>
-                    })}
-                    <button 
-                        className="moves cancel shadow"
-                        onClick={()=>{setBattle(false)}}
-                    ><div>Cancel</div></button> 
-                </div>   
-            }
-
-            {pokemon && 
-                <div id="battle-options" className='battle-bottom'>
-                    {
-                        [1,2,3,4,5,6].map((item)=>{
-                            return <button className="pokemon-select">{item}</button>
-                        })
-                    }
-                    
-                    <button 
-                        className="pokemon-select"
-                        onClick={()=>{setPokemon(false)}}
-                    ><span>Cancel</span></button> 
-                </div>   
-            }
-        </div>
+        }
         </>
      );
 }

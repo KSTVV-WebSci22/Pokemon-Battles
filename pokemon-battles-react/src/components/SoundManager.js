@@ -38,6 +38,7 @@ const SoundManager = ({song}) => {
         url={currentSong}
         playStatus={ mute ? Sound.status.PLAYING : Sound.status.STOPPED}
         volume={volume}
+        loop={true}
     />
     }
   </>);

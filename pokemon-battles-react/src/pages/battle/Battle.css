@@ -33,7 +33,7 @@
     grid-template-rows: 1fr 1fr;
 }
 
-/* opponent */
+/* opponent boxes */
 #opponent-pokemon-box {
     grid-row: 1 / 2;
     grid-column: 1 / 2;
@@ -46,7 +46,7 @@
     grid-column: 2 / 3;
 }
 
-
+/* Pokemons */
 #opponent-pokemon, #player-pokemon {
     background-color: var(--gray);
     padding: 10px;
@@ -57,13 +57,33 @@
 }
 
 #opponent-pokemon-img, #player-pokemon-img {
-    position: relative
+    position: relative;
 }
 
-#opponent-pokemon-img img, #player-pokemon-img img {
+#opponent-pokemon-img img, 
+#player-pokemon-img img {
     position: absolute;
     width: 100%;
 }
+
+#opponent-pokemon-img img {
+    animation: 2s slide-right forwards;
+}
+
+#player-pokemon-img img {
+    animation: 2s slide-left forwards;
+}
+
+@keyframes slide-right {
+    from {transform: translateX(100%)}
+    to {transform: translateX(0)}
+}
+
+@keyframes slide-left {
+    from {transform: translateX(-100%)}
+    to {transform: translateX(0)}
+}
+
 
 #player-pokemon {
     position: absolute;
