@@ -45,11 +45,11 @@ const Welcome = () => {
       <img src={shopImg} alt="shop"/> 
       Shop
     </Link>
-    <div id="settings" className='menu-item'>
+    <Link to='/settings' id="settings" className='menu-item'>
       <img src={phone} alt="phone"/> 
       <img src={phone} alt="phone"/> 
       Settings
-    </div>
+    </Link>
   </div>
   
   );

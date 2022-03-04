@@ -20,6 +20,7 @@ function App() {
         <Route path='/party' element={<Party/>} />
         <Route path='/friends' element={<Friends/>} />
         <Route path='/shop' element={<Shop/>} />
+        <Route path='/settings' element={<Settings/>} />
       </Routes>
     </Router>
   );
