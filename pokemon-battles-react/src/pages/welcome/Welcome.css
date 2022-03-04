@@ -76,26 +76,28 @@ h3 {
   grid-column: 1 / 3;
 }
 
-#top-players {
-  background-color: var(--dragon);
-  grid-row: 5 / 6;
-  grid-column: 2 / 3;
-}
-
 #friends-link {
   background-color: var(--water);
   grid-row: 5 / 6;
   grid-column: 1 / 2;
 }
 
-#settings {
-  background-color: var(--fire);
-  grid-row: 6 / 7;
-  grid-column: 1 / 3;
+
+#top-players {
+  background-color: var(--dragon);
+  grid-row: 5 / 6;
+  grid-column: 2 / 3;
 }
 
+
 #shop-link {
-  background-color: var(--electric);
-  grid-row: 5 / 6;
+  background-color: var(--fighting);
+  grid-row: 6 / 7;
   grid-column: 1 / 3;
 } 
+
+#settings {
+  background-color: var(--fire);
+  grid-row: 7 / 8;
+  grid-column: 1 / 3;
+}

@@ -6,6 +6,7 @@ import fist from './fist.png'
 import gym from '../../img/items/gym.png'
 import Sound from 'react-sound'
 import Music from '../../sounds/music/welcome.mp3'
+import shopImg from './shop.png'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 

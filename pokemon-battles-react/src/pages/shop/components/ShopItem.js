@@ -50,7 +50,7 @@ const ShopItem = ({itemUrl}) => {
 						}
 					}
 				>
-					19.99
+					100
 				</Button>
 			</Card>
 		}
