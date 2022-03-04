@@ -5,18 +5,18 @@ import phone from './phone.png'
 import fist from './fist.png'
 import Sound from 'react-sound'
 import Music from '../../sounds/music/welcome.mp3'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
+import { ClientContext } from '../../context/ClientContext'
 
 const Welcome = () => {
-  const [isPlaying, setIsPlaying] = useState(true);
-
+  const{mute,setMute} = useContext(ClientContext);
   return (
 
   <div id="welcome" className="full-screen">
     <Sound 
       url={Music}
-      playStatus={ isPlaying ? Sound.status.PLAYING : Sound.status.STOPPED}
+      playStatus={ mute ? Sound.status.PLAYING : Sound.status.STOPPED}
     />
     <h3>Welcome back Player!</h3>
     <Link to='/battle' id="find-match" className='menu-item'>
@@ -34,11 +34,11 @@ const Welcome = () => {
       <img src={fist} alt="phone"/> 
       Top Players
     </div>
-    <div id="settings" className='menu-item'>
+    <Link to='/settings' id="settings" className='menu-item'>
       <img src={phone} alt="phone"/> 
       <img src={phone} alt="phone"/> 
       Settings
-    </div>
+    </Link>
   </div>
   
   );
