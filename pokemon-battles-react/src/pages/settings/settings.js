@@ -50,7 +50,7 @@ const Settings = () => {
       </div>
      </div>
      <div class="card-footer">
-        <Link to ='../../pages/home' class="music" id="logout">LOGOUT</Link>
+        <Link to ='/' class="music" id="logout">LOGOUT</Link>
       </div>
   </Card>
 </div>
