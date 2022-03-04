@@ -4,6 +4,8 @@ import { Card} from 'react-bootstrap'
 import { ClientContext } from '../../context/ClientContext';
 import RangeSlider from 'react-bootstrap-range-slider';
 import { Link } from 'react-router-dom';
+import ball from '../../img/items/pokemonball.png';
+
 
 const Settings = () => {
     const{mute,setMute} = useContext(ClientContext);
@@ -49,6 +51,7 @@ const Settings = () => {
          <input type="text" id="username" maxlength="255" placeholder="Password"></input>
       </div>
      </div>
+     <img id="ball" src={ball} alt="p-ball"/>
      <div class="card-footer">
         <Link to ='/' class="music" id="logout">LOGOUT</Link>
       </div>
