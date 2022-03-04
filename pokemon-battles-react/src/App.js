@@ -6,7 +6,7 @@ import Battle from './pages/battle/Battle';
 import Welcome from './pages/welcome/Welcome';
 import Players from './pages/players/players';
 import Party from './pages/party/party';
-import Friends from './pages/friends/Friends';
+import Friends from './pages/friends/Friends'
 
 function App() {
   return (
