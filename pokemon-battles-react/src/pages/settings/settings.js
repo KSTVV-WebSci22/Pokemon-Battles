@@ -3,6 +3,7 @@ import './settings.css'
 import { Card} from 'react-bootstrap'
 import { ClientContext } from '../../context/ClientContext';
 import RangeSlider from 'react-bootstrap-range-slider';
+import { Link } from 'react-router-dom';
 
 const Settings = () => {
     const{mute,setMute} = useContext(ClientContext);
@@ -39,9 +40,17 @@ const Settings = () => {
          <p id="volume">Volume</p>
          <RangeSlider value={value} id="vol-slider" min={0} max={100} onChange={onChange} tooltip='auto' />
       </div>
+      <div>
+         <p>Update Username</p>
+        <input type="text" id="password" maxlength="255" placeholder="Username"></input>
+      </div>
+      <div>
+         <p>Change Passwod</p>
+         <input type="text" id="username" maxlength="255" placeholder="Password"></input>
+      </div>
      </div>
      <div class="card-footer">
-        <button class="music" id="logout">Log Out</button>
+        <Link to ='../../pages/home' class="music" id="logout">LOGOUT</Link>
       </div>
   </Card>
 </div>

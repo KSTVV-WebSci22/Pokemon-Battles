@@ -87,6 +87,7 @@ p{
     margin-top: 10px;
     transition: all 0.3s ease 0s;
     box-shadow: rgb(13, 15, 17) 0px 20px 20px -10px; 
+    
 }
 
 #vol-slider{
@@ -98,3 +99,36 @@ p{
    #logout{
        background-color: red;
    }
+
+
+  input {
+    color: var(--water);
+    background-color: aliceblue;
+    border: none;
+    height: 40px;
+    width: 70%;
+    border-radius: 6px;
+    transition: all 0.3s ease 0s;
+  }
+  
+  input::placeholder {
+    color: var(--water);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bolder;
+  }
+  
+  input:hover {
+
+    box-shadow: rgb(7, 116, 233) 0px 20px 20px -10px;
+  }
+  
+  /*style the input boxes */
+  input[type=text], select {
+    color: white;
+    margin: 3px 0;
+    display: inline-block;
+    border: none;
+    outline: none;
+  }
+  
+ 
