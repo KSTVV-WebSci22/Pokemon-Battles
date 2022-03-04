@@ -88,7 +88,7 @@ h3 {
   grid-column: 1 / 3;
 }
 
-#shop {
+#shop-link {
   background-color: var(--electric);
   grid-row: 5 / 6;
   grid-column: 1 / 3;

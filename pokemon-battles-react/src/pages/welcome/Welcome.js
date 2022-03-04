@@ -35,11 +35,11 @@ const Welcome = () => {
       <img src={fist} alt="phone"/> 
       Top Players
     </div>
-    <div id="shop" className='menu-item'>
-      <img src={shopImg} alt="phone"/> 
-      <img src={shopImg} alt="phone"/> 
+    <Link to='/shop' id="shop-link" className='menu-item'>
+      <img src={shopImg} alt="shop"/> 
+      <img src={shopImg} alt="shop"/> 
       Shop
-    </div>
+    </Link>
     <div id="settings" className='menu-item'>
       <img src={phone} alt="phone"/> 
       <img src={phone} alt="phone"/> 

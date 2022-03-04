@@ -1,0 +1,14 @@
+.shop-item {
+  /* width: calc(50%); */
+	/* width: 10rem;
+  height: 10rem; */
+  margin-bottom: 1rem;
+  border-radius: 4px;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  text-transform: capitalize;
+  background-color: rgba(1, 1, 1, 0.295);
+  height: 300px;
+  flex-direction: column;
+}
