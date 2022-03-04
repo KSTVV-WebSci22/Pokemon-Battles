@@ -30,11 +30,11 @@ const Welcome = () => {
       <img src={gym} alt="gym"/> 
       Party
     </Link>
-    <div id="friends" className='menu-item'>
+    <Link to='/friends' id="friends-link" className='menu-item'>
       <img src={pikachu} alt="pikachu"/> 
       <img src={pikachu} alt="pikachu"/> 
       Friends
-    </div>
+    </Link>
     <Link to='/players' id="top-players" className='menu-item'>
       <img src={fist} alt="fist"/> 
       <img src={fist} alt="fist"/> 

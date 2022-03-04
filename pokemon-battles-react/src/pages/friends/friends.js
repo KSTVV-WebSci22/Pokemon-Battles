@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
-import './friends.css'
+import './Friends.css'
 import fist from '../welcome/fist.png'
 import ash from '../../img/people/ashketchum.png'
-import add from './add.png'
-import cancel from './cancel.png'
+import add from '../../img/components/add.png'
+import cancel from '../../img/components/cancel.png'
 import { FloatingLabel, Form} from 'react-bootstrap'
 
 const Friends = () => {

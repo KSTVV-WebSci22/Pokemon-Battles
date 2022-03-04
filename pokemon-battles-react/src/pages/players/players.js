@@ -2,8 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import './players.css'
 import fist from '../welcome/fist.png'
 import ash from '../../img/people/ashketchum.png'
-import cancel from '../../img/items/cancel.png'
-import add from '../../img/items/add.png'
+import cancel from '../../img/components/cancel.png'
+import add from '../../img/components/add.png'
 
 import { FloatingLabel, Form} from 'react-bootstrap'
 
