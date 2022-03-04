@@ -33,6 +33,7 @@ import { HomeComponent } from './home/home.component';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { BattlesComponent } from './game/battles/battles.component';
 
 
 const routes: Routes = [
@@ -52,7 +53,8 @@ const routes: Routes = [
     HomeComponent,
     SignupComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    BattlesComponent
   ],
   imports: [
     BrowserModule,

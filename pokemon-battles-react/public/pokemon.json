@@ -1,0 +1,74 @@
+{
+    "pokemon": [
+        {
+            "name": "Mew",
+            "level": 15,
+            "types": [
+                {
+                    "type": "dark"
+                }
+            ],  
+            "moves":[
+                {
+                    "name": "move1",
+                    "type": "normal",
+                    "powerLeft": "10",
+                    "power": "15"
+                }, 
+                {
+                    "name": "move2",
+                    "type": "dark",
+                    "powerLeft": "8",
+                    "power": "10"
+                }, 
+                {
+                    "name": "move3",
+                    "type": "fairy",
+                    "powerLeft": "15",
+                    "power": "15"
+                }, 
+                {
+                    "name": "move4",
+                    "type": "ground",
+                    "powerLeft": "25",
+                    "power": "25"
+                }
+            ] 
+        },
+        {
+            "name": "Mew Two",
+            "level": 15,
+            "types": [
+                {
+                    "type": "dark"
+                }
+            ],  
+            "moves":[
+                {
+                    "name": "move1",
+                    "type": "normal",
+                    "powerLeft": "10",
+                    "power": "15"
+                }, 
+                {
+                    "name": "move2",
+                    "type": "dark",
+                    "powerLeft": "8",
+                    "power": "10"
+                }, 
+                {
+                    "name": "move3",
+                    "type": "fairy",
+                    "powerLeft": "15",
+                    "power": "15"
+                }, 
+                {
+                    "name": "move4",
+                    "type": "ground",
+                    "powerLeft": "25",
+                    "power": "25"
+                }
+            ] 
+        }
+    ]
+}

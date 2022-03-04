@@ -1,0 +1,195 @@
+#battle {
+    background-color: var(--blue);
+    width: 100vw;
+    height: 100vh; 
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+
+.battle-top {
+    grid-row: 1 / 2;
+    grid-column: 1 / 3;
+    padding: 10px;
+}
+
+.battle-bottom {
+    grid-row: 2 / 3;
+    grid-column: 1 / 3;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+/* Battle View */
+#battle-view {
+    background-image: url('../../img/pokemon-battle-bg.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+
+/* opponent */
+#opponent-pokemon-box {
+    grid-row: 1 / 2;
+    grid-column: 1 / 2;
+    position: relative;
+}
+
+#player-pokemon-box {
+    position: relative;
+    grid-row: 2 / 3;
+    grid-column: 2 / 3;
+}
+
+
+#opponent-pokemon, #player-pokemon {
+    background-color: var(--gray);
+    padding: 10px;
+    border-radius: 10px;
+    width: 100%;
+    text-transform: capitalize;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+#opponent-pokemon-img, #player-pokemon-img {
+    position: relative
+}
+
+#opponent-pokemon-img img, #player-pokemon-img img {
+    position: absolute;
+    width: 100%;
+}
+
+#player-pokemon {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+#my-pokemon-stats, #opponent-pokemon-stats {
+    float: right;
+}
+
+/* Battle Buttons */
+#battle-buttons button{
+    border: none;
+    margin: 10px;
+    border-radius: 5px;
+    font-size: 2rem;
+}
+
+#battle-buttons button:nth-child(1){
+    background-color: Red;
+    height: 75%;
+}
+
+#battle-buttons button:nth-child(2){
+    background-color: var(--yellow);
+    height: 25%;
+}
+
+/* Fight Buttons */
+.moves {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    margin: 6px;
+    border: none;    
+}
+
+.moves > div {
+    width: 100%;
+    height: 100%;
+    text-align: left;
+}
+
+.move-info, .move-name {
+    display: flex;
+    align-items: center;
+    font-size: .9em;
+    position: relative;
+}
+
+.move-name {
+    padding-left: 10px;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.move-info::before {
+    content: '';
+    background: linear-gradient(
+        rgba(0, 0, 0, 0.35),
+        rgba(255, 0, 0, 0)
+    );
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.move-info > div {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: var(--light);
+    padding-left: 1rem;
+}
+
+
+.move-info > div:nth-child(2) {
+    justify-content: center;
+    background-color: var(--gray);
+    clip-path: polygon(33% 0, 100% 0, 100% 100%, 0% 100%);
+    border: 2px var(--gray) solid;
+}
+
+.move-info > div:nth-child(2)::before {
+    content: '';
+    background: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 1),
+        rgba(0, 0, 0, 0)
+    );
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#battle-options .cancel{
+    background-color: transparent;
+    position: relative;
+    display: flex;
+    color: white;
+    font-weight: bold;
+}
+
+#battle-options .cancel > div:nth-child(1){
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.1rem;
+    background-color: var(--danger);
+}
+
+
+/* Pokemon Selection */
+.pokemon-select {
+    height: 100%;
+    margin: 3px;
+}
+
+.shadow {
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}

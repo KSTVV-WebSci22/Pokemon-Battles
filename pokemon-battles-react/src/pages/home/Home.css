@@ -1,0 +1,83 @@
+#home {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-image: url('../../img/items/pokestop.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: left;
+    font-family: var(--museo);
+    text-shadow: -1px 2px 3px #3d3d3d6b, 0px 0px;
+}
+
+#home > img {
+    height: auto;
+    max-height: 250px;
+}
+
+h2 {
+    color: var(--yellow);
+}
+
+#intro {
+    font-weight: bold;
+}
+
+#login-button a {
+    color: var(--dark) !important;
+}
+
+#intro h2 {
+    font-family: var(--pokemon);
+    line-height: 1px;
+    font-size: 2em;
+    /* border: 3px solid var(--blue); */
+    text-shadow: -1px 2px 3px #4a4f526b, 0px 0px; 
+}
+
+#intro img {
+    width: 250px;
+}
+
+h3 {
+    padding: 1em;
+}
+
+#login-button button:hover {
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+    transform: scale(1.1);
+}
+
+#login {
+    color: var(--yellow);
+    text-decoration: none;    
+}
+
+#login:hover {
+    color: var(--lightblue);
+}
+
+#disclaimer {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 80vw;
+    max-width: 360px;
+    background-color: black;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+#disclaimer h3 {
+    color: var(--yellow);
+    font-family: var(--pokemon);
+}
+
+input {
+    background-color: var(--dark) !important;
+}
+
+
