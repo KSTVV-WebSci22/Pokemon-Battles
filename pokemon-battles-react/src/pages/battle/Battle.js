@@ -1,18 +1,22 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
 import './Battle.css'
 import axios from 'axios'
 import Moves from './components/Moves';
-import Sound from 'react-sound'
-import Music from '../../sounds/music/battle.mp3'
+import { ClientContext } from '../../context/ClientContext';
 
 const Battle = () => {
 
     const [battle, setBattle] = useState(false)
     const [pokemon, setPokemon] = useState(false)
-    const [isPlaying, setIsPlaying] = useState(true);
     const [pokemons, setPokemons] = useState([])
     const [myPokemons, setMyPokemons] = useState([])
     const signatureRef = useRef(null);
+
+    const{ setSong } = useContext(ClientContext);
+
+    useEffect(()=>{
+      setSong(3)
+    }, [])
 
     const getPokemon=(number)=>{
         axios.get('https://pokeapi.co/api/v2/pokemon/' + number)
@@ -57,13 +61,6 @@ const Battle = () => {
 
         <div id="battle" className="full-screen">
             {console.log("test rendering")}
-            {/* <Sound 
-                ref={signatureRef}
-                url={Music}
-                playStatus={Sound.status.PLAYING}
-                playFromPosition={2000}
-            /> */}
-
             {/* Top View */}
             <div id="battle-view" className='battle-top'>
 

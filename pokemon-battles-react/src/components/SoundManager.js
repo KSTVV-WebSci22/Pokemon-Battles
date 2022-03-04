@@ -1,6 +1,7 @@
 import Sound from 'react-sound'
 import TitleScreen from '../sounds/music/titleScreen.mp3'
 import WelcomeMusic from '../sounds/music/welcome.mp3'
+import BattleMusic from '../sounds/music/battle.mp3'
 import { ClientContext } from '../context/ClientContext';
 import { useContext, useEffect, useState } from 'react';
 
@@ -13,21 +14,19 @@ const SoundManager = ({song}) => {
   useEffect(()=>{
     switch(song){
       case 1: 
-        // stopMusic()
         setCurrentSong(TitleScreen)
-        // setMute(true)
         break
       
       case 2: 
-        // stopMusic()
         setCurrentSong(WelcomeMusic)
-        // setMute(true)
+        break
+
+      case 3: 
+        setCurrentSong(BattleMusic)
         break
 
       default:
-        // setMute(false)
         setCurrentSong(TitleScreen)
-        // setMute(true)
         break
     }
   }, [song])
