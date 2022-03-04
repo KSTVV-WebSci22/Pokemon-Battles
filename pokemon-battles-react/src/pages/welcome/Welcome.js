@@ -1,9 +1,9 @@
 import './Welcome.css'
 import pikachu from './pikachu.png'
 import pokeball from './pokeball.png'
-import shopImg from './shop.png'
 import phone from './phone.png'
 import fist from './fist.png'
+import gym from '../../img/items/gym.png'
 import Sound from 'react-sound'
 import Music from '../../sounds/music/welcome.mp3'
 import { useState } from 'react'
@@ -25,16 +25,21 @@ const Welcome = () => {
       <img src={pokeball} alt="pokeball"/> 
       Random Match
     </Link>
+    <Link to='/party' id="partymenu" className='menu-item'>
+      <img src={gym} alt="pikachu"/> 
+      <img src={gym} alt="gym"/> 
+      Party
+    </Link>
     <Link to='/friends' id="friends-link" className='menu-item'>
       <img src={pikachu} alt="pikachu"/> 
       <img src={pikachu} alt="pikachu"/> 
       Friends
     </Link>
-    <div id="top-players" className='menu-item'>
-      <img src={fist} alt="phone"/> 
-      <img src={fist} alt="phone"/> 
+    <Link to='/players' id="top-players" className='menu-item'>
+      <img src={fist} alt="fist"/> 
+      <img src={fist} alt="fist"/> 
       Top Players
-    </div>
+    </Link>
     <Link to='/shop' id="shop-link" className='menu-item'>
       <img src={shopImg} alt="shop"/> 
       <img src={shopImg} alt="shop"/> 
