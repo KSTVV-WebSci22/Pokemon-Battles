@@ -14,6 +14,10 @@
   overflow-x: hidden !important;
 }
 
+#shop-row div {
+  margin-bottom: 1rem;
+}
+
 #shop::-webkit-scrollbar {
   display: none;
 }
