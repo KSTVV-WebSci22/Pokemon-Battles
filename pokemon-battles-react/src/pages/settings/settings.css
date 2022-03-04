@@ -106,7 +106,7 @@ p{
     background-color: aliceblue;
     border: none;
     height: 40px;
-    width: 70%;
+    width: 100%;
     border-radius: 6px;
     transition: all 0.3s ease 0s;
   }
@@ -118,7 +118,6 @@ p{
   }
   
   input:hover {
-
     box-shadow: rgb(7, 116, 233) 0px 20px 20px -10px;
   }
   
