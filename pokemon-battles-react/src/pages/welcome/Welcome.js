@@ -4,22 +4,21 @@ import pokeball from './pokeball.png'
 import phone from './phone.png'
 import fist from './fist.png'
 import gym from '../../img/items/gym.png'
-import Sound from 'react-sound'
-import Music from '../../sounds/music/welcome.mp3'
 import shopImg from './shop.png'
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useEffect, useContext } from 'react'
+import { ClientContext } from '../../context/ClientContext'
 
 const Welcome = () => {
-  const [isPlaying, setIsPlaying] = useState(true);
+  const{ setSong } = useContext(ClientContext);
 
+  useEffect(()=>{
+    setSong(2)
+  }, [])
+  
   return (
 
   <div id="welcome" className="full-screen">
-    <Sound 
-      url={Music}
-      playStatus={ isPlaying ? Sound.status.PLAYING : Sound.status.STOPPED}
-    />
     <h3>Welcome back Player!</h3>
     <Link to='/battle' id="find-match" className='menu-item'>
       <img src={pokeball} alt="pokeball"/> 

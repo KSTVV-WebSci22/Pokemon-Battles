@@ -1,27 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './Home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import pokemon from '../../img/items/Pokemon3.png';
 import ash from '../../img/people/ashketchum.png';
 import { Link } from 'react-router-dom';
-import TitleScreen from '../../sounds/music/titleScreen.mp3'
-import Sound from 'react-sound'
 import { FloatingLabel, Form} from 'react-bootstrap'
+import { ClientContext } from '../../context/ClientContext';
 
 const Home = () => {
 
+    const{ mute, setMute} = useContext(ClientContext);
+
+
     const [disclaimer, setDisclaimer] = useState(true);
-    const [isPlaying, setIsPlaying] = useState(false);
     const [login, setLogin] = useState(false);
     const [createAccount, setCreateAccount] = useState(false);
     
     return ( 
         <div id="home" className='full-screen'>
-            <Sound 
-                url={TitleScreen}
-                playStatus={ isPlaying ? Sound.status.PLAYING : Sound.status.STOPPED}
-                // onPlaying={handleSongPlaying}
-            />
             { disclaimer ?
             <>
                 <div id="disclaimer">
@@ -30,7 +26,7 @@ const Home = () => {
                     <button 
                         className='sbutton'
                         onClick={()=>{
-                            setIsPlaying(!isPlaying)
+                            setMute(!mute)
                             setDisclaimer(false)
                         }}
                     >I Understand</button>  

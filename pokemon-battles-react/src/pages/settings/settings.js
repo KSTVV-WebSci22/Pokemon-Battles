@@ -1,18 +1,12 @@
 import { useState, useEffect, useRef, useContext } from 'react';
 import './settings.css'
-import { Card} from 'react-bootstrap'
+import { Card, Form} from 'react-bootstrap'
 import { ClientContext } from '../../context/ClientContext';
-import RangeSlider from 'react-bootstrap-range-slider';
 import { Link } from 'react-router-dom';
 
 const Settings = () => {
-    const{mute,setMute} = useContext(ClientContext);
+    const{ mute, setMute, volume, setVolume} = useContext(ClientContext);
    
-    const [ value, setValue ] = useState(0);
-    
-  const onChange = (e) => {
-    setValue(e.target.value);
-  }
     return (
 <div id ="set" className='full-screen'>
  <Card className="card bg-transparent text-white mb-3" >
@@ -38,7 +32,14 @@ const Settings = () => {
       </div>
       <div class="divider">
          <p id="volume">Volume</p>
-         <RangeSlider value={value} id="vol-slider" min={0} max={100} onChange={onChange} tooltip='auto' />
+         <Form.Range 
+            defaultValue={volume} 
+            id="vol-slider" 
+            min={0} 
+            max={100} 
+            onChange={(e)=>{setVolume(e.target.value)}} 
+            tooltip='auto' 
+         />
       </div>
       <div>
          <p>Update Username</p>
