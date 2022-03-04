@@ -6,7 +6,6 @@ import Battle from './pages/battle/Battle';
 import Welcome from './pages/welcome/Welcome';
 import Players from './pages/players/players';
 import Party from './pages/party/party';
-import Friends from './pages/friends/friends';
 
 function App() {
   return (
@@ -17,7 +16,6 @@ function App() {
         <Route path='/welcome' element={<Welcome/>} />
         <Route path='/players' element={<Players/>} />
         <Route path='/party' element={<Party/>} />
-        <Route path='/friends' element={<Friends/>} />
       </Routes>
     </Router>
   );
