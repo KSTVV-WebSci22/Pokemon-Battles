@@ -45,7 +45,7 @@ const Settings = () => {
         <input type="text" id="password" maxlength="255" placeholder="Username"></input>
       </div>
       <div>
-         <p>Change Passwod</p>
+         <p>Change Password</p>
          <input type="text" id="username" maxlength="255" placeholder="Password"></input>
       </div>
      </div>
