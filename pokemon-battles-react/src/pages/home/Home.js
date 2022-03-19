@@ -21,7 +21,7 @@ const Home = () => {
     }, [])
     
     return ( 
-        <div id="home" className='content'>
+        <div id="home" className='content content-center'>
             <div id="intro">
                 <h3>Welcome to</h3>
                 <img src={pokemon} alt="" />
