@@ -81,6 +81,13 @@
     justify-content: center;
 }
 
+.content-item {
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+    max-width: 1080px;
+}
+
 .sbutton {
     background-color: var(--yellow);
     border: none;

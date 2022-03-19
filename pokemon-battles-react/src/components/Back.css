@@ -1,0 +1,19 @@
+#back {
+    position: fixed;
+    bottom: 1rem;
+    right: calc(50px + 2rem);
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.527);
+    border-radius: 100vw;
+    width: 50px;
+    height: 50px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: .8rem;
+}
+
+#back a {
+    color: var(--light) !important;
+}

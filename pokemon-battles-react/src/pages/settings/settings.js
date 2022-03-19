@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useContext } from 'react';
-import './settings.css'
+// import './settings.css'
 import { Card, Form} from 'react-bootstrap'
 import { ClientContext } from '../../context/ClientContext';
 import { Link } from 'react-router-dom';

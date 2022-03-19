@@ -17,7 +17,7 @@ const Welcome = () => {
   
   return (
   <div className='content'>
-    <div id="welcome">
+    <div id="welcome" className='content-item'>
       <h3>Welcome back Player!</h3>
       <Link to='/battle' id="find-match" className='menu-item'>
         <img src={pokeball} alt="pokeball"/> 
