@@ -17,28 +17,25 @@ const Settings = () => {
     <div className="card-body">
      <div className="divider">
      <p>Music</p>
-        {mute?  
          <button 
-            className="music" 
-            id="music-on"
-            onClick={() => {setMute(!mute)}}
-         >On</button>
-         :
-         <button 
-            className="music" 
-            id="music-off"
-            onClick={() => {setMute(!mute)}}
-         >Off</button>
-        }
+            className={mute ? "music music-on" : "music music-off" }
+            onClick={() => {
+               localStorage.setItem("mute", !mute);
+               setMute(!mute)
+            }}
+         >{mute ? "On" : "Off"}</button>
       </div>
       <div class="divider">
          <p id="volume">Volume</p>
          <Form.Range 
-            defaultValue={volume} 
+            defaultValue={localStorage.getItem("volume")} 
             id="vol-slider" 
             min={0} 
             max={100} 
-            onChange={(e)=>{setVolume(e.target.value)}} 
+            onChange={(e)=>{
+               localStorage.setItem("volume", e.target.value);
+               setVolume(e.target.value)
+            }} 
             tooltip='auto' 
          />
       </div>

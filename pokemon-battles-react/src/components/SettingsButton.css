@@ -1,0 +1,45 @@
+#settings-button {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.527);
+    border-radius: 100vw;
+    width: 50px;
+    height: 50px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#settings-button:hover {
+    transform: scale(1.1) rotate(15deg);
+    cursor: pointer;
+}
+
+#settings-button img{
+    width: 100%;
+}
+
+#settings-menu {
+    transition: all ease .25s;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 99;
+    background-color: var(--blue);
+    border-radius: 10px 0 0 10px;
+}
+
+.modal-dailog {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+}
+
+#settings-menu #vol-slider {
+    /* height: 0 !important; */
+    background-color: transparent !important;
+}

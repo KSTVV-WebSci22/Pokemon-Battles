@@ -1,14 +1,5 @@
 #home {
-    text-align: center;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    background-image: url('../../img/items/pokestop.png');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: left;
-    font-family: var(--museo);
-    text-shadow: -1px 2px 3px #3d3d3d6b, 0px 0px;
+
 }
 
 #home > img {
@@ -64,11 +55,12 @@ h3 {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    width: 80vw;
+    width: 100%;
     max-width: 360px;
     background-color: black;
     padding: 10px;
     border-radius: 10px;
+    position: relative;
 }
 
 #disclaimer h3 {

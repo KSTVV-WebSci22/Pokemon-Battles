@@ -41,8 +41,6 @@ color:black;
     
 }
 
-
-
 p{
     font-size: 40px;
     color:yellow;
@@ -65,13 +63,13 @@ p{
     justify-content: space-between;
 }
 
-#music-on{
-    background-color: rgb(16, 190, 16);
+.music-on {
+    background-color: rgb(16, 190, 16) !important;
 }
 
-#music-off{
-    background-color: red;
-}
+.music-off{
+    background-color: red !important;
+} 
     
 .music:hover{
     box-shadow: var(--electric) 0px 20px 20px -10px;

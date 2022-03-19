@@ -10,10 +10,9 @@ import Loading from '../../components/Loading';
 
 const Home = () => {
     // Context
-    const{ setSong } = useContext(ClientContext);
+    const{ setSong, disclaimer, setDisclaimer } = useContext(ClientContext);
 
-    const{ mute, setMute} = useContext(ClientContext);
-    const [disclaimer, setDisclaimer] = useState(true);
+    const { mute, setMute} = useContext(ClientContext);
     const [login, setLogin] = useState(false);
     const [createAccount, setCreateAccount] = useState(false);
     
@@ -22,86 +21,66 @@ const Home = () => {
     }, [])
     
     return ( 
-        <div id="home" className='full-screen'>
-            
-            { disclaimer ?
-            <>
-                <div id="disclaimer">
-                    <h3>Disclaimer</h3>
-                    All content in this game is property of Pokemon and the Nintendo Corporation.  This game is intended as satire and is does not attempt to take profits in any way.  All rights reserved to pokemon.  Please don't sue me bro.
-                    <button 
-                        className='sbutton'
-                        onClick={()=>{
-                            setMute(true)
-                            setDisclaimer(false)
-                        }}
-                    >I Understand</button>  
-                </div>
-            </>
-            :
-            <>
-                <div id="intro">
-                    <h3>Welcome to</h3>
-                    <img src={pokemon} alt="" />
-                    <h2 className='mb-5'>Battles</h2>
-                </div>
-                {login ? 
+        <div id="home" className='content'>
+            <div id="intro">
+                <h3>Welcome to</h3>
+                <img src={pokemon} alt="" />
+                <h2 className='mb-5'>Battles</h2>
+            </div>
+            {login ? 
+                <>
+                    {/* Welcome Message */}
+                    <h3 className='mt-3'>Welcome Back Trainer!</h3>
+
+                    {/* Input Boxes */}
+                    <FloatingLabel
+                        controlId="floatingInput"
+                        label="Email address"
+                        className="mb-3"
+                    >
+                        <Form.Control type="email" placeholder="name@example.com" />
+                    </FloatingLabel>
+                    <FloatingLabel controlId="floatingPassword" label="Password">
+                        <Form.Control type="password" placeholder="Password" />
+                    </FloatingLabel>
+
+                    {/* Buttons */}
+                    <Link 
+                        to='welcome'
+                        className='sbutton fw-bold mb-3'
+                    >Lets Go!</Link>
+                    <span 
+                        className='fw-bold'
+                        onClick={()=>{setLogin(!login)}}
+                    >Cancel</span>
+                </>
+                : 
+                createAccount ?
+                    <></>
+                    :
                     <>
-                        {/* Welcome Message */}
-                        <h3 className='mt-3'>Welcome Back Trainer!</h3>
-
-                        {/* Input Boxes */}
-                        <FloatingLabel
-                            controlId="floatingInput"
-                            label="Email address"
-                            className="mb-3"
-                        >
-                            <Form.Control type="email" placeholder="name@example.com" />
-                        </FloatingLabel>
-                        <FloatingLabel controlId="floatingPassword" label="Password">
-                            <Form.Control type="password" placeholder="Password" />
-                        </FloatingLabel>
-
-                        {/* Buttons */}
-                        <Link 
-                            to='welcome'
-                            className='sbutton fw-bold mb-3'
-                        >Lets Go!</Link>
-                        <span 
-                            className='fw-bold'
-                            onClick={()=>{setLogin(!login)}}
-                        >Cancel</span>
-                    </>
-                    : 
-                    createAccount ?
-                        <></>
-                        :
-                        <>
-                        <img src={ash} alt="pokeball animation" className='mb-3'/>
-                        <div id="login-button">
-                            <button 
-                                className='sbutton fw-bold mb-3 w-50'
+                    <img src={ash} alt="pokeball animation" className='mb-3'/>
+                    <div id="login-button">
+                        <button 
+                            className='sbutton fw-bold mb-3 w-50'
+                            onClick={()=>{
+                                setLogin(!login)
+                            }} 
+                        >Login!</button><br/>
+                        <small className='mb-5'>
+                            Don't have an account?  
+                            <span 
+                                id="login"
                                 onClick={()=>{
-                                    setLogin(!login)
+                                    setCreateAccount(!createAccount)
                                 }} 
-                            >Login!</button><br/>
-                            <small className='mb-5'>
-                                Don't have an account?  
-                                <span 
-                                    id="login"
-                                    onClick={()=>{
-                                        setCreateAccount(!createAccount)
-                                    }} 
-                                    
-                                > Create an Account</span>
-                            </small>
-                        </div>
-                        </>
-                    
-                }
-            </>
+                                
+                            > Create an Account</span>
+                        </small>
+                    </div>
+                    </>
+                
             }
-            
         </div>    
     );
 }
