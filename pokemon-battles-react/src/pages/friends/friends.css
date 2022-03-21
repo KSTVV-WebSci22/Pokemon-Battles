@@ -4,12 +4,15 @@ button {
 
 #friends {
   font-family: var(--museo);
-  text-shadow: -1px 2px 3px #3d3d3d6b, 0px 0px;
   overflow-y: auto;
   -ms-overflow-style: none;  
   scrollbar-width: none; 
   display: flex;
   flex-direction: column;
+  align-items: center;
+  padding: 0;
+  max-width: 100% !important;
+  margin-top: 1rem;
 }
 
 #friends::-webkit-scrollbar {
@@ -20,13 +23,20 @@ button {
   display: flex;
   flex-direction: column;
   box-shadow: none;
+  width: 100%;
 }
 
 .add-friend-container {
   padding: 1rem;
   top: 0;
   position: sticky;
-  z-index: 5;
+  z-index: 6;
+}
+
+#friends .friends-h, .form-floating, .menu-item:not(.battle-btn) {
+  max-width: 1080px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .menu-item:hover {
@@ -43,6 +53,7 @@ button {
   overflow-y: auto;
   overflow-x: hidden;
   padding: 1rem;
+  padding-bottom: 5rem;
 }
 
 .friends-h {
@@ -130,35 +141,40 @@ button {
 }
 
 .add-friend-div {
-  padding: 1rem;
-}
-
-#friend-input-label label {
-  color: var(--blue);
-  z-index: 6;
+  padding: 1rem !important;
 }
 
 #friend-input {
+  border: none;
+  background-color: white !important; 
+}
+
+.form-floating {
+  width: 100%;
   top: 0;
   position: sticky;
   z-index: 5;
-  border: none;
-  background-color: white !important;
   color: var(--blue);
+}
+
+#friend-results {
+  margin-bottom: 5rem;
+  flex-grow: 1;
+  overflow-y: auto;
 }
 
 #add {
   background-color: var(--grass);
-  position: sticky;
-}
-
-#friend-results {
-  flex-grow: 1;
 }
 
 #cancel-friend {
   background-color: var(--fire);
+}
+
+#friend-foot {
   position: sticky;
+  bottom: 5rem;
+  width: 100%;
 }
 
 

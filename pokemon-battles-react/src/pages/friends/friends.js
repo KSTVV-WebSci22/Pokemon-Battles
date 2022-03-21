@@ -4,7 +4,7 @@ import fist from '../welcome/fist.png'
 import ash from '../../img/people/ashketchum.png'
 import add from '../../img/components/add.png'
 import cancel from '../../img/components/cancel.png'
-import { FloatingLabel, Form} from 'react-bootstrap'
+import Back from '../../components/Back'
 
 const Friends = () => {
     const [friends, setFriends] = useState([
@@ -19,6 +19,7 @@ const Friends = () => {
 
     return (
         <div className='content'>
+            <Back name="Back" to="/welcome" />
             {!addFriend ? 
                 <>
                 <div id="friends" className="content-item">
@@ -57,21 +58,23 @@ const Friends = () => {
                 </div>
                 </>
                 :
-                <div id="friends" className="content add-friend-div">
-                        <FloatingLabel id="friend-input-label" className="mb-3" controlId="floatingFriend" label="Friend Name">
-                            <Form.Control id="friend-input" className="menu-item" type="text" placeholder="Friend Name" />
-                        </FloatingLabel>
-                        <div id="friend-results">
-                            <h3>Please Enter a Name</h3>
-                        </div>
-                        <div id="add" className="menu-item add-friend-btn">Add Friend
-                            <img src={add} alt="add"/> 
-                            <img src={add} alt="add"/> 
-                        </div>
-                        <div id="cancel-friend" className="menu-item add-friend-btn" onClick={()=>{setAddFriend(false)}}>Cancel
-                            <img src={cancel} alt="cancel"/> 
-                            <img src={cancel} alt="cancel"/> 
-                    
+                <div id="friends" className="content-item add-friend-div">
+                    <div class="form-floating mb-3">
+                        <input type="text"  id="friend-input" className="menu-item form-control" placeholder="Friend Name"/>
+                        <label id="friend-input-label" for="friend-input">Friend Name</label>
+                    </div>
+                    <div id="friend-results">
+                        <h3>Please Enter a Name</h3>
+                    </div>
+                    <div id="friend-foot">
+                    <div id="add" className="menu-item add-friend-btn">Add Friend
+                        <img src={add} alt="add"/> 
+                        <img src={add} alt="add"/> 
+                    </div>
+                    <div id="cancel-friend" className="menu-item add-friend-btn" onClick={()=>{setAddFriend(false)}}>Cancel
+                        <img src={cancel} alt="cancel"/> 
+                        <img src={cancel} alt="cancel"/> 
+                    </div>
                     </div>
                 </div>
             }
