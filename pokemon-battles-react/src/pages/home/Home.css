@@ -72,4 +72,12 @@ input {
     background-color: var(--dark) !important;
 }
 
+.gicon {
+    padding: 10px;
+    border-radius: 4px;
+}
 
+.gicon img {
+    height: 30px;
+    margin-right: 10px;
+}

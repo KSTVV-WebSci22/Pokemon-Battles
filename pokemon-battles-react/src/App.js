@@ -13,6 +13,7 @@ import { ClientContext } from './context/ClientContext';
 import { useState, useEffect } from 'react';
 import SoundManager from './components/SoundManager';
 import SettingsButton from './components/SettingsButton';
+import Profile from './components/Profile';
 
 function App() {
 

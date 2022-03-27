@@ -1,0 +1,24 @@
+#profile {
+    position: fixed;
+    bottom: 1rem;
+    left: 1rem;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.527);
+    border-radius: 100vw;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: .8rem;
+    overflow: hidden;
+}
+
+#profile a {
+    color: var(--light) !important;
+}
+
+#profile img {
+  width: 100%;
+  height: 100%;
+}

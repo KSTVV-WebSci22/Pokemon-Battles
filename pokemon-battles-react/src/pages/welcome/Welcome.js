@@ -7,6 +7,7 @@ import shopImg from './shop.png'
 import { Link } from 'react-router-dom'
 import { useEffect, useContext } from 'react'
 import { ClientContext } from '../../context/ClientContext'
+import Profile from '../../components/Profile'
 
 const Welcome = () => {
   const{ setSong } = useContext(ClientContext);
@@ -18,7 +19,7 @@ const Welcome = () => {
   return (
   <div className='content'>
     <div id="welcome" className='content-item'>
-      <h3>Welcome back Player!</h3>
+      <h3>Welcome back {localStorage.getItem("name")}!</h3>
       <Link to='/battle' id="find-match" className='menu-item'>
         <img src={pokeball} alt="pokeball"/> 
         <img src={pokeball} alt="pokeball"/> 
@@ -43,6 +44,11 @@ const Welcome = () => {
         <img src={shopImg} alt="shop"/> 
         <img src={shopImg} alt="shop"/> 
         Shop
+      </Link>
+      <Link to='/profile' id="profile-link" className='menu-item'>
+        <img src={localStorage.getItem("profilePic")} alt="profile"/> 
+        <img src={localStorage.getItem("profilePic")} alt="profile"/> 
+        Profile
       </Link>
     </div>
   </div>

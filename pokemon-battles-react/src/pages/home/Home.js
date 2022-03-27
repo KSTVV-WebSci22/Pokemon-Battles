@@ -3,12 +3,16 @@ import './Home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import pokemon from '../../img/items/Pokemon3.png';
 import ash from '../../img/people/ashketchum.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FloatingLabel, Form} from 'react-bootstrap'
 import { ClientContext } from '../../context/ClientContext';
 import Loading from '../../components/Loading';
+import { signInWithGoogle } from '../../util/Firebase';
+import googleIcon from './google.png'
 
 const Home = () => {
+    let navigate = useNavigate();
+
     // Context
     const{ setSong, disclaimer, setDisclaimer } = useContext(ClientContext);
 
@@ -16,6 +20,16 @@ const Home = () => {
     const [login, setLogin] = useState(false);
     const [createAccount, setCreateAccount] = useState(false);
     
+    // Login System
+    const loginCheck = async () => {
+
+    const response = await signInWithGoogle();
+      console.log("response: " + response)
+      if (response){
+        navigate("./welcome")
+      }
+    }
+
     useEffect(()=>{
         setSong(1)
     }, [])
@@ -33,7 +47,7 @@ const Home = () => {
                     <h3 className='mt-3'>Welcome Back Trainer!</h3>
 
                     {/* Input Boxes */}
-                    <FloatingLabel
+                    {/* <FloatingLabel
                         controlId="floatingInput"
                         label="Email address"
                         className="mb-3"
@@ -42,13 +56,22 @@ const Home = () => {
                     </FloatingLabel>
                     <FloatingLabel controlId="floatingPassword" label="Password">
                         <Form.Control type="password" placeholder="Password" />
-                    </FloatingLabel>
+                    </FloatingLabel> */}
 
                     {/* Buttons */}
-                    <Link 
+                    {/* <Link 
                         to='welcome'
                         className='sbutton fw-bold mb-3'
-                    >Lets Go!</Link>
+                    >Lets Go!</Link> */}
+
+                    {/* Gmail Login */}
+                    <button 
+                        onClick={loginCheck} 
+                        className='gicon fw-bold mb-3'
+                    >
+                        <img src={googleIcon} />Sign in with Google
+                    </button>
+
                     <span 
                         className='fw-bold'
                         onClick={()=>{setLogin(!login)}}
