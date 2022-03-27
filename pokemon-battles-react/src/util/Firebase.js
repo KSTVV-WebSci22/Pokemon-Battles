@@ -1,5 +1,9 @@
 import { initializeApp } from "firebase/app";
+
+// Firebase Login Authorization
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+// Firebase Database
+import { getDatabase, ref, set } from "firebase/database";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC2eABQ11POuOO0nf3jGR2-wjQoGrGN11g",
@@ -11,12 +15,32 @@ const firebaseConfig = {
   appId: "1:352748750837:web:f99af77d02bb170ca742bc"
 };
 
+// Firebase App
 const app = initializeApp(firebaseConfig);
+
+// Firebase Database
+export const db = getDatabase(app);
+
+// Firebase Authorization
 export const auth = getAuth(app);
 
-const provider = new GoogleAuthProvider();
 
-export const signInWithGoogle = async () => {
+
+// Login with Google
+export const signInWithGoogle = async () => {  
+
+  const writeUserData = (uid, name, email, profilePic) => {
+    const reference = ref(db, 'users/' + uid)
+
+    set(reference, {
+      email: email,
+      name: name,
+      profilePic: profilePic
+    })
+    
+  }
+
+  const provider = new GoogleAuthProvider();
 
   return signInWithPopup(auth, provider)
     .then((result)=>{
@@ -24,11 +48,16 @@ export const signInWithGoogle = async () => {
       const email = result.user.email;
       const profilePic = result.user.photoURL;
       const verified = result._tokenResponse.emailVerified;
+      const uid = result.user.uid;
 
       localStorage.setItem("name", name)
       localStorage.setItem("email", email)
       localStorage.setItem("profilePic", profilePic)
       localStorage.setItem("verified", verified)
+
+      writeUserData(uid, name, email, profilePic)
+
+
 
       return verified
     })
@@ -36,3 +65,4 @@ export const signInWithGoogle = async () => {
       console.log(error)
     })
 }
+
