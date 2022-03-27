@@ -91,9 +91,15 @@ const Profile = () => {
                 <Modal.Title>Change Username</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                    
+                <small>
+                    Requirements: <br/> 
+                    6 Characters Minimum<br/>
+                </small>
                 <FloatingLabel 
                     controlId="usernameUpdate" 
                     label="username"
+                    className='mt-3'
                 >
                     <Form.Control 
                         type="text" 
@@ -102,18 +108,19 @@ const Profile = () => {
                         onChange={(e)=>{setUsername(e.target.value)}}
                     />
                 </FloatingLabel>    
+                <small><span className='text-danger fw-bold'>Warning: Any usernames created that are deemed to be inappropriate, will be permanantly banned.</span></small>
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="danger" onClick={()=>{setEditUsername(false)}}>
                     Cancel
                 </Button>
-                <Button 
+                {username.length >= 6 && <Button 
                     variant="success"
                     onClick={()=>{
                         updateUser(uid, username)
                         setEditUsername(false)
                     }}    
-                >Update</Button>
+                >Update</Button>}
                 </Modal.Footer>
             </Modal>
         </div>

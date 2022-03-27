@@ -122,6 +122,10 @@ a {
     border: 1px solid var(--yellow);
 }
 
+.modal-body {
+    color: var(--light);
+}
+
 .modal-content {
     background-color: var(--blue) !important;
 }

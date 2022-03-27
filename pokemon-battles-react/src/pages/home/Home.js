@@ -52,7 +52,7 @@ const Home = () => {
             {login ? 
                 <>
                     {/* Welcome Message */}
-                    <h3 className='mt-3'>Welcome Back Trainer!</h3>
+                    <h3 className='mt-3'>Welcome Trainer!</h3>
 
                     {/* Input Boxes */}
                     {/* <FloatingLabel
@@ -93,12 +93,12 @@ const Home = () => {
                     <img src={ash} alt="pokeball animation" className='mb-3'/>
                     <div id="login-button">
                         <button 
-                            className='sbutton fw-bold mb-3 w-50'
+                            className='sbutton fw-bold mb-3 w-100'
                             onClick={()=>{
                                 setLogin(!login)
                             }} 
-                        >Login!</button><br/>
-                        <small className='mb-5'>
+                        >Lets Go!</button><br/>
+                        {/* <small className='mb-5'>
                             Don't have an account?  
                             <span 
                                 id="login"
@@ -107,7 +107,7 @@ const Home = () => {
                                 }} 
                                 
                             > Create an Account</span>
-                        </small>
+                        </small> */}
                     </div>
                     </>
                 
