@@ -1,17 +1,19 @@
 import './Profile.css'
 import Back from '../../components/Back';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { auth } from '../../util/Firebase';
+import { auth, getUser } from '../../util/Firebase';
 import { useState, useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { ClientContext } from '../../context/ClientContext';
+import { Button, FloatingLabel, Form, Modal } from 'react-bootstrap';
 
 const Profile = () => {
     let navigate = useNavigate();
-    const [uid, setUID] = useState("")
+    const [username, setUsername] = useState("")
     const [email, setEmail] = useState("")
     const [profilePic, setProfilePic] = useState("")
     const [name, setName] = useState("")
+    const [editUsername, setEditUsername] = useState(false)
 
     // Context
     const{ setSong } = useContext(ClientContext);
@@ -26,8 +28,12 @@ const Profile = () => {
             });
     }
 
-    const home = () => {
-        navigate('/')
+    const userInfo = async (uid) => {
+        const user = await getUser(uid);
+        setName(user.legalName)
+        setUsername(user.username)
+        setEmail(user.email)
+        setProfilePic(user.profilePic)
     }
     
     useEffect(() => {
@@ -35,18 +41,13 @@ const Profile = () => {
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // User is Signed In
-                console.log(user)
-                setUID(user.uid)
-                setEmail(user.email)
-                setProfilePic(user.photoURL)
-                setName(user.displayName)
+              // User is Signed In
+              userInfo(user.uid);
             } else {
-                // User is signed out
-                console.log("NO LOGGED IN USER")
-                home()
+              // User is signed out
+              navigate('/');
             }
-      })
+        })
 
     }, []);
 
@@ -56,23 +57,53 @@ const Profile = () => {
             <div id="profile" className="content-item">
 
                 {/* Profile Pic */}
-                <img src={`${profilePic}`} alt="Profile Picture" />
+                <img src={`${profilePic}`} alt="Profile" />
 
-                {/* Username */}
-                <h4 className='mt-3'>Username:</h4>
-                <h5>{uid}</h5>
+                <div className="user-info">
+                    {/* Username */}
+                    <h4 className='mt-3'>Username:</h4>
+                    <h5>
+                        {username} 
+                        <Button 
+                            className='btn-sm btn-danger'
+                            onClick={()=>{setEditUsername(true)}}
+                        >Edit</Button>
+                    </h5>
 
-                {/* Email */}
-                <h4 className='mt-3'>Email:</h4>
-                <h5>{email}</h5>
+                    {/* Email */}
+                    <h4 className='mt-5'>Email:</h4>
+                    <h5>{email}</h5>
+                </div>
 
-                {/* Name */}
-                <h4 className='mt-3'>Name:</h4>
-                <h5>{name}</h5>
-
+                <hr />
 
                 <button onClick={logout} className="sbutton">Logout</button>
+                
             </div>
+
+            <Modal
+                show={editUsername}
+                onHide={()=>{setEditUsername(false)}}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                <Modal.Title>Change Username</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                <FloatingLabel 
+                    controlId="usernameUpdate" 
+                    label="username">
+                    <Form.Control type="text" placeholder="username" />
+                </FloatingLabel>    
+                </Modal.Body>
+                <Modal.Footer>
+                <Button variant="danger" onClick={()=>{setEditUsername(false)}}>
+                    Cancel
+                </Button>
+                <Button variant="success">Update</Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     );
 }

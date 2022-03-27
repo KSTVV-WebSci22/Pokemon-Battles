@@ -15,4 +15,21 @@
   color: var(--ice);
 }
 
-#profile img { border-radius: 4px;}
+#profile img { 
+  border-radius: 4px;
+}
+
+.user-info {
+  text-align: left;
+  width: 100%;
+  max-width: 500px;
+}
+
+.user-info .btn-sm {
+  float: right;
+}
+
+#profile hr {
+  width: 100%;
+  background-color: var(--yellow);
+}

@@ -2,13 +2,13 @@ import { initializeApp } from "firebase/app";
 
 // Firebase Login Authorization
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
-// Firebase Database
-import { getDatabase, ref, set } from "firebase/database";
+
+// Firebase FireStore
+import { getFirestore, setDoc, doc, getDoc, onSnapshot } from 'firebase/firestore'
 
 const firebaseConfig = {
   apiKey: "AIzaSyC2eABQ11POuOO0nf3jGR2-wjQoGrGN11g",
   authDomain: "pokemon-battle-rpi.firebaseapp.com",
-  databaseURL: "https://pokemon-battle-rpi-default-rtdb.firebaseio.com",
   projectId: "pokemon-battle-rpi",
   storageBucket: "pokemon-battle-rpi.appspot.com",
   messagingSenderId: "352748750837",
@@ -19,27 +19,54 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 // Firebase Database
-export const db = getDatabase(app);
+export const db = getFirestore(app);
 
 // Firebase Authorization
 export const auth = getAuth(app);
+
+// ----- Functions --------- //
+const addUser = (user, uid, name, email, profilePic) => {
+  const docData = {
+    username: null, 
+    legalName: name, 
+    email: email,
+    profilePic: profilePic
+  }
+
+  setDoc(user, docData, { merge: true })
+    .then(result => {
+      console.log("Added to database")
+    })
+    .then(error => {
+      console.log(error)
+    })
+}
+
+const checkIfUserExists = async (user, uid, name, email, profilePic) => {
+  const docData = await getDoc(user)
+  
+  if(docData.exists()) {
+    console.log("Welcome Back")
+  } else {
+    console.log("new user")
+    addUser(user, uid, name, email, profilePic);
+  }
+}
+
+export const getUser = async (uid) => {
+  const user = doc(db, 'users/' + uid)
+  const docData = await getDoc(user)
+  if(docData.exists()) {
+    return docData.data();
+  } 
+}
 
 
 
 // Login with Google
 export const signInWithGoogle = async () => {  
 
-  const writeUserData = (uid, name, email, profilePic) => {
-    const reference = ref(db, 'users/' + uid)
-
-    set(reference, {
-      email: email,
-      name: name,
-      profilePic: profilePic
-    })
-    
-  }
-
+  // Provider
   const provider = new GoogleAuthProvider();
 
   return signInWithPopup(auth, provider)
@@ -55,9 +82,12 @@ export const signInWithGoogle = async () => {
       localStorage.setItem("profilePic", profilePic)
       localStorage.setItem("verified", verified)
 
-      writeUserData(uid, name, email, profilePic)
+      
 
+      // writeUserData(uid, name, email, profilePic)
 
+      const user = doc(db, 'users/' + uid)
+      checkIfUserExists(user, uid, name, email, profilePic);
 
       return verified
     })
@@ -65,4 +95,3 @@ export const signInWithGoogle = async () => {
       console.log(error)
     })
 }
-

@@ -68,10 +68,6 @@ h3 {
     font-family: var(--pokemon);
 }
 
-input {
-    background-color: var(--dark) !important;
-}
-
 .gicon {
     padding: 10px;
     border-radius: 4px;
