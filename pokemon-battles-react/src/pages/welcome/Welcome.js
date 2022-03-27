@@ -28,7 +28,6 @@ const Welcome = () => {
 
   const userInfo = async (uid) => {
     const user = await getUser(uid);
-    console.log(user.legalName)
     if(user.username == null){
       setNewUser(true);
       setLoading(false);
