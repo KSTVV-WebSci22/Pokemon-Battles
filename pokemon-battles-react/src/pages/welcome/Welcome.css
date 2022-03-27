@@ -109,3 +109,20 @@ h3 {
   background-color: var(--black);
   color: var(--light);
 }
+
+#new-user {
+  grid-row: 1 / 8;
+  grid-column: 1 / 3;
+}
+
+#new-user img {
+  height: 200px;
+}
+
+#new-user h1 {
+  color: var(--yellow);
+}
+
+#new-user input{
+  color: var(--dark) !important;
+}

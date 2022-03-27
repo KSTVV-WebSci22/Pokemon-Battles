@@ -1,7 +1,7 @@
 import './Profile.css'
 import Back from '../../components/Back';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { auth, getUser } from '../../util/Firebase';
+import { auth, getUser, updateUser } from '../../util/Firebase';
 import { useState, useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { ClientContext } from '../../context/ClientContext';
@@ -9,10 +9,10 @@ import { Button, FloatingLabel, Form, Modal } from 'react-bootstrap';
 
 const Profile = () => {
     let navigate = useNavigate();
+    const [uid, setUID] = useState("")
     const [username, setUsername] = useState("")
     const [email, setEmail] = useState("")
     const [profilePic, setProfilePic] = useState("")
-    const [name, setName] = useState("")
     const [editUsername, setEditUsername] = useState(false)
 
     // Context
@@ -30,7 +30,6 @@ const Profile = () => {
 
     const userInfo = async (uid) => {
         const user = await getUser(uid);
-        setName(user.legalName)
         setUsername(user.username)
         setEmail(user.email)
         setProfilePic(user.profilePic)
@@ -42,6 +41,7 @@ const Profile = () => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
               // User is Signed In
+              setUID(user.uid);
               userInfo(user.uid);
             } else {
               // User is signed out
@@ -93,15 +93,27 @@ const Profile = () => {
                 <Modal.Body>
                 <FloatingLabel 
                     controlId="usernameUpdate" 
-                    label="username">
-                    <Form.Control type="text" placeholder="username" />
+                    label="username"
+                >
+                    <Form.Control 
+                        type="text" 
+                        placeholder="username" 
+                        defaultValue={username}
+                        onChange={(e)=>{setUsername(e.target.value)}}
+                    />
                 </FloatingLabel>    
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="danger" onClick={()=>{setEditUsername(false)}}>
                     Cancel
                 </Button>
-                <Button variant="success">Update</Button>
+                <Button 
+                    variant="success"
+                    onClick={()=>{
+                        updateUser(uid, username)
+                        setEditUsername(false)
+                    }}    
+                >Update</Button>
                 </Modal.Footer>
             </Modal>
         </div>

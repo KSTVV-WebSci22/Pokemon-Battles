@@ -4,7 +4,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 
 // Firebase FireStore
-import { getFirestore, setDoc, doc, getDoc, onSnapshot } from 'firebase/firestore'
+import { getFirestore, setDoc, doc, getDoc, updateDoc } from 'firebase/firestore'
 
 const firebaseConfig = {
   apiKey: "AIzaSyC2eABQ11POuOO0nf3jGR2-wjQoGrGN11g",
@@ -61,6 +61,16 @@ export const getUser = async (uid) => {
   } 
 }
 
+export const updateUser = async (uid, username) => {
+  const user = doc(db, 'users/', uid)
+  await updateDoc(user, {
+    username: username
+  }).then(() =>{
+    return true
+  }).catch(error => {
+    console.log(error);
+  });
+}
 
 
 // Login with Google
