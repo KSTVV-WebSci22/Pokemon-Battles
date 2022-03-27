@@ -7,7 +7,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FloatingLabel, Form} from 'react-bootstrap'
 import { ClientContext } from '../../context/ClientContext';
 import Loading from '../../components/Loading';
-import { signInWithGoogle } from '../../util/Firebase';
+import { signInWithGoogle, auth } from '../../util/Firebase';
+import { onAuthStateChanged } from 'firebase/auth'
 import googleIcon from './google.png'
 
 const Home = () => {
@@ -32,6 +33,13 @@ const Home = () => {
 
     useEffect(()=>{
         setSong(1)
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+              navigate('./welcome')
+            }
+          });
+          
     }, [])
     
     return ( 

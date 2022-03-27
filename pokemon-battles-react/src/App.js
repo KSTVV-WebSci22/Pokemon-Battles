@@ -13,10 +13,12 @@ import { ClientContext } from './context/ClientContext';
 import { useState, useEffect } from 'react';
 import SoundManager from './components/SoundManager';
 import SettingsButton from './components/SettingsButton';
-import Profile from './components/Profile';
+import Profile from './pages/profile/Profile';
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth } from './util/Firebase'
+import { useNavigate } from 'react-router-dom'
 
 function App() {
-
   const [mute, setMute] = useState(false)  
   const [volume, setVolume] = useState(localStorage.getItem("volume"));
   const [song, setSong] = useState(1);
@@ -30,7 +32,6 @@ function App() {
       console.log("Volume Already Set: " + volume)
     }
   }, [])
-  
 
 
   return (
@@ -77,6 +78,7 @@ function App() {
               <Route path='/friends' element={<Friends/>} />
               <Route path='/shop' element={<Shop/>} />
               <Route path='/settings' element={<Settings/>} />
+              <Route path='/profile' element={<Profile/>} />
             </Routes>
           </Router>
         </>

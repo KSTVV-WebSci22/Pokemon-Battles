@@ -4,22 +4,36 @@ import pokeball from './pokeball.png'
 import fist from './fist.png'
 import gym from '../../img/items/gym.png'
 import shopImg from './shop.png'
-import { Link } from 'react-router-dom'
-import { useEffect, useContext } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useEffect, useContext, useState } from 'react'
 import { ClientContext } from '../../context/ClientContext'
-import Profile from '../../components/Profile'
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth } from '../../util/Firebase'
 
 const Welcome = () => {
+  let navigate = useNavigate();
+  const [name, setName] = useState("")
   const{ setSong } = useContext(ClientContext);
 
   useEffect(()=>{
     setSong(2)
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is Signed In
+        console.log(user)
+        setName(user.displayName)
+      } else {
+        // User is signed out
+        navigate('/');
+      }
+    })
   }, [])
   
   return (
   <div className='content'>
     <div id="welcome" className='content-item'>
-      <h3>Welcome back {localStorage.getItem("name")}!</h3>
+      <h3>Welcome back {name}!</h3>
       <Link to='/battle' id="find-match" className='menu-item'>
         <img src={pokeball} alt="pokeball"/> 
         <img src={pokeball} alt="pokeball"/> 
