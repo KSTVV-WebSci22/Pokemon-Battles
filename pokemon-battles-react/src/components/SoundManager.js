@@ -1,4 +1,4 @@
-import Sound from 'react-sound'
+import Sound, {soundManager } from 'react-sound'
 import TitleScreen from '../sounds/music/titleScreen.mp3'
 import WelcomeMusic from '../sounds/music/welcome.mp3'
 import BattleMusic from '../sounds/music/battle.mp3'
@@ -10,6 +10,8 @@ const SoundManager = ({song}) => {
   const {mute, volume} = useContext(ClientContext);
 
   const [currentSong, setCurrentSong] = useState()
+
+  window.soundManager.setup({debugMode: false});
 
   useEffect(()=>{
     switch(song){

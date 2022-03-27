@@ -1,13 +1,13 @@
 import './Profile.css'
 import Back from '../../components/Back';
-import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../../util/Firebase';
 import { useState, useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { ClientContext } from '../../context/ClientContext';
 
 const Profile = () => {
-    let navigate = useNavigate;
+    let navigate = useNavigate();
     const [uid, setUID] = useState("")
     const [email, setEmail] = useState("")
     const [profilePic, setProfilePic] = useState("")
@@ -16,23 +16,38 @@ const Profile = () => {
     // Context
     const{ setSong } = useContext(ClientContext);
 
+    const logout = () => {
+        signOut(auth)
+            .then(() => {
+                navigate('/')
+            })
+            .catch((error) => {
+                console.log(error)
+            });
+    }
 
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-          // User is Signed In
-          console.log(user)
-          setUID(user.uid)
-          setEmail(user.email)
-          setProfilePic(user.photoURL)
-          setName(user.displayName)
-        } else {
-          // User is signed out
-          navigate('/');
-        }
-      })
-
+    const home = () => {
+        navigate('/')
+    }
+    
     useEffect(() => {
         setSong(2)
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is Signed In
+                console.log(user)
+                setUID(user.uid)
+                setEmail(user.email)
+                setProfilePic(user.photoURL)
+                setName(user.displayName)
+            } else {
+                // User is signed out
+                console.log("NO LOGGED IN USER")
+                home()
+            }
+      })
+
     }, []);
 
     return ( 
@@ -56,7 +71,7 @@ const Profile = () => {
                 <h5>{name}</h5>
 
 
-                <button className="sbutton">Logout</button>
+                <button onClick={logout} className="sbutton">Logout</button>
             </div>
         </div>
     );

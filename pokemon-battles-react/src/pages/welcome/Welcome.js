@@ -33,7 +33,7 @@ const Welcome = () => {
   return (
   <div className='content'>
     <div id="welcome" className='content-item'>
-      <h3>Welcome back {name}!</h3>
+      <h3>Welcome back {name.substring(0, name.indexOf(' '))}!</h3>
       <Link to='/battle' id="find-match" className='menu-item'>
         <img src={pokeball} alt="pokeball"/> 
         <img src={pokeball} alt="pokeball"/> 

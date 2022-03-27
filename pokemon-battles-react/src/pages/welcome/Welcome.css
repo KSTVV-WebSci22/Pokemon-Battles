@@ -98,6 +98,7 @@ h3 {
 
 #profile-link img{
   border-radius: 100vw; 
+  border: 1px solid var(--black);
 }
 
 #welcome a img:nth-child(2) {
