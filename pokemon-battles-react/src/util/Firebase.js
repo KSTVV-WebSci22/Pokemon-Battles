@@ -87,13 +87,6 @@ export const signInWithGoogle = async () => {
       const verified = result._tokenResponse.emailVerified;
       const uid = result.user.uid;
 
-      localStorage.setItem("name", name)
-      localStorage.setItem("email", email)
-      localStorage.setItem("profilePic", profilePic)
-      localStorage.setItem("verified", verified)
-
-      
-
       // writeUserData(uid, name, email, profilePic)
 
       const user = doc(db, 'users/' + uid)
