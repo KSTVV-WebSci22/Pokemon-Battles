@@ -64,8 +64,10 @@ const Welcome = () => {
     const user = doc(db, 'users/', uid)
     onSnapshot(user, docSnapshot => {
       if(docSnapshot.exists()) {
+        console.log("listening to username")
         const docData = docSnapshot.data();
         if(docData.username != null) {
+          console.log("listening to username2")
           setNewUser(false)
         } 
       }
