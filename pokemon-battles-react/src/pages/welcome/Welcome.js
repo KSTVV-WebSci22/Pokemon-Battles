@@ -22,7 +22,7 @@ const Welcome = () => {
   const [newUser, setNewUser] = useState(true)
   const [loading, setLoading] = useState(true)
   const [uid, setUID] = useState('')
-  const [profilePic, setProfilePic] = useState("")
+  const [profilePic, setProfilePic] = useState()
 
   // Context
   const{ setSong } = useContext(ClientContext);
@@ -33,6 +33,7 @@ const Welcome = () => {
       setNewUser(true);
       setLoading(false);
     } else {
+      console.log(user.profilePic)
       setName(user.username)
       setProfilePic(user.profilePic)
       setLoading(false)
@@ -45,6 +46,7 @@ const Welcome = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is Signed In
+        console.log(user);
         setUID(user.uid);
         listenToUsername(user.uid)
         userInfo(user.uid);
