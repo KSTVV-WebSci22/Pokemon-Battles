@@ -115,3 +115,25 @@
 a {
     text-decoration: none !important;
 }
+
+/* Change Bootstrap defaults */
+.modal-header {
+    background-color: var(--yellow);
+    border: 1px solid var(--yellow);
+}
+
+.modal-body {
+    color: var(--light);
+}
+
+.modal-content {
+    background-color: var(--blue) !important;
+}
+
+.modal-body input{
+    color: var(--black) !important;
+}
+
+input {
+    color: var(--light) !important;
+}
