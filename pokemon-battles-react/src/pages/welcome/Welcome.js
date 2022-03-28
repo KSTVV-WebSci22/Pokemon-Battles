@@ -22,6 +22,7 @@ const Welcome = () => {
   const [newUser, setNewUser] = useState(true)
   const [loading, setLoading] = useState(true)
   const [uid, setUID] = useState('')
+  const [profilePic, setProfilePic] = useState("")
 
   // Context
   const{ setSong } = useContext(ClientContext);
@@ -33,6 +34,7 @@ const Welcome = () => {
       setLoading(false);
     } else {
       setName(user.username)
+      setProfilePic(user.profilePic)
       setLoading(false)
     }
   }
@@ -124,8 +126,8 @@ const Welcome = () => {
           Shop
         </Link>
         <Link to='/profile' id="profile-link" className='menu-item'>
-          <img src={localStorage.getItem("profilePic")} alt="profile"/> 
-          <img src={localStorage.getItem("profilePic")} alt="profile"/> 
+          <img src={profilePic} alt="profile"/> 
+          <img src={profilePic} alt="profile"/> 
           Profile
         </Link>
         </>
