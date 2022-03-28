@@ -93,13 +93,14 @@ const Welcome = () => {
               setName(e.target.value)
             }}
           /> <br/>
-          {name === '' ? 
+          {name.length >= 6 ? 
             <></>
             :
             <button 
               onClick={updateUsername}
               className='sbutton'>Submit
-            </button>}
+            </button>
+            }
         </div>
         :
         <>
