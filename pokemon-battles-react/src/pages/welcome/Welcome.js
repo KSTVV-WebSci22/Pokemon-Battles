@@ -93,7 +93,7 @@ const Welcome = () => {
               setName(e.target.value)
             }}
           /> <br/>
-          {name.length >= 6 ? 
+          {name.length <= 6 ? 
             <></>
             :
             <button 
