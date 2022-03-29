@@ -91,7 +91,6 @@ const Battle = () => {
     const [won, setWon] = useState(null);
     const [myOpponent, setMyOpponent] = useState(null);
     const [myTurn, setMyTurn] = useState(true);
-    const [sendT, setSendT] = useState(true);
     const signatureRef = useRef(null);
     const [loading, setLoading] = useState(true);
 
@@ -163,7 +162,7 @@ const Battle = () => {
         //test recieved oppenent data
         const opponent = {
             name: "Opponent",
-            pokemon: "Pikachu",
+            pokemon: "pikachu",
             hp: 100,
             level: 7,
             move: {
@@ -173,6 +172,7 @@ const Battle = () => {
             },
             won: null,
         }
+        setMyOpponent(opponent);
 
         //if opponent lost
         if(opponent.won == false) {
@@ -189,7 +189,6 @@ const Battle = () => {
             let max = -1;
             //if pokemon died switch pokemon
             if(myHp[selectedPokemon] == 0) {
-                //if all pokemon are dead
                 myHp.every((x, i) => {
                     if(x > 0) {
                         max = i;
@@ -197,14 +196,14 @@ const Battle = () => {
                     }
                     return true;
                 });
-                //if all pokemon are dead
+                //if all pokemon are dead you lose
                 if(max == -1) {
                     setWon(false);
                     next("ENDGAME");
                     setMyTurn(false);
                     sendTurn();
                 } else {
-                    //if pokemon dead switch pokemon
+                    //if a pokemon dead switch pokemon
                     next({ type: "DEAD", id: max }); 
                     setMyTurn(true);
                 }
@@ -280,7 +279,7 @@ const Battle = () => {
         setMyHp([100, 100, 100, 100, 100, 100]); //initial hp percents
         setMyTurn(true); //you go first in this example false = opponent goes first
 
-        //opponent test data
+        //opponent initial test data
         setMyOpponent({
             name: "Opponent",
             pokemon: "pikachu",
@@ -397,7 +396,7 @@ const Battle = () => {
     return ( 
         <div id="battle" className='content'>
             <div className='battle content-item'>
-
+            {/*when all data has been recieved stop loading*/}
             {myPokemonData.length == 6 && myPokemon.length == 6 && myMoves.length == 6 && myOpponent != null ? (
                 <>
                     {won == null ? (
