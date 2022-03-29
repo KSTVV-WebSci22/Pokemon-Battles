@@ -1,0 +1,1361 @@
+[
+ {
+   "id": 1,
+   "identifier": "bulbasaur",
+   "evolved_species_id": 2,
+   "evolve_level": 16,
+   "base_experience": 64,
+   "type1": 12,
+   "type2": 4
+ },
+ {
+   "id": 2,
+   "identifier": "ivysaur",
+   "evolved_species_id": 3,
+   "evolve_level": 32,
+   "base_experience": 142,
+   "type1": 12,
+   "type2": 4
+ },
+ {
+   "id": 3,
+   "identifier": "venusaur",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 236,
+   "type1": 12,
+   "type2": 4
+ },
+ {
+   "id": 4,
+   "identifier": "charmander",
+   "evolved_species_id": 5,
+   "evolve_level": 16,
+   "base_experience": 62,
+   "type1": 10,
+   "type2": 0
+ },
+ {
+   "id": 5,
+   "identifier": "charmeleon",
+   "evolved_species_id": 6,
+   "evolve_level": 36,
+   "base_experience": 142,
+   "type1": 10,
+   "type2": 0
+ },
+ {
+   "id": 6,
+   "identifier": "charizard",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 240,
+   "type1": 10,
+   "type2": 3
+ },
+ {
+   "id": 7,
+   "identifier": "squirtle",
+   "evolved_species_id": 8,
+   "evolve_level": 16,
+   "base_experience": 63,
+   "type1": 11,
+   "type2": 0
+ },
+ {
+   "id": 8,
+   "identifier": "wartortle",
+   "evolved_species_id": 9,
+   "evolve_level": 32,
+   "base_experience": 142,
+   "type1": 11,
+   "type2": 0
+ },
+ {
+   "id": 9,
+   "identifier": "blastoise",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 239,
+   "type1": 11,
+   "type2": 0
+ },
+ {
+   "id": 10,
+   "identifier": "caterpie",
+   "evolved_species_id": 11,
+   "evolve_level": 18,
+   "base_experience": 39,
+   "type1": 7,
+   "type2": 0
+ },
+ {
+   "id": 11,
+   "identifier": "metapod",
+   "evolved_species_id": 12,
+   "evolve_level": 36,
+   "base_experience": 72,
+   "type1": 7,
+   "type2": 0
+ },
+ {
+   "id": 12,
+   "identifier": "butterfree",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 178,
+   "type1": 7,
+   "type2": 3
+ },
+ {
+   "id": 13,
+   "identifier": "weedle",
+   "evolved_species_id": 14,
+   "evolve_level": 16,
+   "base_experience": 39,
+   "type1": 7,
+   "type2": 4
+ },
+ {
+   "id": 14,
+   "identifier": "kakuna",
+   "evolved_species_id": 15,
+   "evolve_level": 22,
+   "base_experience": 72,
+   "type1": 7,
+   "type2": 4
+ },
+ {
+   "id": 15,
+   "identifier": "beedrill",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 178,
+   "type1": 7,
+   "type2": 4
+ },
+ {
+   "id": 16,
+   "identifier": "pidgey",
+   "evolved_species_id": 17,
+   "evolve_level": 16,
+   "base_experience": 50,
+   "type1": 1,
+   "type2": 3
+ },
+ {
+   "id": 17,
+   "identifier": "pidgeotto",
+   "evolved_species_id": 18,
+   "evolve_level": 22,
+   "base_experience": 122,
+   "type1": 1,
+   "type2": 3
+ },
+ {
+   "id": 18,
+   "identifier": "pidgeot",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 216,
+   "type1": 1,
+   "type2": 3
+ },
+ {
+   "id": 19,
+   "identifier": "rattata",
+   "evolved_species_id": 20,
+   "evolve_level": 16,
+   "base_experience": 51,
+   "type1": 1,
+   "type2": 0
+ },
+ {
+   "id": 20,
+   "identifier": "raticate",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 145,
+   "type1": 1,
+   "type2": 0
+ },
+ {
+   "id": 21,
+   "identifier": "spearow",
+   "evolved_species_id": 22,
+   "evolve_level": 16,
+   "base_experience": 52,
+   "type1": 1,
+   "type2": 3
+ },
+ {
+   "id": 22,
+   "identifier": "fearow",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 155,
+   "type1": 1,
+   "type2": 3
+ },
+ {
+   "id": 23,
+   "identifier": "ekans",
+   "evolved_species_id": 24,
+   "evolve_level": 22,
+   "base_experience": 58,
+   "type1": 4,
+   "type2": 0
+ },
+ {
+   "id": 24,
+   "identifier": "arbok",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 157,
+   "type1": 4,
+   "type2": 0
+ },
+ {
+   "id": 25,
+   "identifier": "pikachu",
+   "evolved_species_id": 26,
+   "evolve_level": 32,
+   "base_experience": 112,
+   "type1": 13,
+   "type2": 0
+ },
+ {
+   "id": 26,
+   "identifier": "raichu",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 218,
+   "type1": 13,
+   "type2": 0
+ },
+ {
+   "id": 27,
+   "identifier": "sandshrew",
+   "evolved_species_id": 28,
+   "evolve_level": 22,
+   "base_experience": 60,
+   "type1": 5,
+   "type2": 0
+ },
+ {
+   "id": 28,
+   "identifier": "sandslash",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 158,
+   "type1": 5,
+   "type2": 0
+ },
+ {
+   "id": 29,
+   "identifier": "nidoran-f",
+   "evolved_species_id": 30,
+   "evolve_level": 21,
+   "base_experience": 55,
+   "type1": 4,
+   "type2": 0
+ },
+ {
+   "id": 30,
+   "identifier": "nidorina",
+   "evolved_species_id": 31,
+   "evolve_level": 24,
+   "base_experience": 128,
+   "type1": 4,
+   "type2": 0
+ },
+ {
+   "id": 31,
+   "identifier": "nidoqueen",
+   "evolved_species_id": -1,
+   "evolve_level": 24,
+   "base_experience": 227,
+   "type1": 4,
+   "type2": 5
+ },
+ {
+   "id": 32,
+   "identifier": "nidoran-m",
+   "evolved_species_id": 33,
+   "evolve_level": 31,
+   "base_experience": 55,
+   "type1": 4,
+   "type2": 0
+ },
+ {
+   "id": 33,
+   "identifier": "nidorino",
+   "evolved_species_id": 34,
+   "evolve_level": 26,
+   "base_experience": 128,
+   "type1": 4,
+   "type2": 0
+ },
+ {
+   "id": 34,
+   "identifier": "nidoking",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 227,
+   "type1": 4,
+   "type2": 5
+ },
+ {
+   "id": 35,
+   "identifier": "clefairy",
+   "evolved_species_id": 36,
+   "evolve_level": 33,
+   "base_experience": 113,
+   "type1": 18,
+   "type2": 0
+ },
+ {
+   "id": 36,
+   "identifier": "clefable",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 217,
+   "type1": 18,
+   "type2": 0
+ },
+ {
+   "id": 37,
+   "identifier": "vulpix",
+   "evolved_species_id": 38,
+   "evolve_level": 25,
+   "base_experience": 60,
+   "type1": 10,
+   "type2": 0
+ },
+ {
+   "id": 38,
+   "identifier": "ninetales",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 177,
+   "type1": 10,
+   "type2": 0
+ },
+ {
+   "id": 39,
+   "identifier": "jigglypuff",
+   "evolved_species_id": 40,
+   "evolve_level": 16,
+   "base_experience": 95,
+   "type1": 1,
+   "type2": 18
+ },
+ {
+   "id": 40,
+   "identifier": "wigglytuff",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 196,
+   "type1": 1,
+   "type2": 18
+ },
+ {
+   "id": 41,
+   "identifier": "zubat",
+   "evolved_species_id": 42,
+   "evolve_level": 16,
+   "base_experience": 49,
+   "type1": 4,
+   "type2": 3
+ },
+ {
+   "id": 42,
+   "identifier": "golbat",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 159,
+   "type1": 4,
+   "type2": 3
+ },
+ {
+   "id": 43,
+   "identifier": "oddish",
+   "evolved_species_id": 44,
+   "evolve_level": 21,
+   "base_experience": 64,
+   "type1": 12,
+   "type2": 4
+ },
+ {
+   "id": 44,
+   "identifier": "gloom",
+   "evolved_species_id": 45,
+   "evolve_level": 21,
+   "base_experience": 138,
+   "type1": 12,
+   "type2": 4
+ },
+ {
+   "id": 45,
+   "identifier": "vileplume",
+   "evolved_species_id": 71,
+   "evolve_level": 32,
+   "base_experience": 221,
+   "type1": 12,
+   "type2": 4
+ },
+ {
+   "id": 46,
+   "identifier": "paras",
+   "evolved_species_id": 47,
+   "evolve_level": 30,
+   "base_experience": 57,
+   "type1": 7,
+   "type2": 12
+ },
+ {
+   "id": 47,
+   "identifier": "parasect",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 142,
+   "type1": 7,
+   "type2": 12
+ },
+ {
+   "id": 48,
+   "identifier": "venonat",
+   "evolved_species_id": 49,
+   "evolve_level": 40,
+   "base_experience": 61,
+   "type1": 7,
+   "type2": 4
+ },
+ {
+   "id": 49,
+   "identifier": "venomoth",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 158,
+   "type1": 7,
+   "type2": 4
+ },
+ {
+   "id": 50,
+   "identifier": "diglett",
+   "evolved_species_id": 51,
+   "evolve_level": 30,
+   "base_experience": 53,
+   "type1": 5,
+   "type2": 0
+ },
+ {
+   "id": 51,
+   "identifier": "dugtrio",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 149,
+   "type1": 5,
+   "type2": 0
+ },
+ {
+   "id": 52,
+   "identifier": "meowth",
+   "evolved_species_id": 52,
+   "evolve_level": 31,
+   "base_experience": 58,
+   "type1": 1,
+   "type2": 0
+ },
+ {
+   "id": 53,
+   "identifier": "persian",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 154,
+   "type1": 1,
+   "type2": 0
+ },
+ {
+   "id": 54,
+   "identifier": "psyduck",
+   "evolved_species_id": 55,
+   "evolve_level": 38,
+   "base_experience": 64,
+   "type1": 11,
+   "type2": 0
+ },
+ {
+   "id": 55,
+   "identifier": "golduck",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 175,
+   "type1": 11,
+   "type2": 0
+ },
+ {
+   "id": 56,
+   "identifier": "mankey",
+   "evolved_species_id": 57,
+   "evolve_level": 25,
+   "base_experience": 61,
+   "type1": 2,
+   "type2": 0
+ },
+ {
+   "id": 57,
+   "identifier": "primeape",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 159,
+   "type1": 2,
+   "type2": 0
+ },
+ {
+   "id": 58,
+   "identifier": "growlithe",
+   "evolved_species_id": 59,
+   "evolve_level": 26,
+   "base_experience": 70,
+   "type1": 10,
+   "type2": 0
+ },
+ {
+   "id": 59,
+   "identifier": "arcanine",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 194,
+   "type1": 10,
+   "type2": 0
+ },
+ {
+   "id": 60,
+   "identifier": "poliwag",
+   "evolved_species_id": 61,
+   "evolve_level": 22,
+   "base_experience": 60,
+   "type1": 11,
+   "type2": 0
+ },
+ {
+   "id": 61,
+   "identifier": "poliwhirl",
+   "evolved_species_id": 62,
+   "evolve_level": 32,
+   "base_experience": 135,
+   "type1": 11,
+   "type2": 0
+ },
+ {
+   "id": 62,
+   "identifier": "poliwrath",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 230,
+   "type1": 11,
+   "type2": 2
+ },
+ {
+   "id": 63,
+   "identifier": "abra",
+   "evolved_species_id": 64,
+   "evolve_level": 20,
+   "base_experience": 62,
+   "type1": 14,
+   "type2": 0
+ },
+ {
+   "id": 64,
+   "identifier": "kadabra",
+   "evolved_species_id": 65,
+   "evolve_level": 35,
+   "base_experience": 140,
+   "type1": 14,
+   "type2": 0
+ },
+ {
+   "id": 65,
+   "identifier": "alakazam",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 225,
+   "type1": 14,
+   "type2": 0
+ },
+ {
+   "id": 66,
+   "identifier": "machop",
+   "evolved_species_id": 67,
+   "evolve_level": 16,
+   "base_experience": 61,
+   "type1": 2,
+   "type2": 0
+ },
+ {
+   "id": 67,
+   "identifier": "machoke",
+   "evolved_species_id": 68,
+   "evolve_level": 32,
+   "base_experience": 142,
+   "type1": 2,
+   "type2": 0
+ },
+ {
+   "id": 68,
+   "identifier": "machamp",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 227,
+   "type1": 2,
+   "type2": 0
+ },
+ {
+   "id": 69,
+   "identifier": "bellsprout",
+   "evolved_species_id": 70,
+   "evolve_level": 16,
+   "base_experience": 60,
+   "type1": 12,
+   "type2": 4
+ },
+ {
+   "id": 70,
+   "identifier": "weepinbell",
+   "evolved_species_id": 71,
+   "evolve_level": 33,
+   "base_experience": 137,
+   "type1": 12,
+   "type2": 4
+ },
+ {
+   "id": 71,
+   "identifier": "victreebel",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 221,
+   "type1": 12,
+   "type2": 4
+ },
+ {
+   "id": 72,
+   "identifier": "tentacool",
+   "evolved_species_id": 73,
+   "evolve_level": 30,
+   "base_experience": 67,
+   "type1": 11,
+   "type2": 4
+ },
+ {
+   "id": 73,
+   "identifier": "tentacruel",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 180,
+   "type1": 11,
+   "type2": 4
+ },
+ {
+   "id": 74,
+   "identifier": "geodude",
+   "evolved_species_id": 75,
+   "evolve_level": 20,
+   "base_experience": 60,
+   "type1": 6,
+   "type2": 5
+ },
+ {
+   "id": 75,
+   "identifier": "graveler",
+   "evolved_species_id": 76,
+   "evolve_level": 30,
+   "base_experience": 137,
+   "type1": 6,
+   "type2": 5
+ },
+ {
+   "id": 76,
+   "identifier": "golem",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 223,
+   "type1": 6,
+   "type2": 5
+ },
+ {
+   "id": 77,
+   "identifier": "ponyta",
+   "evolved_species_id": 78,
+   "evolve_level": 25,
+   "base_experience": 82,
+   "type1": 10,
+   "type2": 0
+ },
+ {
+   "id": 78,
+   "identifier": "rapidash",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 175,
+   "type1": 10,
+   "type2": 0
+ },
+ {
+   "id": 79,
+   "identifier": "slowpoke",
+   "evolved_species_id": 80,
+   "evolve_level": 40,
+   "base_experience": 63,
+   "type1": 11,
+   "type2": 14
+ },
+ {
+   "id": 80,
+   "identifier": "slowbro",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 172,
+   "type1": 11,
+   "type2": 14
+ },
+ {
+   "id": 81,
+   "identifier": "magnemite",
+   "evolved_species_id": 82,
+   "evolve_level": 30,
+   "base_experience": 65,
+   "type1": 13,
+   "type2": 9
+ },
+ {
+   "id": 82,
+   "identifier": "magneton",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 163,
+   "type1": 13,
+   "type2": 9
+ },
+ {
+   "id": 83,
+   "identifier": "farfetchd",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 132,
+   "type1": 1,
+   "type2": 3
+ },
+ {
+   "id": 84,
+   "identifier": "doduo",
+   "evolved_species_id": 85,
+   "evolve_level": 16,
+   "base_experience": 62,
+   "type1": 1,
+   "type2": 3
+ },
+ {
+   "id": 85,
+   "identifier": "dodrio",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 165,
+   "type1": 1,
+   "type2": 3
+ },
+ {
+   "id": 86,
+   "identifier": "seel",
+   "evolved_species_id": 87,
+   "evolve_level": 36,
+   "base_experience": 65,
+   "type1": 11,
+   "type2": 0
+ },
+ {
+   "id": 87,
+   "identifier": "dewgong",
+   "evolved_species_id": 157,
+   "evolve_level": -1,
+   "base_experience": 166,
+   "type1": 11,
+   "type2": 15
+ },
+ {
+   "id": 88,
+   "identifier": "grimer",
+   "evolved_species_id": 89,
+   "evolve_level": 30,
+   "base_experience": 65,
+   "type1": 4,
+   "type2": 0
+ },
+ {
+   "id": 89,
+   "identifier": "muk",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 175,
+   "type1": 4,
+   "type2": 0
+ },
+ {
+   "id": 90,
+   "identifier": "shellder",
+   "evolved_species_id": 91,
+   "evolve_level": 20,
+   "base_experience": 61,
+   "type1": 11,
+   "type2": 0
+ },
+ {
+   "id": 91,
+   "identifier": "cloyster",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 184,
+   "type1": 11,
+   "type2": 15
+ },
+ {
+   "id": 92,
+   "identifier": "gastly",
+   "evolved_species_id": 93,
+   "evolve_level": 22,
+   "base_experience": 62,
+   "type1": 8,
+   "type2": 4
+ },
+ {
+   "id": 93,
+   "identifier": "haunter",
+   "evolved_species_id": 94,
+   "evolve_level": 32,
+   "base_experience": 142,
+   "type1": 8,
+   "type2": 4
+ },
+ {
+   "id": 94,
+   "identifier": "gengar",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 225,
+   "type1": 8,
+   "type2": 4
+ },
+ {
+   "id": 95,
+   "identifier": "onix",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 77,
+   "type1": 6,
+   "type2": 5
+ },
+ {
+   "id": 96,
+   "identifier": "drowzee",
+   "evolved_species_id": 97,
+   "evolve_level": 25,
+   "base_experience": 66,
+   "type1": 14,
+   "type2": 0
+ },
+ {
+   "id": 97,
+   "identifier": "hypno",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 169,
+   "type1": 14,
+   "type2": 0
+ },
+ {
+   "id": 98,
+   "identifier": "krabby",
+   "evolved_species_id": 99,
+   "evolve_level": 30,
+   "base_experience": 65,
+   "type1": 11,
+   "type2": 0
+ },
+ {
+   "id": 99,
+   "identifier": "kingler",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 166,
+   "type1": 11,
+   "type2": 0
+ },
+ {
+   "id": 100,
+   "identifier": "voltorb",
+   "evolved_species_id": 101,
+   "evolve_level": 25,
+   "base_experience": 66,
+   "type1": 13,
+   "type2": 0
+ },
+ {
+   "id": 101,
+   "identifier": "electrode",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 172,
+   "type1": 13,
+   "type2": 0
+ },
+ {
+   "id": 102,
+   "identifier": "exeggcute",
+   "evolved_species_id": 103,
+   "evolve_level": 18,
+   "base_experience": 65,
+   "type1": 12,
+   "type2": 14
+ },
+ {
+   "id": 103,
+   "identifier": "exeggutor",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 186,
+   "type1": 12,
+   "type2": 14
+ },
+ {
+   "id": 104,
+   "identifier": "cubone",
+   "evolved_species_id": 105,
+   "evolve_level": 18,
+   "base_experience": 64,
+   "type1": 5,
+   "type2": 0
+ },
+ {
+   "id": 105,
+   "identifier": "marowak",
+   "evolved_species_id": 188,
+   "evolve_level": 18,
+   "base_experience": 149,
+   "type1": 5,
+   "type2": 0
+ },
+ {
+   "id": 106,
+   "identifier": "hitmonlee",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 159,
+   "type1": 2,
+   "type2": 0
+ },
+ {
+   "id": 107,
+   "identifier": "hitmonchan",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 159,
+   "type1": 2,
+   "type2": 0
+ },
+ {
+   "id": 108,
+   "identifier": "lickitung",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 77,
+   "type1": 1,
+   "type2": 0
+ },
+ {
+   "id": 109,
+   "identifier": "koffing",
+   "evolved_species_id": 196,
+   "evolve_level": 25,
+   "base_experience": 68,
+   "type1": 4,
+   "type2": 0
+ },
+ {
+   "id": 110,
+   "identifier": "weezing",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 172,
+   "type1": 4,
+   "type2": 0
+ },
+ {
+   "id": 111,
+   "identifier": "rhyhorn",
+   "evolved_species_id": 112,
+   "evolve_level": 25,
+   "base_experience": 69,
+   "type1": 5,
+   "type2": 6
+ },
+ {
+   "id": 112,
+   "identifier": "rhydon",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 170,
+   "type1": 5,
+   "type2": 6
+ },
+ {
+   "id": 113,
+   "identifier": "chansey",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 395,
+   "type1": 1,
+   "type2": 0
+ },
+ {
+   "id": 114,
+   "identifier": "tangela",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 87,
+   "type1": 12,
+   "type2": 0
+ },
+ {
+   "id": 115,
+   "identifier": "kangaskhan",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 172,
+   "type1": 1,
+   "type2": 0
+ },
+ {
+   "id": 116,
+   "identifier": "horsea",
+   "evolved_species_id": 117,
+   "evolve_level": 30,
+   "base_experience": 59,
+   "type1": 11,
+   "type2": 0
+ },
+ {
+   "id": 117,
+   "identifier": "seadra",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 154,
+   "type1": 11,
+   "type2": 0
+ },
+ {
+   "id": 118,
+   "identifier": "goldeen",
+   "evolved_species_id": 119,
+   "evolve_level": 33,
+   "base_experience": 64,
+   "type1": 11,
+   "type2": 0
+ },
+ {
+   "id": 119,
+   "identifier": "seaking",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 158,
+   "type1": 11,
+   "type2": 0
+ },
+ {
+   "id": 120,
+   "identifier": "staryu",
+   "evolved_species_id": 121,
+   "evolve_level": 25,
+   "base_experience": 68,
+   "type1": 11,
+   "type2": 0
+ },
+ {
+   "id": 121,
+   "identifier": "starmie",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 182,
+   "type1": 11,
+   "type2": 14
+ },
+ {
+   "id": 122,
+   "identifier": "mr-mime",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 161,
+   "type1": 14,
+   "type2": 18
+ },
+ {
+   "id": 123,
+   "identifier": "scyther",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 100,
+   "type1": 7,
+   "type2": 3
+ },
+ {
+   "id": 124,
+   "identifier": "jynx",
+   "evolved_species_id": 232,
+   "evolve_level": 25,
+   "base_experience": 159,
+   "type1": 15,
+   "type2": 14
+ },
+ {
+   "id": 125,
+   "identifier": "electabuzz",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 172,
+   "type1": 13,
+   "type2": 0
+ },
+ {
+   "id": 126,
+   "identifier": "magmar",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 173,
+   "type1": 10,
+   "type2": 0
+ },
+ {
+   "id": 127,
+   "identifier": "pinsir",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 175,
+   "type1": 7,
+   "type2": 0
+ },
+ {
+   "id": 128,
+   "identifier": "tauros",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 172,
+   "type1": 1,
+   "type2": 0
+ },
+ {
+   "id": 129,
+   "identifier": "magikarp",
+   "evolved_species_id": 130,
+   "evolve_level": 16,
+   "base_experience": 40,
+   "type1": 11,
+   "type2": 0
+ },
+ {
+   "id": 130,
+   "identifier": "gyarados",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 189,
+   "type1": 11,
+   "type2": 3
+ },
+ {
+   "id": 131,
+   "identifier": "lapras",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 187,
+   "type1": 11,
+   "type2": 15
+ },
+ {
+   "id": 132,
+   "identifier": "ditto",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 101,
+   "type1": 1,
+   "type2": 0
+ },
+ {
+   "id": 133,
+   "identifier": "eevee",
+   "evolved_species_id": [134,135,136],
+   "evolve_level": 16,
+   "base_experience": 65,
+   "type1": 1,
+   "type2": 0
+ },
+ {
+   "id": 134,
+   "identifier": "vaporeon",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 184,
+   "type1": 11,
+   "type2": 0
+ },
+ {
+   "id": 135,
+   "identifier": "jolteon",
+   "evolved_species_id": -1,
+   "evolve_level": 36,
+   "base_experience": 184,
+   "type1": 13,
+   "type2": 0
+ },
+ {
+   "id": 136,
+   "identifier": "flareon",
+   "evolved_species_id": 262,
+   "evolve_level": 18,
+   "base_experience": 184,
+   "type1": 10,
+   "type2": 0
+ },
+ {
+   "id": 137,
+   "identifier": "porygon",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 79,
+   "type1": 1,
+   "type2": 0
+ },
+ {
+   "id": 138,
+   "identifier": "omanyte",
+   "evolved_species_id": 139,
+   "evolve_level": 10,
+   "base_experience": 71,
+   "type1": 6,
+   "type2": 11
+ },
+ {
+   "id": 139,
+   "identifier": "omastar",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 173,
+   "type1": 6,
+   "type2": 11
+ },
+ {
+   "id": 140,
+   "identifier": "kabuto",
+   "evolved_species_id": 141,
+   "evolve_level": 14,
+   "base_experience": 71,
+   "type1": 6,
+   "type2": 11
+ },
+ {
+   "id": 141,
+   "identifier": "kabutops",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 173,
+   "type1": 6,
+   "type2": 11
+ },
+ {
+   "id": 142,
+   "identifier": "aerodactyl",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 180,
+   "type1": 6,
+   "type2": 3
+ },
+ {
+   "id": 143,
+   "identifier": "snorlax",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 189,
+   "type1": 1,
+   "type2": 0
+ },
+ {
+   "id": 144,
+   "identifier": "articuno",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 261,
+   "type1": 15,
+   "type2": 3
+ },
+ {
+   "id": 145,
+   "identifier": "zapdos",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 261,
+   "type1": 13,
+   "type2": 3
+ },
+ {
+   "id": 146,
+   "identifier": "moltres",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 261,
+   "type1": 10,
+   "type2": 3
+ },
+ {
+   "id": 147,
+   "identifier": "dratini",
+   "evolved_species_id": 148,
+   "evolve_level": 20,
+   "base_experience": 60,
+   "type1": 16,
+   "type2": 0
+ },
+ {
+   "id": 148,
+   "identifier": "dragonair",
+   "evolved_species_id": 149,
+   "evolve_level": 30,
+   "base_experience": 147,
+   "type1": 16,
+   "type2": 0
+ },
+ {
+   "id": 149,
+   "identifier": "dragonite",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 270,
+   "type1": 16,
+   "type2": 3
+ },
+ {
+   "id": 150,
+   "identifier": "mewtwo",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 306,
+   "type1": 14,
+   "type2": 0
+ },
+ {
+   "id": 151,
+   "identifier": "mew",
+   "evolved_species_id": -1,
+   "evolve_level": -1,
+   "base_experience": 270,
+   "type1": 14,
+   "type2": 0
+ }
+]
