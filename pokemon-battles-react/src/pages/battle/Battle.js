@@ -183,7 +183,7 @@ const Battle = () => {
         }
 
         if(opponent.move != null) {
-            //will have to calculate damage from type & pp
+            //will have to calculate damage from type & pp / other stats
             myHp[selectedPokemon] -= opponent.move.pp;
             
             let max = -1;
