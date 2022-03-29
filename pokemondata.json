@@ -3,8 +3,10 @@
    "id": 1,
    "identifier": "bulbasaur",
    "evolved_species_id": 2,
-   "minimum_level": 16,
+   "minimum_level": 16, 
    "base_experience": 64,
+   "pokemon_stage": 1,
+   "pokemon_chance": 1,
    "type1": 12,
    "type2": 4
  },
