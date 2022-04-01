@@ -11,6 +11,9 @@ const pokemonData = require("./data/pokemondata.json");
 const typeData = require("./data/typedamage.json");
 const typeConvert = require("./data/types.json");
 
+// Imports
+import { auth } from './util/Firebase';
+
 // Cors
 var cors = require("cors");
 
@@ -60,3 +63,26 @@ app.listen(port, () => {
   console.log('Listening on *:3001')
 })
 
+
+
+// Game logic
+app.get('/api/login', (req, res) =>{
+  const googleLogin = async () => {
+    const response = await signInWithGoogle();
+    if (response){
+      res.send(true);
+    } else {
+      res.send(false);
+    }
+  }
+
+  googleLogin();
+})
+
+app.get('/api/auth', (req, res) =>{
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+        res.send(true)
+    }
+  });
+})

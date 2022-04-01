@@ -1,7 +1,5 @@
 import './Profile.css'
 import Back from '../../components/Back';
-import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { auth, getUser, updateUser } from '../../util/Firebase';
 import { useState, useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { ClientContext } from '../../context/ClientContext';

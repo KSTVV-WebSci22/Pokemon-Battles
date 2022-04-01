@@ -7,39 +7,44 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FloatingLabel, Form} from 'react-bootstrap'
 import { ClientContext } from '../../context/ClientContext';
 import Loading from '../../components/Loading';
-import { signInWithGoogle, auth } from '../../util/Firebase';
-import { onAuthStateChanged } from 'firebase/auth'
 import googleIcon from './google.png'
+import axios from 'axios';
 
 const Home = () => {
     let navigate = useNavigate();
 
     // Context
-    const{ setSong, disclaimer, setDisclaimer } = useContext(ClientContext);
-
-    const { mute, setMute} = useContext(ClientContext);
+    const{ setSong, website } = useContext(ClientContext);
     const [login, setLogin] = useState(false);
     const [createAccount, setCreateAccount] = useState(false);
     
     // Login System
     const loginCheck = async () => {
+        axios.get((website + '/api/login')
+            .then(res =>{
+                console.log("response: " + res)
+                if (res){
+                    navigate("./welcome")
+                }
+            })
+            .catch(error=>{
+                console.log(error)
+            })
+        )
+    }
 
-    const response = await signInWithGoogle();
-      console.log("response: " + response)
-      if (response){
-        navigate("./welcome")
-      }
+    const auth = () => {
+        axios.get((`${website}/api/auth`))
+            .then((res)=>{
+                if (res) {
+                    navigate('./welcome')
+                }
+            })
     }
 
     useEffect(()=>{
         setSong(1)
-
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-              navigate('./welcome')
-            }
-          });
-          
+        auth()
     }, [])
     
     return ( 

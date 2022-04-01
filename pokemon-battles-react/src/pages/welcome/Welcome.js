@@ -8,11 +8,8 @@ import prof from '../../img/people/prof.png'
 import { Link, useNavigate } from 'react-router-dom'
 import { useEffect, useContext, useState } from 'react'
 import { ClientContext } from '../../context/ClientContext'
-import { onAuthStateChanged } from 'firebase/auth'
-import { auth, db, getUser, updateUser } from '../../util/Firebase'
 import Loading from '../../components/Loading'
-import { onSnapshot, doc } from 'firebase/firestore'
-
+import axios from 'axios'
 
 const Welcome = () => {
   let navigate = useNavigate();
@@ -26,7 +23,7 @@ const Welcome = () => {
   const [profilePic, setProfilePic] = useState()
 
   // Context
-  const{ setSong } = useContext(ClientContext);
+  const{ setSong, website } = useContext(ClientContext);
 
   const userInfo = async (uid) => {
     const user = await getUser(uid);
@@ -41,21 +38,25 @@ const Welcome = () => {
     }
   }
 
+  const auth = () => {
+    axios.get((`${website}/api/auth`))
+        .then((user)=>{
+          if (user) {
+            // User is Signed In
+            console.log(user);
+            setUID(user.uid);
+            listenToUsername(user.uid)
+            userInfo(user.uid);
+          } else {
+            // User is signed out
+            navigate('/');
+          }
+        })
+}
+
   useEffect(()=>{
     setSong(2)
-    
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        // User is Signed In
-        console.log(user);
-        setUID(user.uid);
-        listenToUsername(user.uid)
-        userInfo(user.uid);
-      } else {
-        // User is signed out
-        navigate('/');
-      }
-    })
+    auth()
   }, [])
 
   const updateUsername = async () => {

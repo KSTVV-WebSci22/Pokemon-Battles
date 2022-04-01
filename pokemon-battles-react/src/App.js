@@ -14,8 +14,7 @@ import { useState, useEffect } from 'react';
 import SoundManager from './components/SoundManager';
 import SettingsButton from './components/SettingsButton';
 import Profile from './pages/profile/Profile';
-import { onAuthStateChanged } from 'firebase/auth'
-import { auth } from './util/Firebase'
+
 import { useNavigate } from 'react-router-dom'
 
 function App() {
