@@ -1,11 +1,20 @@
 #battle {
-    background-color: var(--blue);
+   display: flex;
+   width: 100vw;
+   justify-content: center;
+}
+
+.battle {
     width: 100vw;
     height: 100vh; 
     display: grid;
+    margin-left: auto;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
+    justify-self: center;
+    margin-left: 0;
 }
+
 
 .battle-top {
     grid-row: 1 / 2;
@@ -58,6 +67,8 @@
 
 #opponent-pokemon-img, #player-pokemon-img {
     position: relative;
+    width: 130px;
+    object-fit: cover;
 }
 
 #opponent-pokemon-img img, 
@@ -96,28 +107,33 @@
 }
 
 /* Battle Buttons */
-#battle-buttons button{
+#battle-buttons button {
     border: none;
     margin: 10px;
     border-radius: 5px;
     font-size: 2rem;
 }
 
-#battle-buttons button:nth-child(1){
+#battle-buttons button:nth-child(1) {
     background-color: Red;
     height: 75%;
 }
 
-#battle-buttons button:nth-child(2){
+#battle-buttons button:nth-child(2) {
     background-color: var(--yellow);
     height: 25%;
 }
 
 /* Fight Buttons */
+.move {
+    height: 100%;
+}
+
 .moves {
     display: flex;
     align-items: center;
     height: 100%;
+    width: 100%;
     margin: 6px;
     border: none;    
 }
@@ -187,7 +203,7 @@
     height: 100%;
 }
 
-#battle-options .cancel{
+#battle-options .cancel {
     background-color: transparent;
     position: relative;
     display: flex;
@@ -195,7 +211,7 @@
     font-weight: bold;
 }
 
-#battle-options .cancel > div:nth-child(1){
+#battle-options .cancel > div:nth-child(1) {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -206,8 +222,12 @@
 
 /* Pokemon Selection */
 .pokemon-select {
-    height: 100%;
-    margin: 3px;
+
+}
+
+.pokemon-btn {
+    height: 100% !important;
+    margin-bottom: 0;
 }
 
 .shadow {
