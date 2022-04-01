@@ -20,6 +20,7 @@ const Welcome = () => {
   // States
   const [name, setName] = useState("")
   const [newUser, setNewUser] = useState(true)
+  const [stage, setStage] = useState(0)
   const [loading, setLoading] = useState(true)
   const [uid, setUID] = useState('')
   const [profilePic, setProfilePic] = useState()
@@ -80,8 +81,11 @@ const Welcome = () => {
   <div className='content'>
     {loading && <Loading />}
     <div id="welcome" className='content-item'>
-      {newUser ?
-        <div id="new-user">
+      {newUser ? <>
+
+        {/* Nickname */}
+        { stage === 0 ? 
+          <div id="new-user">
           <h1 className='mb-5'>Welcome to the exciting world of Pokemon!</h1>
           <p>My name is Prof. Oak and i'm here to help you become the #1 Pokemon Trainer! 
              <br/>Let's not take too much time! Are you ready?! </p>
@@ -101,7 +105,13 @@ const Welcome = () => {
               className='sbutton'>Submit
             </button>
             }
-        </div>
+          </div> : <></>
+        }
+
+        {/* Base Pokemon Selection */}
+
+        {/* Remaining 5 pokemon */}
+        </>
         :
         <>
         <h3>Welcome Back, {name}!</h3>
