@@ -94,7 +94,7 @@ const Battle = () => {
     const signatureRef = useRef(null);
     const [loading, setLoading] = useState(true);
 
-    const { setSong } = useContext(ClientContext);
+    const { setSong, website } = useContext(ClientContext);
 
     useEffect(()=>{
       setSong(3)
@@ -109,7 +109,7 @@ const Battle = () => {
     const getPokemon = async (number) => {
         if(number != undefined) {
             return new Promise((res) => {
-                axios.get('/api/pokemon/'+ number).then(function (response) {
+                axios.get(website + '/api/pokemon/'+ number).then(function (response) {
                     //console.log(response.data);
                     res(response.data);
                 }).catch(function (error) {
@@ -121,7 +121,7 @@ const Battle = () => {
 
     const getMove = async (number) => {
         return new Promise((res) => {
-            axios.get('/api/move/'+ number).then(function (response) {
+            axios.get(website + '/api/move/'+ number).then(function (response) {
                 //console.log(response.data);
                 res(response.data);
             }).catch(function (error) {

@@ -11,9 +11,22 @@ const pokemonData = require("./data/pokemondata.json");
 const typeData = require("./data/typedamage.json");
 const typeConvert = require("./data/types.json");
 
+// Cors
+var cors = require("cors");
+
+
 app.get('/api', (req, res) => {
   res.json("Working");
 });
+
+app.use(cors({
+  origin: ['http://localhost:3000'],
+  methods: [
+      "GET", "POST", "DELETE", "PUT"
+  ],
+  credentials: true
+}));
+
 
 app.get('/api/move/:id', (req, res) => {
   var id = req.params.id;

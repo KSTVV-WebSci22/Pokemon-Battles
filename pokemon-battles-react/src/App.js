@@ -23,6 +23,7 @@ function App() {
   const [volume, setVolume] = useState(localStorage.getItem("volume"));
   const [song, setSong] = useState(1);
   const [disclaimer, setDisclaimer] = useState(true);
+  const [website] = useState("http://localhost:3001")
 
   useEffect(()=>{
     if (localStorage.getItem("volume") === null) {
@@ -39,6 +40,7 @@ function App() {
       mute, setMute,
       volume, setVolume,
       song, setSong,
+      website,
       // settings, setSettings,
       disclaimer, setDisclaimer
     }}>
