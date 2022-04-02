@@ -70,14 +70,14 @@ const Party = () => {
             <div className='party-words'>
               {/* Name */}
               <h2>
-                <span style={{color: `var(--${poke.type1.toLowerCase()})`}}>{poke.identifier}</span>
+                <span style={{color: `var(--${poke.type1.toLowerCase()})`}}>
+                  {poke.identifier}
+                </span>
                 <span className='party-level'>
                   {poke.current_level}
                 </span>
-
               </h2>
 
-              {/* Level */}
 
               {/* Type */}
               <div className="party-text">
