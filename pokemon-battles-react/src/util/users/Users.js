@@ -86,7 +86,6 @@ export const updateUser = async (username) => {
 
 
 // Update Pokemon
-
 export const addPokemon = async (pokemon) => {
   const user = doc(db, 'users/', auth.currentUser.uid)
   await updateDoc(user, {
@@ -97,4 +96,15 @@ export const addPokemon = async (pokemon) => {
     return false
   })
 
+}
+
+// Get Users Pokemons
+export const getMyPokemon = async(uid) => {
+  const user = doc(db, 'users/' + uid)
+  const docData = await getDoc(user)
+  if(docData.exists()) {
+    return docData.data().pokemon;
+  } else {
+    return false
+  }
 }

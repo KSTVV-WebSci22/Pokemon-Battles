@@ -53,23 +53,39 @@ app.get('/api/pokemon/:id', (req, res) => {
   res.json(pokemon);
 });
 
+app.get('/api/newPokemon/:id', (req, res) => {
+  var id = req.params.id;
+  let pokemon = {...pokemonData[id]};
+  let t1 = typeConvert.types[String(pokemon['type1'])].identifier;
+  let t2 = typeConvert.types[String(pokemon['type2'])].identifier;
+  
+  pokemon['type1'] = t1;
+  pokemon['type2'] = t2;
+
+  const moves = []
+
+  const array = moveList.filter(obj => {
+    // Filter by Pokemon ID, Pokemon Moves from Evolving, and Pokemons Level 
+    return obj.pokemon_id === parseInt(id) && obj.pokemon_move_method_id === 1 && obj.level <= 5
+  })
+  array.map((move)=>{
+    moves.push(
+      moveData.find(obj => { return obj.id === move.move_id })
+    )
+  })
+  let i = moves.length
+  for(i; i < 4; i++){
+    moves.push(null)
+  }
+  pokemon.moves = moves
+  res.json(pokemon);
+});
+
 
 // Pokemon Type
 app.get('/api/type/:type', (req, res) => {
   var type = req.params.type;
   res.json(typeData.type_damage[type]);
-});
-
-
-// Pokemon Starting Moves
-app.get('/api/starterMoves/:id', (req, res) => {
-  const moves = []
-  var id = parseInt(req.params.id)
-  const array = moveList.filter(obj => {
-    // Filter by Pokemon ID, Pokemon Moves from Evolving, and Pokemons Level 
-    return obj.pokemon_id === id && obj.pokemon_move_method_id === 1 && obj.level <= 5
-  })
-  res.json(array);
 });
 
 

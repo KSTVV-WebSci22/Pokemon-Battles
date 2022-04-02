@@ -84,7 +84,7 @@ const Welcome = () => {
 
   const firstPokemon = () =>{
     let array = []
-    axios.get(`${website}/api/pokemon/1`)
+    axios.get(`${website}/api/newPokemon/1`)
       .then(response => {
         array.push(response.data)
       })
@@ -92,7 +92,7 @@ const Welcome = () => {
         console.log(error);
       })
 
-    axios.get(`${website}/api/pokemon/4`)
+    axios.get(`${website}/api/newPokemon/4`)
       .then(response => {
         array.push(response.data)
       })
@@ -100,7 +100,7 @@ const Welcome = () => {
         console.log(error);
       })
 
-    axios.get(`${website}/api/pokemon/7`)
+    axios.get(`${website}/api/newPokemon/7`)
       .then(response => {
         array.push(response.data)
       })
@@ -110,29 +110,6 @@ const Welcome = () => {
 
       setFirst(array)
   }
-
-  const getStartingMoves = (pokemon) => {
-    console.log(pokemon.id)
-    axios.get(`${website}/api/starterMoves/${pokemon.id}`)
-      .then(response => {
-        let moves = []
-        for(let i = 0; i < 4; i++){
-          if(response.data[i]){
-            moves.push(response.data[i]) 
-          } else {
-            moves.push(null)
-          }
-        }
-        pokemon.moves = moves;
-        addPokemon(pokemon)
-        setNewUser(false)
-      })
-      .catch( error => {
-        console.log(error);
-      })
-
-  }
-
   
   return (
   <div className='content'>
@@ -209,7 +186,9 @@ const Welcome = () => {
                     onClick={()=>{
                       let pokemon = firstQ
                       pokemon.current_level = 5
-                      getStartingMoves(pokemon);
+                      console.log(pokemon)
+                      addPokemon(pokemon);
+                      setNewUser(false)
                     }}
                   >Yes</button>
                   <button 
