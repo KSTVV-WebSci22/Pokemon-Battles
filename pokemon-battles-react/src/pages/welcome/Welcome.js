@@ -9,6 +9,10 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useEffect, useContext, useState } from 'react'
 import { ClientContext } from '../../context/ClientContext'
 import Loading from '../../components/Loading'
+
+// Firebase
+import { auth } from '../../util/Firebase'
+import { updateUser, getUser } from '../../util/users/Users'
 import axios from 'axios'
 
 const Welcome = () => {
@@ -19,64 +23,86 @@ const Welcome = () => {
   const [newUser, setNewUser] = useState(true)
   const [stage, setStage] = useState(0)
   const [loading, setLoading] = useState(true)
-  const [uid, setUID] = useState('')
   const [profilePic, setProfilePic] = useState()
+  
+  // First Pokemon
+  const [first, setFirst] = useState()
+  const [firstQ, setFirstQ] = useState(null)
+
 
   // Context
   const{ setSong, website } = useContext(ClientContext);
 
   const userInfo = async (uid) => {
+    // Get User Info
     const user = await getUser(uid);
+
+    // Check Username
     if(user.username == null){
+      setStage(0)
       setNewUser(true);
       setLoading(false);
+
+    // Check Pokemon
+    } else if(user.pokemon == null){
+      setStage(1)
+      setNewUser(true)
+      setLoading(false)
+
+    // Good to go
     } else {
-      console.log(user.profilePic)
+      setStage(1)
+      setNewUser(false)
       setName(user.username)
       setProfilePic(user.profilePic)
       setLoading(false)
     }
   }
 
-  const auth = () => {
-    axios.get((`${website}/api/auth`))
-        .then((user)=>{
-          if (user) {
-            // User is Signed In
-            console.log(user);
-            setUID(user.uid);
-            listenToUsername(user.uid)
-            userInfo(user.uid);
-          } else {
-            // User is signed out
-            navigate('/');
-          }
-        })
-}
-
   useEffect(()=>{
     setSong(2)
-    auth()
+    if(auth.currentUser){
+      userInfo(auth.currentUser.uid)
+      firstPokemon()
+    } else {
+      navigate('/')
+    }
   }, [])
 
   const updateUsername = async () => {
-    const updated = await updateUser(uid, name)
-    console.log(updated)
+    const updated = await updateUser(name)
+    console.log("User Update: " + updated)
   }
 
-  const listenToUsername = (uid) => {
-    const user = doc(db, 'users/', uid)
-    onSnapshot(user, docSnapshot => {
-      if(docSnapshot.exists()) {
-        console.log("listening to username")
-        const docData = docSnapshot.data();
-        if(docData.username != null) {
-          console.log("listening to username2")
-          setNewUser(false)
-        } 
-      }
-    })
+  const firstPokemon = () =>{
+    let array = []
+    axios.get(`${website}/api/pokemon/1`)
+      .then(response => {
+        array.push(response.data)
+      })
+      .catch( error => {
+        console.log(error);
+      })
+
+    axios.get(`${website}/api/pokemon/4`)
+      .then(response => {
+        array.push(response.data)
+      })
+      .catch( error => {
+        console.log(error);
+      })
+
+    axios.get(`${website}/api/pokemon/7`)
+      .then(response => {
+        array.push(response.data)
+      })
+      .catch( error => {
+        console.log(error);
+      })
+
+      setFirst(array)
   }
+
   
   return (
   <div className='content'>
@@ -87,29 +113,70 @@ const Welcome = () => {
         {/* Nickname */}
         { stage === 0 ? 
           <div id="new-user">
-          <h1 className='mb-5'>Welcome to the exciting world of Pokemon!</h1>
-          <p>My name is Prof. Oak and i'm here to help you become the #1 Pokemon Trainer! 
-             <br/>Let's not take too much time! Are you ready?! </p>
-          <img src={prof} alt="professor" />
-          <h3>Oh I forgot to ask! <br/>What should we call you?</h3>
-          <input 
-            type="text" 
-            onChange={(e)=>{
-              setName(e.target.value)
-            }}
-          /> <br/>
-          {name.length <= 6 ? 
-            <></>
-            :
-            <button 
-              onClick={updateUsername}
-              className='sbutton'>Submit
-            </button>
+            <h1 className='mb-5'>Welcome to the exciting world of Pokemon!</h1>
+            <p>My name is Prof. Oak and i'm here to help you become the #1 Pokemon Trainer! 
+              <br/>Let's not take too much time! Are you ready?! </p>
+            <img src={prof} alt="professor" />
+            <h3>Oh I forgot to ask! <br/>What should we call you?</h3>
+            <input 
+              type="text" 
+              onChange={(e)=>{
+                setName(e.target.value)
+              }}
+            /> <br/>
+            {name.length <= 6 ? 
+              <></>
+              :
+              <button 
+                onClick={updateUsername}
+                className='sbutton'>Submit
+              </button>
             }
           </div> : <></>
         }
 
         {/* Base Pokemon Selection */}
+        { stage === 1 ? 
+          <div id="new-user">
+            <h1 className='mb-5'>Lets get your next pokemon!</h1>
+            {
+              firstQ === null ? <>
+                <p>Please choose your first pokemon!</p>
+                <div className="first-pokemon-box">
+                  {first && first.map((pokemon, key) => {
+                    return (
+                      <img 
+                        key={key} 
+                        src={require("../../img/pokemon/" + pokemon.identifier + ".png")} 
+                        alt={pokemon.identifier} 
+                        onClick={()=>{setFirstQ(first[key])}}
+                      />
+                    )
+                  })}
+                </div>
+                <h3>Which Pokemon?</h3>
+                
+              </>
+              :
+              <>
+                
+                <h3>{firstQ.identifier}</h3>
+                <img src={require("../../img/pokemon/" + firstQ.identifier + ".png")} alt={"first pokemon"} /><br/>
+                <p>{firstQ.type1}{firstQ.type2 === "None" ? "" : firstQ.type2}</p>
+                <h4>Are you sure?</h4>
+                <button 
+                  className='sbutton'
+                  onClick={()=>{setStage(2)}}
+                >Yes</button>
+                <button 
+                  className='ms-3'
+                  variant="danger"
+                  onClick={()=>{setStage(2)}}
+                >No</button>
+              </>
+            }
+          </div> : <></>
+        }
 
         {/* Remaining 5 pokemon */}
         </>

@@ -10,6 +10,9 @@ import Loading from '../../components/Loading';
 import googleIcon from './google.png'
 import axios from 'axios';
 
+// Firebase
+import { signInWithGoogle } from '../../util/users/Users';
+
 const Home = () => {
     let navigate = useNavigate();
 
@@ -20,31 +23,16 @@ const Home = () => {
     
     // Login System
     const loginCheck = async () => {
-        axios.get((website + '/api/login')
-            .then(res =>{
-                console.log("response: " + res)
-                if (res){
-                    navigate("./welcome")
-                }
-            })
-            .catch(error=>{
-                console.log(error)
-            })
-        )
-    }
-
-    const auth = () => {
-        axios.get((`${website}/api/auth`))
-            .then((res)=>{
-                if (res) {
-                    navigate('./welcome')
-                }
-            })
+        const response = await signInWithGoogle();
+        if (response){
+            navigate("./welcome")
+        } else {
+            console.log(`Response: ${response}`)
+        }
     }
 
     useEffect(()=>{
         setSong(1)
-        auth()
     }, [])
     
     return ( 

@@ -5,6 +5,13 @@ import { useNavigate } from 'react-router-dom';
 import { ClientContext } from '../../context/ClientContext';
 import { Button, FloatingLabel, Form, Modal } from 'react-bootstrap';
 
+// Firebase
+import { auth } from '../../util/Firebase';
+import { signOut, onAuthStateChanged } from 'firebase/auth';
+
+// Firebase Users
+import { getUser, updateUser } from '../../util/users/Users';
+
 const Profile = () => {
     let navigate = useNavigate();
     const [uid, setUID] = useState("")
@@ -103,7 +110,9 @@ const Profile = () => {
                         type="text" 
                         placeholder="username" 
                         defaultValue={username}
-                        onChange={(e)=>{setUsername(e.target.value)}}
+                        onChange={(e)=>{
+                            setUsername(e.target.value)
+                        }}
                     />
                 </FloatingLabel>    
                 <small><span className='text-danger fw-bold'>Warning: Any usernames created that are deemed to be inappropriate, will be permanantly banned.</span></small>

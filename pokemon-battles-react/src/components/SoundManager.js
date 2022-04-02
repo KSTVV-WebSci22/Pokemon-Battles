@@ -39,7 +39,7 @@ const SoundManager = ({song}) => {
     {currentSong && <Sound 
         url={currentSong}
         playStatus={ mute ? Sound.status.PLAYING : Sound.status.STOPPED}
-        volume={volume}
+        volume={parseInt(volume)}
         loop={true}
     />
     }

@@ -11,9 +11,6 @@ const pokemonData = require("./data/pokemondata.json");
 const typeData = require("./data/typedamage.json");
 const typeConvert = require("./data/types.json");
 
-// Imports
-import { auth } from './util/Firebase';
-
 // Cors
 var cors = require("cors");
 
@@ -77,12 +74,4 @@ app.get('/api/login', (req, res) =>{
   }
 
   googleLogin();
-})
-
-app.get('/api/auth', (req, res) =>{
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-        res.send(true)
-    }
-  });
 })

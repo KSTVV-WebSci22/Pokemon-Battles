@@ -126,3 +126,30 @@ h3 {
 #new-user input{
   color: var(--dark) !important;
 }
+
+#new-user .first-pokemon-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 1080px;
+  height: auto;
+}
+
+#new-user .first-pokemon {
+ border-radius: 100vw;
+ border: 3px solid var(--dragon); 
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ /* overflow: hidden; */
+ /* padding: 2rem; */
+ margin: .6rem;
+ max-height: 100px;
+ width: min(50vw, 200px);
+}
+
+#new-user img {
+  width: 25%;
+  height: auto;
+  padding: 1rem;
+}
