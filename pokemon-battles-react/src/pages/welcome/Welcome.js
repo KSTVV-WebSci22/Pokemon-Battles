@@ -44,7 +44,6 @@ const Welcome = () => {
   const userInfo = async (uid) => {
     // Get User Info
     const user = await getUser(uid);
-    console.log(user.pokemon.length)
     // Check Username
     if(user.username == null){
       setStage(0)
@@ -110,6 +109,28 @@ const Welcome = () => {
       })
 
       setFirst(array)
+  }
+
+  const getStartingMoves = (pokemon) => {
+    console.log(pokemon.id)
+    axios.get(`${website}/api/starterMoves/${pokemon.id}`)
+      .then(response => {
+        let moves = []
+        for(let i = 0; i < 4; i++){
+          if(response.data[i]){
+            moves.push(response.data[i]) 
+          } else {
+            moves.push(null)
+          }
+        }
+        pokemon.moves = moves;
+        addPokemon(pokemon)
+        setNewUser(false)
+      })
+      .catch( error => {
+        console.log(error);
+      })
+
   }
 
   
@@ -188,12 +209,7 @@ const Welcome = () => {
                     onClick={()=>{
                       let pokemon = firstQ
                       pokemon.current_level = 5
-                      const added = addPokemon(pokemon);
-                      if(added) {
-                        setStage(2)
-                      } else {
-                        console.log("pokemon not added to user.")
-                      };
+                      getStartingMoves(pokemon);
                     }}
                   >Yes</button>
                   <button 

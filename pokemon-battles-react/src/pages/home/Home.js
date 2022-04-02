@@ -35,9 +35,10 @@ const Home = () => {
 
     // Authorized
     onAuthStateChanged(auth, (user) => {
-        if (user) {
-            navigate('/welcome')
-        }
+        console.log(user)
+        // if (user) {
+        //     navigate('/welcome')
+        // }
     });
 
     useEffect(()=>{
@@ -56,27 +57,9 @@ const Home = () => {
                     {/* Welcome Message */}
                     <h3 className='mt-3'>Welcome Trainer!</h3>
 
-                    {/* Input Boxes */}
-                    {/* <FloatingLabel
-                        controlId="floatingInput"
-                        label="Email address"
-                        className="mb-3"
-                    >
-                        <Form.Control type="email" placeholder="name@example.com" />
-                    </FloatingLabel>
-                    <FloatingLabel controlId="floatingPassword" label="Password">
-                        <Form.Control type="password" placeholder="Password" />
-                    </FloatingLabel> */}
-
-                    {/* Buttons */}
-                    {/* <Link 
-                        to='welcome'
-                        className='sbutton fw-bold mb-3'
-                    >Lets Go!</Link> */}
-
                     {/* Gmail Login */}
                     <button 
-                        onClick={loginCheck} 
+                        onClick={()=>{loginCheck()}} 
                         className='gicon fw-bold mb-3'
                     >
                         <img src={googleIcon} />Sign in with Google
