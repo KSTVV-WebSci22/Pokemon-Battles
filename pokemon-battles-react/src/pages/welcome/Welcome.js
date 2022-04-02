@@ -85,7 +85,7 @@ const Welcome = () => {
 
   const firstPokemon = () =>{
     let array = []
-    axios.get(`${website}/api/pokemonStarter/1`)
+    axios.get(`${website}/api/pokemon/1`)
       .then(response => {
         array.push(response.data)
       })
@@ -93,7 +93,7 @@ const Welcome = () => {
         console.log(error);
       })
 
-    axios.get(`${website}/api/pokemonStarter/4`)
+    axios.get(`${website}/api/pokemon/4`)
       .then(response => {
         array.push(response.data)
       })
@@ -101,7 +101,7 @@ const Welcome = () => {
         console.log(error);
       })
 
-    axios.get(`${website}/api/pokemonStarter/7`)
+    axios.get(`${website}/api/pokemon/7`)
       .then(response => {
         array.push(response.data)
       })
@@ -112,15 +112,6 @@ const Welcome = () => {
       setFirst(array)
   }
 
-  useEffect(() => {
-    axios.get(`${website}/api/pokemonStarter2/1`)
-    .then(response => {
-      console.log(response)
-    })
-    .catch( error => {
-      console.log(error);
-    })
-  }, []);
   
   return (
   <div className='content'>
