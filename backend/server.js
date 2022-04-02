@@ -75,7 +75,7 @@ app.get('/api/pokemonStarter2/:id', (req, res) => {
   let t2 = typeConvert.types[String(pokemon['type2'])].identifier;
   
   pokemon['type1'] = t1;
-  pokemon['type2'] = t2;e
+  pokemon['type2'] = t2;
   console.log(pokemon)
   res.json(pokemon);
 });
