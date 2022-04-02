@@ -27,7 +27,7 @@ app.use(cors({
   credentials: true
 }));
 
-
+// Pokemon Moves
 app.get('/api/move/:id', (req, res) => {
   var id = req.params.id;
   var move = {};
@@ -41,37 +41,62 @@ app.get('/api/move/:id', (req, res) => {
   res.json(move);
 });
 
+// Pokemon
 app.get('/api/pokemon/:id', (req, res) => {
   var id = req.params.id;
   let pokemon = {...pokemonData[id]};
   let t1 = typeConvert.types[String(pokemon['type1'])].identifier;
   let t2 = typeConvert.types[String(pokemon['type2'])].identifier;
+  
   pokemon['type1'] = t1;
-  pokemon['type2'] = t2;
+  pokemon['type2'] = t2;e
   res.json(pokemon);
 });
 
+
+// Starting Pokemon - Level 5
+app.get('/api/pokemonStarter/:id', (req, res) => {
+  var id = req.params.id;
+  let pokemon = {...pokemonData[id]};
+  let t1 = typeConvert.types[String(pokemon['type1'])].identifier;
+  let t2 = typeConvert.types[String(pokemon['type2'])].identifier;
+  
+  pokemon['type1'] = t1;
+  pokemon['type2'] = t2;e
+  console.log(pokemon)
+  res.json(pokemon);
+});
+
+// Starting Pokemon - Test (DELETE THIS AFTER POKEMON SELECTION IS DONE) 
+app.get('/api/pokemonStarter2/:id', (req, res) => {
+  var id = req.params.id;
+  let pokemon = {...pokemonData[id]};
+  let t1 = typeConvert.types[String(pokemon['type1'])].identifier;
+  let t2 = typeConvert.types[String(pokemon['type2'])].identifier;
+  
+  pokemon['type1'] = t1;
+  pokemon['type2'] = t2;e
+  console.log(pokemon)
+  res.json(pokemon);
+});
+
+
+
+// Pokemon Type
 app.get('/api/type/:type', (req, res) => {
   var type = req.params.type;
   res.json(typeData.type_damage[type]);
 });
 
+// Pokemon Rarity
+app.get('/api/pokemon/:rarity', (req, res) => {
+  var rarity = req.params.rarity;
+  // res.json(typeData.type_damage[rarity]);
+});
+
+
+// Listen
 app.listen(port, () => {
   console.log('Listening on *:3001')
 })
 
-
-
-// Game logic
-app.get('/api/login', (req, res) =>{
-  const googleLogin = async () => {
-    const response = await signInWithGoogle();
-    if (response){
-      res.send(true);
-    } else {
-      res.send(false);
-    }
-  }
-
-  googleLogin();
-})

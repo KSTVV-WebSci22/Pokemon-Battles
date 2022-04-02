@@ -3,21 +3,23 @@ import './Home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import pokemon from '../../img/items/Pokemon3.png';
 import ash from '../../img/people/ashketchum.png';
-import { Link, useNavigate } from 'react-router-dom';
-import { FloatingLabel, Form} from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom';
 import { ClientContext } from '../../context/ClientContext';
 import Loading from '../../components/Loading';
 import googleIcon from './google.png'
-import axios from 'axios';
 
 // Firebase
 import { signInWithGoogle } from '../../util/users/Users';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../../util/Firebase';
 
 const Home = () => {
     let navigate = useNavigate();
 
     // Context
     const{ setSong, website } = useContext(ClientContext);
+
+    // States
     const [login, setLogin] = useState(false);
     const [createAccount, setCreateAccount] = useState(false);
     
@@ -30,6 +32,13 @@ const Home = () => {
             console.log(`Response: ${response}`)
         }
     }
+
+    // Authorized
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            navigate('/welcome')
+        }
+    });
 
     useEffect(()=>{
         setSong(1)

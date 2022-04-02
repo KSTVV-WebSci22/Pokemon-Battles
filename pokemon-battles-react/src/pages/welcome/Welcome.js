@@ -12,8 +12,9 @@ import Loading from '../../components/Loading'
 
 // Firebase
 import { auth } from '../../util/Firebase'
-import { updateUser, getUser } from '../../util/users/Users'
+import { updateUser, getUser, addPokemon } from '../../util/users/Users'
 import axios from 'axios'
+import { onAuthStateChanged } from 'firebase/auth'
 
 const Welcome = () => {
   let navigate = useNavigate();
@@ -29,14 +30,21 @@ const Welcome = () => {
   const [first, setFirst] = useState()
   const [firstQ, setFirstQ] = useState(null)
 
-
   // Context
   const{ setSong, website } = useContext(ClientContext);
 
+  // Authorized
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      navigate('/')
+    }
+  });
+
+  // User Info
   const userInfo = async (uid) => {
     // Get User Info
     const user = await getUser(uid);
-
+    console.log(user.pokemon.length)
     // Check Username
     if(user.username == null){
       setStage(0)
@@ -44,14 +52,13 @@ const Welcome = () => {
       setLoading(false);
 
     // Check Pokemon
-    } else if(user.pokemon == null){
+    } else if(user.pokemon.length === 0){
       setStage(1)
       setNewUser(true)
       setLoading(false)
 
     // Good to go
     } else {
-      setStage(1)
       setNewUser(false)
       setName(user.username)
       setProfilePic(user.profilePic)
@@ -69,6 +76,8 @@ const Welcome = () => {
     }
   }, [])
 
+  
+
   const updateUsername = async () => {
     const updated = await updateUser(name)
     console.log("User Update: " + updated)
@@ -76,7 +85,7 @@ const Welcome = () => {
 
   const firstPokemon = () =>{
     let array = []
-    axios.get(`${website}/api/pokemon/1`)
+    axios.get(`${website}/api/pokemonStarter/1`)
       .then(response => {
         array.push(response.data)
       })
@@ -84,7 +93,7 @@ const Welcome = () => {
         console.log(error);
       })
 
-    axios.get(`${website}/api/pokemon/4`)
+    axios.get(`${website}/api/pokemonStarter/4`)
       .then(response => {
         array.push(response.data)
       })
@@ -92,7 +101,7 @@ const Welcome = () => {
         console.log(error);
       })
 
-    axios.get(`${website}/api/pokemon/7`)
+    axios.get(`${website}/api/pokemonStarter/7`)
       .then(response => {
         array.push(response.data)
       })
@@ -103,6 +112,15 @@ const Welcome = () => {
       setFirst(array)
   }
 
+  useEffect(() => {
+    axios.get(`${website}/api/pokemonStarter2/1`)
+    .then(response => {
+      console.log(response)
+    })
+    .catch( error => {
+      console.log(error);
+    })
+  }, []);
   
   return (
   <div className='content'>
@@ -116,19 +134,22 @@ const Welcome = () => {
             <h1 className='mb-5'>Welcome to the exciting world of Pokemon!</h1>
             <p>My name is Prof. Oak and i'm here to help you become the #1 Pokemon Trainer! 
               <br/>Let's not take too much time! Are you ready?! </p>
-            <img src={prof} alt="professor" />
-            <h3>Oh I forgot to ask! <br/>What should we call you?</h3>
+            <img className="prof" src={prof} alt="professor" />
+            <h3 className='yellow-text'>Oh I forgot to ask! <br/>What should we call you?</h3>
             <input 
               type="text" 
               onChange={(e)=>{
                 setName(e.target.value)
               }}
             /> <br/>
-            {name.length <= 6 ? 
+            {name.length < 6 ? 
               <></>
               :
               <button 
-                onClick={updateUsername}
+                onClick={()=>{
+                  updateUsername()
+                  setStage(1)
+                }}
                 className='sbutton'>Submit
               </button>
             }
@@ -138,10 +159,9 @@ const Welcome = () => {
         {/* Base Pokemon Selection */}
         { stage === 1 ? 
           <div id="new-user">
-            <h1 className='mb-5'>Lets get your next pokemon!</h1>
+            <h1 className='mb-3'>Please Choose your First Pokemon!</h1>
             {
               firstQ === null ? <>
-                <p>Please choose your first pokemon!</p>
                 <div className="first-pokemon-box">
                   {first && first.map((pokemon, key) => {
                     return (
@@ -149,6 +169,7 @@ const Welcome = () => {
                         key={key} 
                         src={require("../../img/pokemon/" + pokemon.identifier + ".png")} 
                         alt={pokemon.identifier} 
+                        className="first-pokemon-unselected"
                         onClick={()=>{setFirstQ(first[key])}}
                       />
                     )
@@ -159,26 +180,41 @@ const Welcome = () => {
               </>
               :
               <>
-                
+                {/* Selected First Pokemon Screen */}
                 <h3>{firstQ.identifier}</h3>
-                <img src={require("../../img/pokemon/" + firstQ.identifier + ".png")} alt={"first pokemon"} /><br/>
-                <p>{firstQ.type1}{firstQ.type2 === "None" ? "" : firstQ.type2}</p>
+                <img className="first-pokemon-selected" src={require("../../img/pokemon/" + firstQ.identifier + ".png")} alt={"first pokemon"} /><br/>
+                <div className='mb-4'>
+                  <h5 className='mb-3 yellow-text'>Pokemon Type:</h5>
+                  <span className="pokemon-type" style={{backgroundColor: `var(--${firstQ.type1.toLowerCase()})`}}>{firstQ.type1}</span>
+                  {firstQ.type2 !== "None" &&
+                    <span className="pokemon-type" style={{backgroundColor: `var(--${firstQ.type2.toLowerCase()})`}}>{firstQ.type2}</span>
+                  }
+                </div>
                 <h4>Are you sure?</h4>
-                <button 
-                  className='sbutton'
-                  onClick={()=>{setStage(2)}}
-                >Yes</button>
-                <button 
-                  className='ms-3'
-                  variant="danger"
-                  onClick={()=>{setStage(2)}}
-                >No</button>
+                <div>
+                  <button 
+                    className='sbutton'
+                    onClick={()=>{
+                      let pokemon = firstQ
+                      pokemon.current_level = 5
+                      const added = addPokemon(pokemon);
+                      if(added) {
+                        setStage(2)
+                      } else {
+                        console.log("pokemon not added to user.")
+                      };
+                    }}
+                  >Yes</button>
+                  <button 
+                    className='ms-3 sbutton-cancel'
+                    onClick={()=>{setFirstQ(null)}}
+                  >No</button>
+                </div>
               </>
             }
           </div> : <></>
         }
 
-        {/* Remaining 5 pokemon */}
         </>
         :
         <>

@@ -1,4 +1,4 @@
-import { doc, getDoc, updateDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc, setDoc, arrayUnion } from "firebase/firestore";
 import { db } from "../Firebase";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../Firebase";
@@ -43,12 +43,13 @@ export const getUser = async (uid) => {
 // Check User
 const checkIfUserExists = async (user, uid, name, email, profilePic) => {
 
-  const addUser = () => {
+  const newUser = () => {
     const docData = {
       username: null, 
       legalName: name, 
       email: email,
-      profilePic: profilePic
+      profilePic: profilePic,
+      pokemon: []
     }
   
     setDoc(user, docData, { merge: true })
@@ -66,7 +67,7 @@ const checkIfUserExists = async (user, uid, name, email, profilePic) => {
     console.log("Welcome Back")
   } else {
     console.log("new user")
-    addUser();
+    newUser();
   }
 }
 
@@ -81,4 +82,19 @@ export const updateUser = async (username) => {
   }).catch(error => {
     console.log(error);
   });
+}
+
+
+// Update Pokemon
+
+export const addPokemon = async (pokemon) => {
+  const user = doc(db, 'users/', auth.currentUser.uid)
+  await updateDoc(user, {
+    pokemon: arrayUnion(pokemon)
+  }).then(()=>{
+    return true
+  }).catch(error =>{
+    return false
+  })
+
 }
