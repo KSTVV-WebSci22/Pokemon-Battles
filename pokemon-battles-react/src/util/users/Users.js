@@ -49,7 +49,8 @@ const checkIfUserExists = async (user, uid, name, email, profilePic) => {
       legalName: name, 
       email: email,
       profilePic: profilePic,
-      pokemon: []
+      wallet: 10,
+      pokemon: [],
     }
   
     setDoc(user, docData, { merge: true })
