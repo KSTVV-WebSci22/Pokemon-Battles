@@ -61,6 +61,9 @@ app.get('/api/newPokemon/:id', (req, res) => {
   
   pokemon['type1'] = t1;
   pokemon['type2'] = t2;
+  pokemon.win = 0
+  pokemon.loss = 0
+  pokemon.final_win = 0 
 
   const moves = []
 

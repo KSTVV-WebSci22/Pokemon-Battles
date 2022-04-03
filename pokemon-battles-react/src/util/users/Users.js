@@ -18,9 +18,8 @@ export const signInWithGoogle = async () => {
       const uid = result.user.uid;
 
       // writeUserData(uid, name, email, profilePic)
-
       const user = doc(db, 'users/' + uid)
-      checkIfUserExists(user, uid, name, email, profilePic);
+      checkIfUserExists(user, name, email, profilePic);
 
       return verified
     })
@@ -41,7 +40,7 @@ export const getUser = async (uid) => {
 }
 
 // Check User
-const checkIfUserExists = async (user, uid, name, email, profilePic) => {
+const checkIfUserExists = async (user, name, email, profilePic) => {
 
   const newUser = () => {
     const docData = {
@@ -51,11 +50,14 @@ const checkIfUserExists = async (user, uid, name, email, profilePic) => {
       profilePic: profilePic,
       wallet: 10,
       pokemon: [],
+      backpack: [],
+      win: 0,
+      loss: 0
     }
   
     setDoc(user, docData, { merge: true })
       .then(result => {
-        console.log("Added to database")
+        console.log("Added to database: " + result)
       })
       .then(error => {
         console.log(error)
@@ -93,7 +95,7 @@ export const addPokemon = async (pokemon) => {
     pokemon: arrayUnion(pokemon)
   }).then(()=>{
     return true
-  }).catch(error =>{
+  }).catch(() =>{
     return false
   })
 

@@ -1,0 +1,51 @@
+#matches {
+  background-color: var(--light);
+  backdrop-filter: blur(20px);
+  border-radius: 0 0 6px 6px;
+  padding: 1rem;
+  text-align: left;
+  text-shadow: none;
+  color: var(--black);
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#matches .matches-party{
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  padding: 1rem;
+  color: var(--black);
+  gap: 0 10px;
+}
+
+.matches-pokemon {
+  padding: 8px;
+  border-radius: 6px;
+  position: relative;
+}
+
+
+.matches-pokemon > img {
+  width: 100%;
+  background-color: white;
+  border-radius: 6px;
+  z-index: 2;
+  padding: 6px;
+}
+
+.matches-pokemon-card-top{
+  display: flex;
+text-transform: capitalize;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+#recent {
+  display: flex;
+}
+
+#score-board {
+  display: flex;
+}

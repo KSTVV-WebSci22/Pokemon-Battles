@@ -1,0 +1,118 @@
+#navbar {
+  background-color: rgba(245, 245, 245, 0.55);
+  backdrop-filter: blur(20px);
+  border-radius: 6px 6px 0 0;
+  width: 100%;
+  grid-column: 1 / 2;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+#navbar .profile-pic {
+  border-radius: 100vw;
+  width: 50px;
+  height: 50px;
+  margin-right: 1rem;
+}
+
+#navbar .brand {
+  margin: 0;
+  color: var(--black);
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.brand h1 {
+  margin: 0;
+  line-height: 30px;
+  font-family: var(--pokemon);
+
+}
+
+.brand small {
+  font-size: .8rem;
+}
+
+#navbar-wallet {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--black);
+  /* height: 100%; */
+}
+
+.navbar-status {
+  color: var(--black);
+  position: relative;
+  border-radius: 100vw;
+  padding: 0 5px;
+}
+
+.online {
+  background-color: var(--bug);
+}
+
+.offline {
+  background-color: var(--fire);
+}
+
+.navbar-pokemon {
+  border-radius: 3px;
+  height: 50px;
+  width: 50px;
+  background-color: var(--blue);
+  border: solid 1px var(--black);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+}
+
+.navbar-level {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: auto;
+  height: 1rem;
+  background-color: var(--dragon);
+  border-radius: 100vw;
+  border: 1px solid var(--black);
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 4px;
+  font-size: .75rem;
+}
+
+.navbar-pokemon img {
+  width: 100%;
+  height: auto;
+}
+
+#navbar a {
+  color: var(--black) !important;
+}
+
+#navbar > a:hover{
+  background-color: transparent !important; 
+}
+
+#navbar .links {
+  display: flex;
+}
+
+#navbar .links a:hover {
+  color: var(--yellow-text) !important;
+  background-color: transparent !important;
+}
+
+#navbar h5 {
+  font-family: var(--classic);
+  font-size: 1rem;
+}

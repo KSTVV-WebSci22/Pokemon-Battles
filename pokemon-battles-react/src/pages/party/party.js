@@ -1,7 +1,6 @@
 import './party.css'
 import Back from '../../components/Back'
 import { useEffect, useState } from 'react'
-import {Row, Col} from 'react-bootstrap'
 import PokemonStats from '../../components/PokemonStats'
 
 

@@ -9,12 +9,14 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useEffect, useContext, useState } from 'react'
 import { ClientContext } from '../../context/ClientContext'
 import Loading from '../../components/Loading'
+import MainMenu from './MainMenu'
 
 // Firebase
 import { auth } from '../../util/Firebase'
 import { updateUser, getUser, addPokemon } from '../../util/users/Users'
 import axios from 'axios'
 import { onAuthStateChanged } from 'firebase/auth'
+
 
 const Welcome = () => {
   let navigate = useNavigate();
@@ -25,6 +27,7 @@ const Welcome = () => {
   const [stage, setStage] = useState(0)
   const [loading, setLoading] = useState(true)
   const [profilePic, setProfilePic] = useState()
+  const [user, setUser] = useState(null);
   
   // First Pokemon
   const [first, setFirst] = useState()
@@ -41,17 +44,17 @@ const Welcome = () => {
   });
 
   // User Info
-  const userInfo = async (uid) => {
+  const userInfo = async () => {
     // Get User Info
-    const user = await getUser(uid);
+    const info = await getUser(auth.currentUser.uid);
     // Check Username
-    if(user.username == null){
+    if(info.username == null){
       setStage(0)
       setNewUser(true);
       setLoading(false);
 
     // Check Pokemon
-    } else if(user.pokemon.length === 0){
+    } else if(info.pokemon.length === 0){
       setStage(1)
       setNewUser(true)
       setLoading(false)
@@ -59,8 +62,9 @@ const Welcome = () => {
     // Good to go
     } else {
       setNewUser(false)
-      setName(user.username)
-      setProfilePic(user.profilePic)
+      setUser(info);
+      setName(info.username)
+      setProfilePic(info.profilePic)
       setLoading(false)
     }
   }
@@ -68,7 +72,7 @@ const Welcome = () => {
   useEffect(()=>{
     setSong(2)
     if(auth.currentUser){
-      userInfo(auth.currentUser.uid)
+      userInfo()
       firstPokemon()
     } else {
       navigate('/')
@@ -77,9 +81,9 @@ const Welcome = () => {
 
   
 
-  const updateUsername = async () => {
-    const updated = await updateUser(name)
-    console.log("User Update: " + updated)
+  const updateUsername = () => {
+    updateUser(name)
+    userInfo()
   }
 
   const firstPokemon = () =>{
@@ -137,7 +141,6 @@ const Welcome = () => {
               <button 
                 onClick={()=>{
                   updateUsername()
-                  setStage(1)
                 }}
                 className='sbutton'>Submit
               </button>
@@ -186,9 +189,8 @@ const Welcome = () => {
                     onClick={()=>{
                       let pokemon = firstQ
                       pokemon.current_level = 5
-                      console.log(pokemon)
                       addPokemon(pokemon);
-                      setNewUser(false)
+                      userInfo()
                     }}
                   >Yes</button>
                   <button 
@@ -204,37 +206,7 @@ const Welcome = () => {
         </>
         :
         <>
-        <h3>Welcome Back, {name}!</h3>
-        <Link to='/battle' id="find-match" className='menu-item'>
-          <img src={pokeball} alt="pokeball"/> 
-          <img src={pokeball} alt="pokeball"/> 
-          Random Match
-        </Link>
-        <Link to='/party' id="partymenu" className='menu-item'>
-          <img src={gym} alt="pikachu"/> 
-          <img src={gym} alt="gym"/> 
-          Party
-        </Link>
-        <Link to='/friends' id="friends-link" className='menu-item'>
-          <img src={pikachu} alt="pikachu"/> 
-          <img src={pikachu} alt="pikachu"/> 
-          Friends
-        </Link>
-        <Link to='/players' id="top-players" className='menu-item'>
-          <img src={fist} alt="fist"/> 
-          <img src={fist} alt="fist"/> 
-          Top Players
-        </Link>
-        <Link to='/shop' id="shop-link" className='menu-item'>
-          <img src={shopImg} alt="shop"/> 
-          <img src={shopImg} alt="shop"/> 
-          Shop
-        </Link>
-        <Link to='/profile' id="profile-link" className='menu-item'>
-          <img src={profilePic} alt="profile"/> 
-          <img src={profilePic} alt="profile"/> 
-          Profile
-        </Link>
+          {user && <MainMenu user={user} />}
         </>
       }
     </div>

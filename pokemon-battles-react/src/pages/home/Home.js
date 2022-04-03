@@ -5,7 +5,7 @@ import pokemon from '../../img/items/Pokemon3.png';
 import ash from '../../img/people/ashketchum.png';
 import { useNavigate } from 'react-router-dom';
 import { ClientContext } from '../../context/ClientContext';
-import Loading from '../../components/Loading';
+// import Loading from '../../components/Loading';
 import googleIcon from './google.png'
 
 // Firebase
@@ -17,11 +17,10 @@ const Home = () => {
     let navigate = useNavigate();
 
     // Context
-    const{ setSong, website } = useContext(ClientContext);
+    const{ setSong } = useContext(ClientContext);
 
     // States
     const [login, setLogin] = useState(false);
-    const [createAccount, setCreateAccount] = useState(false);
     
     // Login System
     const loginCheck = async () => {
@@ -32,14 +31,6 @@ const Home = () => {
             console.log(`Response: ${response}`)
         }
     }
-
-    // Authorized
-    onAuthStateChanged(auth, (user) => {
-        console.log(user)
-        // if (user) {
-        //     navigate('/welcome')
-        // }
-    });
 
     useEffect(()=>{
         setSong(1)
@@ -62,7 +53,7 @@ const Home = () => {
                         onClick={()=>{loginCheck()}} 
                         className='gicon fw-bold mb-3'
                     >
-                        <img src={googleIcon} />Sign in with Google
+                        <img src={googleIcon} alt="google logo" />Sign in with Google
                     </button>
 
                     <span 
@@ -71,31 +62,17 @@ const Home = () => {
                     >Cancel</span>
                 </>
                 : 
-                createAccount ?
-                    <></>
-                    :
-                    <>
-                    <img src={ash} alt="pokeball animation" className='mb-3'/>
-                    <div id="login-button">
-                        <button 
-                            className='sbutton fw-bold mb-3 w-100'
-                            onClick={()=>{
-                                setLogin(!login)
-                            }} 
-                        >Lets Go!</button><br/>
-                        {/* <small className='mb-5'>
-                            Don't have an account?  
-                            <span 
-                                id="login"
-                                onClick={()=>{
-                                    setCreateAccount(!createAccount)
-                                }} 
-                                
-                            > Create an Account</span>
-                        </small> */}
-                    </div>
-                    </>
-                
+                <>
+                <img src={ash} alt="pokeball animation" className='mb-3'/>
+                <div id="login-button">
+                    <button 
+                        className='sbutton fw-bold mb-3 w-100'
+                        onClick={()=>{
+                            setLogin(!login)
+                        }} 
+                    >Lets Go!</button><br/>
+                </div>
+                </>
             }
         </div>    
     );
