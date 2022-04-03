@@ -50,12 +50,19 @@ text-transform: capitalize;
   display: flex;
 }
 
-#matches h4 {
-  margin: 0;
-}
-
 #matches .find-match {
   background-color: var(--bug);
   border-radius: .5rem;
+  padding: 5px;
+}
+
+#matches .matches-border {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 1rem;
   padding: 1rem;
+  margin: 1rem;
+}
+
+.matches-border h4 {
+  margin-bottom: 10px !important;
 }

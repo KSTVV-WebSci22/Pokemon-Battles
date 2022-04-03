@@ -137,3 +137,11 @@ a {
 input {
     color: var(--light) !important;
 }
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 100px auto;
+    font-family: var(--museo);
+    text-shadow: -1px 2px 3px #3d3d3d6b, 0px 0px;
+    }
