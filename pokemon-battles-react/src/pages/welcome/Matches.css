@@ -49,3 +49,13 @@ text-transform: capitalize;
 #score-board {
   display: flex;
 }
+
+#matches h4 {
+  margin: 0;
+}
+
+#matches .find-match {
+  background-color: var(--bug);
+  border-radius: .5rem;
+  padding: 1rem;
+}

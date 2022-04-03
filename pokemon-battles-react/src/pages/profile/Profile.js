@@ -124,7 +124,7 @@ const Profile = () => {
                 {username.length >= 6 && <Button 
                     variant="success"
                     onClick={()=>{
-                        updateUser(uid, username)
+                        updateUser(username)
                         setEditUsername(false)
                     }}    
                 >Update</Button>}
