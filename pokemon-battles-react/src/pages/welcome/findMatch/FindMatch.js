@@ -1,10 +1,14 @@
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Modal, Button } from "react-bootstrap";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const Score = ({user}) => {
   const navigate = useNavigate()
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -21,11 +25,8 @@ const Score = ({user}) => {
 
   return ( 
     <>
-      <h4>Matches</h4>
-      <Row className='mb-3' xs={1} lg={2}>
-        <Col>
-          <Pie data={data} />
-        </Col>
+      <h4>Matches <button className='stats' onClick={handleShow}>Stats</button></h4>
+      <Row className='mb-3'>
         <Col>
           <button 
             onClick={()=>{ navigate('/battle') }}
@@ -33,6 +34,20 @@ const Score = ({user}) => {
           >Find Match</button>
         </Col>
       </Row>
+      <Modal show={show} onHide={handleClose}>
+      <Modal.Body>
+        <h5>Wins and Losses</h5>
+        <Pie data={data} />
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+          Close
+        </Button>
+        <Button variant="primary" onClick={handleClose}>
+          Save Changes
+        </Button>
+      </Modal.Footer>
+    </Modal>
     </>
   );
 }

@@ -1,5 +1,5 @@
 import './WelcomeParty.css'
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Modal, Button } from 'react-bootstrap';
 import {
   Chart as ChartJS,
   RadialLinearScale,
@@ -15,6 +15,11 @@ import { ClientContext } from '../../../context/ClientContext';
 
 const WelcomeParty = ({user}) => {
   const{ website } = useContext(ClientContext);
+  
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   ChartJS.register(RadialLinearScale, ArcElement, Tooltip, Legend);
 
   // so many states
@@ -144,22 +149,25 @@ const WelcomeParty = ({user}) => {
 
   
   return ( <>
-    <h4>My Party</h4>
-    <Row className='mb-3' xs={1} md={2}>
+    <h4>My Party <button className='stats' onClick={handleShow}>Stats</button></h4>
+    <Row className='mb-3'>
       <Col className='myParty'>
         {user.pokemon.slice(0,6).map(p => {
           return (
-            <div className='poke-bar'>
-              <div className="level" 
-                style={{backgroundColor: `var(--${p.type1.toLowerCase()})`}}>{p.current_level}</div>
-              <div className="pokemon-name">{p.identifier}</div>
+            <div className='poke-bar mb-2'>
+              <div 
+                className="level" 
+                style={{backgroundColor: `var(--${p.type1.toLowerCase()})`}}
+              >
+                {p.current_level}
+              </div>
+              <div className="pokemon-name me-auto">{p.identifier}</div>
+              <div className="pokemon-img">
+                <img className="" src={require("../../../img/pokemon/" + p.identifier + ".png")} alt={"my pokemon"} />
+              </div>
             </div>
           )
         })}
-      </Col>
-      <Col>
-        <small className='text-center w-100'>Move Types</small>
-        <PolarArea options={options} data={data} />
       </Col>
     </Row>
     <Row>
@@ -169,6 +177,21 @@ const WelcomeParty = ({user}) => {
         }}>Testing Pokemon Add</button>
       </Col>
     </Row>
+
+    <Modal show={show} onHide={handleClose}>
+      <Modal.Body>
+        <h5>Move Types</h5>
+        <PolarArea options={options} data={data} />
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+          Close
+        </Button>
+        <Button variant="primary" onClick={handleClose}>
+          Save Changes
+        </Button>
+      </Modal.Footer>
+    </Modal>
   </> );
 }
  
