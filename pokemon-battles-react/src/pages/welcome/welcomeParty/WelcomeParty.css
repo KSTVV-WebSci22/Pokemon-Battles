@@ -1,0 +1,19 @@
+/* .myParty div{
+  background-color: green;
+} */
+
+.poke-bar {
+  display: flex;
+}
+
+.myParty .level {
+  clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
+  width: 40px;
+  text-align: left;
+  padding: 0 4px;
+}
+
+.myParty .pokemon-name {
+  text-transform: capitalize;
+  padding-left: 6px;
+}

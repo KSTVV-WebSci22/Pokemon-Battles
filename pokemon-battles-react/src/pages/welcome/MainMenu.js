@@ -5,14 +5,12 @@ import { getUser } from '../../util/users/Users'
 import { useState, useEffect } from 'react'
 import { auth } from '../../util/Firebase'
 
-const MainMenu = ({user}) => {
-
+const MainMenu = () => {
+  
   return ( 
     <>
-      {user && <>
-        <Navbar user={user}/>
-        <Matches user={user}/>
-      </>}
+      <Navbar />
+      <Matches />
     </>
   );
 }

@@ -1,33 +1,36 @@
 import { Row, Col } from "react-bootstrap";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
+import { useNavigate } from "react-router-dom";
 
 const Score = ({user}) => {
+  const navigate = useNavigate()
 
   ChartJS.register(ArcElement, Tooltip, Legend);
 
   const data = {
-    labels: ['Wins', 'Loss'],
+    labels: [`${user.win} Win(s)`, `${user.loss} Loss`],
     datasets: [
       {
         label: 'Wins and Losses',
         data: [user.win, user.loss],
-        backgroundColor: [`green`, 'red'],
+        backgroundColor: [`#FEC902`, '#4a4a4a'],
       }
     ]
   };
 
   return ( 
     <>
-      <h4>Overall Score</h4>
-      <Row className='mb-3'>
-        <Col>
-          Wins: <span>{user.win}</span><br/>
-          Losses: <span>{user.loss}</span><br/>
-          Win Ratio: <span>{user.win > 0 ? user.win / (user.win + user.loss) : 'No wins'}</span>
-        </Col>
+      <h4>Matches</h4>
+      <Row className='mb-3' xs={1} lg={2}>
         <Col>
           <Pie data={data} />
+        </Col>
+        <Col>
+          <button 
+            onClick={()=>{ navigate('/battle') }}
+            className='find-match'
+          >Find Match</button>
         </Col>
       </Row>
     </>

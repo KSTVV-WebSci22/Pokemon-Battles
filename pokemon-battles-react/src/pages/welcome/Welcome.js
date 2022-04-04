@@ -63,8 +63,6 @@ const Welcome = () => {
     } else {
       setNewUser(false)
       setUser(info);
-      setName(info.username)
-      setProfilePic(info.profilePic)
       setLoading(false)
     }
   }
@@ -189,8 +187,8 @@ const Welcome = () => {
                     onClick={()=>{
                       let pokemon = firstQ
                       pokemon.current_level = 5
-                      addPokemon(pokemon);
-                      userInfo()
+                      const ready = addPokemon(pokemon);
+                      if(ready){userInfo()}
                     }}
                   >Yes</button>
                   <button 
@@ -206,7 +204,7 @@ const Welcome = () => {
         </>
         :
         <>
-          {user && <MainMenu user={user} />}
+          <MainMenu />
         </>
       }
     </div>
