@@ -45,7 +45,6 @@ const Navbar = () => {
             <span className='navbar-level'>{user.pokemon[0].current_level}</span>
           </>} 
         </Link>
-
         <h5>🪙 {user.wallet}</h5>
       </div>
       </>
