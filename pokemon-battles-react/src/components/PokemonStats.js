@@ -5,7 +5,6 @@ const PokemonStats = ({poke, showMoves}) => {
   const getMoves = (move) => {
     return move.map(m => {
       if(m) {
-        console.log(m.type)
         return (
           <div className="moves">
             <div className='d-flex w-100'>

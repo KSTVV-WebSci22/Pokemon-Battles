@@ -113,6 +113,12 @@ const Welcome = () => {
 
       setFirst(array)
   }
+
+  const newPokemon = async (pokemon) => {
+    let ready = await addPokemon(pokemon);
+    console.log(ready)
+    userInfo()
+  }
   
   return (
   <div className='content'>
@@ -185,9 +191,7 @@ const Welcome = () => {
                   <button 
                     className='sbutton'
                     onClick={()=>{
-                      let pokemon = firstQ
-                      const ready = addPokemon(pokemon);
-                      if(ready){userInfo()}
+                      newPokemon(firstQ)
                     }}
                   >Yes</button>
                   <button 
