@@ -86,7 +86,7 @@ const Welcome = () => {
 
   const firstPokemon = () =>{
     let array = []
-    axios.get(`${website}/api/newPokemon/1`)
+    axios.get(`${website}/api/newPokemon/1/5`)
       .then(response => {
         array.push(response.data)
       })
@@ -94,7 +94,7 @@ const Welcome = () => {
         console.log(error);
       })
 
-    axios.get(`${website}/api/newPokemon/4`)
+    axios.get(`${website}/api/newPokemon/4/5`)
       .then(response => {
         array.push(response.data)
       })
@@ -102,7 +102,7 @@ const Welcome = () => {
         console.log(error);
       })
 
-    axios.get(`${website}/api/newPokemon/7`)
+    axios.get(`${website}/api/newPokemon/7/5`)
       .then(response => {
         array.push(response.data)
       })
@@ -186,7 +186,6 @@ const Welcome = () => {
                     className='sbutton'
                     onClick={()=>{
                       let pokemon = firstQ
-                      pokemon.current_level = 5
                       const ready = addPokemon(pokemon);
                       if(ready){userInfo()}
                     }}

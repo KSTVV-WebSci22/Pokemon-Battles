@@ -17,3 +17,7 @@
   text-transform: capitalize;
   padding-left: 6px;
 }
+
+.myParty small {
+  width: 100%;
+}

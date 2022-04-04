@@ -53,7 +53,7 @@ app.get('/api/pokemon/:id', (req, res) => {
   res.json(pokemon);
 });
 
-app.get('/api/newPokemon/:id', (req, res) => {
+app.get('/api/newPokemon/:id/:level', (req, res) => {
   var id = req.params.id;
   let pokemon = {...pokemonData[id]};
   let t1 = typeConvert.types[String(pokemon['type1'])].identifier;
@@ -64,6 +64,7 @@ app.get('/api/newPokemon/:id', (req, res) => {
   pokemon.win = 0
   pokemon.loss = 0
   pokemon.final_win = 0 
+  pokemon.current_level = req.params.level
 
   const moves = []
 

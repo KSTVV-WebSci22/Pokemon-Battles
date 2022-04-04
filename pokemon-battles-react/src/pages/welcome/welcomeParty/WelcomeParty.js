@@ -8,10 +8,13 @@ import {
   Legend,
 } from 'chart.js';
 import { PolarArea } from 'react-chartjs-2';
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import { addPokemon } from '../../../util/users/Users';
+import axios from 'axios';
+import { ClientContext } from '../../../context/ClientContext';
 
 const WelcomeParty = ({user}) => {
-
+  const{ website } = useContext(ClientContext);
   ChartJS.register(RadialLinearScale, ArcElement, Tooltip, Legend);
 
   // so many states
@@ -82,25 +85,69 @@ const WelcomeParty = ({user}) => {
   }
 
   const typeCheck = (type) => {
-    if(type === 'fire'){
-      setFire(fire => fire + 1)
-      console.log(type)
+    if(type === 'bug'){
+      setBug(prev => prev + 1)
+    } else if (type === 'dark'){
+      setDark(prev => prev + 1)
+    } else if (type === 'dragon'){
+      setDragon(prev => prev + 1)
+    } else if (type === 'electric'){
+      setElectric(prev => prev + 1)
+    } else if (type === 'fairy'){
+      setFairy(prev => prev + 1)
+    } else if (type === 'fighting'){
+      setFighting(prev => prev + 1)
+    } else if (type === 'fire'){
+      setFire(prev => prev + 1)
+    } else if (type === 'flying'){
+      setFlying(prev => prev + 1)
+    } else if (type === 'ghost'){
+      setGhost(prev => prev + 1)
+    } else if (type === 'grass'){
+      setGrass(prev => prev + 1)
+    } else if (type === 'ground'){
+      setGround(prev => prev + 1)
+    } else if (type === 'ice'){
+      setIce(prev => prev + 1)
+    } else if (type === 'normal'){
+      setNormal(prev => prev + 1)
+    } else if (type === 'poison'){
+      setPoison(prev => prev + 1)
+    } else if (type === 'psychic'){
+      setPyschic(prev => prev + 1)
+    } else if (type === 'rock'){
+      setRock(prev => prev + 1)
+    } else if (type === 'steal'){
+      setSteal(prev => prev + 1)
+    } else if (type === 'water'){
+      setWater(prev => prev + 1)
     }
   }
 
   useEffect(() => {
-    user.pokemon.slice(0,5).map(p => {
+    user.pokemon.slice(0,6).map(p => {
       typeCheck(p.type1.toLowerCase())
       typeCheck(p.type2.toLowerCase())
     })
   }, []);
+
+  const testPokemonAdd = () => {
+
+    axios.get(`${website}/api/newPokemon/35/5`)
+    .then(response => {
+      addPokemon(response.data)
+    })
+    .catch( error => {
+      console.log(error);
+    })
+  }
 
   
   return ( <>
     <h4>My Party</h4>
     <Row className='mb-3' xs={1} md={2}>
       <Col className='myParty'>
-        {user.pokemon.slice(0,5).map(p => {
+        {user.pokemon.slice(0,6).map(p => {
           return (
             <div className='poke-bar'>
               <div className="level" 
@@ -111,7 +158,15 @@ const WelcomeParty = ({user}) => {
         })}
       </Col>
       <Col>
+        <small className='text-center w-100'>Move Types</small>
         <PolarArea options={options} data={data} />
+      </Col>
+    </Row>
+    <Row>
+      <Col>
+        <button onClick={()=>{
+          testPokemonAdd()
+        }}>Testing Pokemon Add</button>
       </Col>
     </Row>
   </> );
