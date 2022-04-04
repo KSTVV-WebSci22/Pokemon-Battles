@@ -3,14 +3,43 @@
   width: 100%;
   border-radius: 4px;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;  background-size: cover;
-  overflow: hidden;
   display: flex;
   /* text-shadow: 1px 1px 1px #fdfdfd6b, 0px 0px; */
   color: var(--light);
   position: relative;
   font-size: .85rem;
+  margin-bottom: 1rem;
 }
 
+
+.pokemon-stats-words {
+  text-align: left;
+  width: 100%;
+  text-transform: capitalize;
+  padding: 6px;
+  background-color: var(--blue);
+  border-radius: 6px;
+}
+
+.pokemon-stats-bg {
+  background-size: contain;
+  background-position: right;
+  background-repeat: no-repeat;
+}
+
+.pokemon-stats-type {
+  padding: 0 6px;
+  border-radius: 4px;
+}
+
+/* Images */
+.pokemon-stats-img {
+  background-color: var(--light);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+}
 
 #pokemon-stats img {
   height: 100px;
@@ -20,34 +49,24 @@
   filter: drop-shadow(5px 3px 2px #222);
 }
 
-.pokemon-stats-words {
-  text-align: left;
-  width: 100%;
-  text-transform: capitalize;
-  padding: 6px;
-  background-color: var(--blue);
-}
-
-.pokemon-stats-type {
-  padding: 0 6px;
-  border-radius: 4px;
-}
-
-.pokemon-stats-img {
-  background-color: var(--light);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .pokemon-stats-level {
-  background-color: white;
-  border-radius: 100vw;
-  font-size: calc(1.325rem + .9vw);
+  background-color: var(--light);
+  border-radius: 6px 0 0 6px;
+  font-size: calc(1.5rem);
   color: black;
-  float: right;
   padding: 0 1rem;
   text-align: center; 
+  clip-path: polygon(0 0, 100% 0, 76% 100%, 0% 100%);
+  margin-right: 6px;
+}
+
+.pokemon-stats-name {
+  border-radius: 6px;
+  background: linear-gradient(
+    to right, 
+    rgba(255, 255, 255, 0.068), 
+    rgba(255, 255, 255, 0));
+  text-transform: uppercase;
 }
 
 .move {
@@ -59,11 +78,13 @@
 }
 
 .moves:first-of-type .move{
-  border-radius: 6px 0 0 0;
+  border-radius: 6px 6px 0 0;
+  overflow: hidden;
 }
 
 .moves:last-of-type .move{
-  border-radius: 0 0 0 6px;
+  border-radius: 0 0 6px 6px;
+  overflow: hidden;
 }
 
 .power {

@@ -88,11 +88,13 @@ export const updateUser = async (username) => {
 }
 
 
-// Update Pokemon
+// Update Pokemon List with new Pokemon
 export const addPokemon = async (pokemon) => {
   const user = doc(db, 'users/', auth.currentUser.uid)
+  let myPokemon = await getMyPokemon(auth.currentUser.uid)
+  myPokemon.push(pokemon)
   await updateDoc(user, {
-    pokemon: arrayUnion(pokemon)
+    pokemon: myPokemon
   }).then(()=>{
     return true
   }).catch(() =>{

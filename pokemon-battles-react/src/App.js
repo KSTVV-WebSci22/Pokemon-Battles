@@ -14,8 +14,7 @@ import { useState, useEffect } from 'react';
 import SoundManager from './components/SoundManager';
 import SettingsButton from './components/SettingsButton';
 import Profile from './pages/profile/Profile';
-
-import { useNavigate } from 'react-router-dom'
+import Loading from './components/Loading';
 
 function App() {
   const [mute, setMute] = useState(false)  
@@ -23,6 +22,7 @@ function App() {
   const [song, setSong] = useState(1);
   const [disclaimer, setDisclaimer] = useState(true);
   const [website] = useState("http://localhost:3001")
+  const [loading, setLoading] = useState(true)
 
   useEffect(()=>{
     if (localStorage.getItem("volume") === null) {
@@ -39,6 +39,7 @@ function App() {
       mute, setMute,
       volume, setVolume,
       song, setSong,
+      loading, setLoading,
       website,
       // settings, setSettings,
       disclaimer, setDisclaimer
@@ -70,6 +71,7 @@ function App() {
           {/* Routes */}
           <Router>
             <SettingsButton />
+            {loading && <Loading />}
             <Routes>
               <Route path='/' element={<Home/>} />
               <Route path='/battle' element={<Battle/>} />

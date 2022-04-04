@@ -25,7 +25,7 @@ const Welcome = () => {
   const [name, setName] = useState("")
   const [newUser, setNewUser] = useState(true)
   const [stage, setStage] = useState(0)
-  const [loading, setLoading] = useState(true)
+  // const [loading, setLoading] = useState(true)
   const [profilePic, setProfilePic] = useState()
   const [user, setUser] = useState(null);
   
@@ -34,7 +34,7 @@ const Welcome = () => {
   const [firstQ, setFirstQ] = useState(null)
 
   // Context
-  const{ setSong, website } = useContext(ClientContext);
+  const{ setSong, website, loading, setLoading } = useContext(ClientContext);
 
   // Authorized
   onAuthStateChanged(auth, (user) => {
@@ -45,6 +45,7 @@ const Welcome = () => {
 
   // User Info
   const userInfo = async () => {
+    setLoading(true)
     // Get User Info
     const info = await getUser(auth.currentUser.uid);
     // Check Username
@@ -112,10 +113,15 @@ const Welcome = () => {
 
       setFirst(array)
   }
+
+  const newPokemon = async (pokemon) => {
+    let ready = await addPokemon(pokemon);
+    console.log(ready)
+    userInfo()
+  }
   
   return (
   <div className='content'>
-    {loading && <Loading />}
     <div id="welcome" className='content-item'>
       {newUser ? <>
 
@@ -185,9 +191,7 @@ const Welcome = () => {
                   <button 
                     className='sbutton'
                     onClick={()=>{
-                      let pokemon = firstQ
-                      const ready = addPokemon(pokemon);
-                      if(ready){userInfo()}
+                      newPokemon(firstQ)
                     }}
                   >Yes</button>
                   <button 

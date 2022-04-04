@@ -1,6 +1,6 @@
 import './Matches.css'
 import { Row, Col } from 'react-bootstrap'
-import Score from './findMatch/FindMatch'
+import FindMatch from './findMatch/FindMatch'
 import WelcomeParty from './welcomeParty/WelcomeParty'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -31,10 +31,10 @@ const Matches = () => {
     <div id="matches">
       {user ? <>
       <Row className=''>
-        <Col className='matches-border'>
-          <Score user={user} />
+        <Col className='matches-border' xs={12}>
+          <FindMatch user={user} />
         </Col>
-        <Col className='matches-border'>
+        <Col className='matches-border' xs={12}>
           <WelcomeParty user={user}/>
         </Col>
       </Row>

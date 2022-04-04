@@ -17,7 +17,7 @@ const Home = () => {
     let navigate = useNavigate();
 
     // Context
-    const{ setSong } = useContext(ClientContext);
+    const{ setSong, loading, setLoading } = useContext(ClientContext);
 
     // States
     const [login, setLogin] = useState(false);
@@ -34,6 +34,11 @@ const Home = () => {
 
     useEffect(()=>{
         setSong(1)
+        if(auth.currentUser){
+            navigate('./welcome')
+        }
+
+        setLoading(false)
     }, [])
     
     return ( 
