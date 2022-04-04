@@ -52,3 +52,11 @@
 .stats:hover {
   background-color: var(--fire);
 }
+
+.light-text {
+  color: var(--light);
+}
+
+.test-pokemon button {
+  background-color: red;
+}

@@ -3,7 +3,6 @@ import './Battle.css'
 import axios from 'axios'
 import Moves from './components/Moves';
 import { ClientContext } from '../../context/ClientContext';
-import Loading from '../../components/Loading';
 
 //xstate
 import { createMachine, interpret, assign } from "xstate";
@@ -92,9 +91,8 @@ const Battle = () => {
     const [myOpponent, setMyOpponent] = useState(null);
     const [myTurn, setMyTurn] = useState(true);
     const signatureRef = useRef(null);
-    const [loading, setLoading] = useState(true);
 
-    const { setSong, website } = useContext(ClientContext);
+    const { setSong, website, loading, setLoading } = useContext(ClientContext);
 
     useEffect(()=>{
       setSong(3)
@@ -473,9 +471,8 @@ const Battle = () => {
                         </>
                     )}
                 </>
-            ) : (
-                <Loading/>
-            )}
+            ) : <></>
+            }
             </div>
         </div>
         

@@ -12,9 +12,10 @@ import { useState, useEffect, useContext } from 'react'
 import { addPokemon } from '../../../util/users/Users';
 import axios from 'axios';
 import { ClientContext } from '../../../context/ClientContext';
+import PokemonStats from '../../../components/PokemonStats';
 
 const WelcomeParty = ({user}) => {
-  const{ website } = useContext(ClientContext);
+  const { website } = useContext(ClientContext);
   
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -137,10 +138,12 @@ const WelcomeParty = ({user}) => {
   }, []);
 
   const testPokemonAdd = () => {
-
-    axios.get(`${website}/api/newPokemon/35/5`)
+    const random = Math.floor(Math.random() * (151 - 1) + 1);
+    console.log(random)
+    axios.get(`${website}/api/newPokemon/${random}/5`)
     .then(response => {
       addPokemon(response.data)
+      alert("Test Pokemon Added")
     })
     .catch( error => {
       console.log(error);
@@ -149,32 +152,19 @@ const WelcomeParty = ({user}) => {
 
   
   return ( <>
-    <h4>My Party <button className='stats' onClick={handleShow}>Stats</button></h4>
+    <h4 className='light-text'>My Party <button className='stats' onClick={handleShow}>Stats</button></h4>
     <Row className='mb-3'>
-      <Col className='myParty'>
+      <Col className='myParty' xs={12}>
         {user.pokemon.slice(0,6).map(p => {
           return (
-            <div className='poke-bar mb-2'>
-              <div 
-                className="level" 
-                style={{backgroundColor: `var(--${p.type1.toLowerCase()})`}}
-              >
-                {p.current_level}
-              </div>
-              <div className="pokemon-name me-auto">{p.identifier}</div>
-              <div className="pokemon-img">
-                <img className="" src={require("../../../img/pokemon/" + p.identifier + ".png")} alt={"my pokemon"} />
-              </div>
-            </div>
+            <PokemonStats poke={p} showMoves={false}/>
           )
         })}
       </Col>
-    </Row>
-    <Row>
-      <Col>
+      <Col className="test-pokemon" xs={12}>
         <button onClick={()=>{
           testPokemonAdd()
-        }}>Testing Pokemon Add</button>
+        }}>Add Pokemon to Party. Delete Soon</button>
       </Col>
     </Row>
 
