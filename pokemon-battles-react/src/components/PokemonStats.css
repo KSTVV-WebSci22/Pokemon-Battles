@@ -100,4 +100,11 @@
   padding-right: 6px;
 }
 
+.pokemon-stats-moves .form-select-sm{
+  font-size: 10px !important;
+}
 
+.pokemon-stats-moves .form-select {
+  padding: .1rem .375rem .1rem .375rem;
+  margin-bottom: 6px;
+}

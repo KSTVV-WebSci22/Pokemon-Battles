@@ -99,6 +99,11 @@ app.get('/api/pokemon/:rarity', (req, res) => {
   // res.json(typeData.type_damage[rarity]);
 });
 
+// Pokemon Shop Item - 1
+app.get('/api/shop/:shopItem', (req, res) => {
+  var shopItem = req.params.shopItem;
+});
+
 
 // Listen
 app.listen(port, () => {

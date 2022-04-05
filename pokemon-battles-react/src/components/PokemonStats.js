@@ -1,4 +1,5 @@
 import './PokemonStats.css';
+import { Form } from 'react-bootstrap';
 
 const PokemonStats = ({poke, showMoves}) => {
 
@@ -68,7 +69,17 @@ const PokemonStats = ({poke, showMoves}) => {
             </div>
             {showMoves && <>
             {/* Moves */}
-            <div className='fw-bold mt-2 yellow-text'>Moves</div> 
+            <div className='fw-bold mt-2 yellow-text pokemon-stats-moves'>
+              Moves
+              <span className='float-end'>
+                <Form.Select size="sm">
+                  <option selected disabled>Swap with</option>
+                  <option>Charmander (5)</option>
+                  <option>Charmander (5)</option>
+                  <option>Charmander (5)</option>
+                </Form.Select>
+              </span>
+            </div> 
             <div className="row-cols-1">
               {getMoves(poke.moves)}
             </div>

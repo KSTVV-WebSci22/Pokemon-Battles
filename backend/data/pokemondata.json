@@ -10,7 +10,8 @@
    "base_experience": 64,
    "type1": 12,
    "type2": 4,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 4
  },
  {
    "id": 2,
@@ -20,7 +21,8 @@
    "base_experience": 142,
    "type1": 12,
    "type2": 4,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 2
  },
  {
    "id": 3,
@@ -30,7 +32,8 @@
    "base_experience": 236,
    "type1": 12,
    "type2": 4,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 2
  },
  {
    "id": 4,
@@ -40,7 +43,8 @@
    "base_experience": 62,
    "type1": 10,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 4
  },
  {
    "id": 5,
@@ -50,7 +54,8 @@
    "base_experience": 142,
    "type1": 10,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 2
  },
  {
    "id": 6,
@@ -60,7 +65,8 @@
    "base_experience": 240,
    "type1": 10,
    "type2": 3,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 2
  },
  {
    "id": 7,
@@ -70,7 +76,8 @@
    "base_experience": 63,
    "type1": 11,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 4
  },
  {
    "id": 8,
@@ -80,7 +87,8 @@
    "base_experience": 142,
    "type1": 11,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 2
  },
  {
    "id": 9,
@@ -90,7 +98,8 @@
    "base_experience": 239,
    "type1": 11,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 2
  },
  {
    "id": 10,
@@ -100,7 +109,8 @@
    "base_experience": 39,
    "type1": 7,
    "type2": 0,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 1
  },
  {
    "id": 11,
@@ -110,7 +120,8 @@
    "base_experience": 72,
    "type1": 7,
    "type2": 0,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 1
  },
  {
    "id": 12,
@@ -120,7 +131,8 @@
    "base_experience": 178,
    "type1": 7,
    "type2": 3,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 2
  },
  {
    "id": 13,
@@ -130,7 +142,8 @@
    "base_experience": 39,
    "type1": 7,
    "type2": 4,
-   "rarity": 1
+   "rarity": 1,
+   "obtain": 1
  },
  {
    "id": 14,
@@ -140,7 +153,8 @@
    "base_experience": 72,
    "type1": 7,
    "type2": 4,
-   "rarity": 1
+   "rarity": 1,
+   "obtain": 2
  },
  {
    "id": 15,
@@ -150,7 +164,8 @@
    "base_experience": 178,
    "type1": 7,
    "type2": 4,
-   "rarity": 1
+   "rarity": 1,
+   "obtain": 2
  },
  {
    "id": 16,
@@ -160,7 +175,8 @@
    "base_experience": 50,
    "type1": 1,
    "type2": 3,
-   "rarity": 1
+   "rarity": 1,
+   "obtain": 1
  },
  {
    "id": 17,
@@ -170,7 +186,8 @@
    "base_experience": 122,
    "type1": 1,
    "type2": 3,
-   "rarity": 1
+   "rarity": 1,
+   "obtain": 2
  },
  {
    "id": 18,
@@ -180,7 +197,8 @@
    "base_experience": 216,
    "type1": 1,
    "type2": 3,
-   "rarity": 1
+   "rarity": 1,
+   "obtain": 2
  },
  {
    "id": 19,
@@ -190,7 +208,8 @@
    "base_experience": 51,
    "type1": 1,
    "type2": 0,
-   "rarity": 1
+   "rarity": 1,
+   "obtain": 1
  },
  {
    "id": 20,
@@ -200,7 +219,8 @@
    "base_experience": 145,
    "type1": 1,
    "type2": 0,
-   "rarity": 1
+   "rarity": 1,
+   "obtain": 2
  },
  {
    "id": 21,
@@ -210,7 +230,8 @@
    "base_experience": 52,
    "type1": 1,
    "type2": 3,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 1
  },
  {
    "id": 22,
@@ -220,7 +241,8 @@
    "base_experience": 155,
    "type1": 1,
    "type2": 3,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 2
  },
  {
    "id": 23,
@@ -230,7 +252,8 @@
    "base_experience": 58,
    "type1": 4,
    "type2": 0,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 1
  },
  {
    "id": 24,
@@ -240,7 +263,8 @@
    "base_experience": 157,
    "type1": 4,
    "type2": 0,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 2
  },
  {
    "id": 25,
@@ -250,7 +274,8 @@
    "base_experience": 112,
    "type1": 13,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 1
  },
  {
    "id": 26,
@@ -260,7 +285,8 @@
    "base_experience": 218,
    "type1": 13,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 2
  },
  {
    "id": 27,
@@ -270,7 +296,8 @@
    "base_experience": 60,
    "type1": 5,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 1
  },
  {
    "id": 28,
@@ -280,7 +307,8 @@
    "base_experience": 158,
    "type1": 5,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 2
  },
  {
    "id": 29,
@@ -290,7 +318,8 @@
    "base_experience": 55,
    "type1": 4,
    "type2": 0,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 1
  },
  {
    "id": 30,
@@ -300,7 +329,8 @@
    "base_experience": 128,
    "type1": 4,
    "type2": 0,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 2
  },
  {
    "id": 31,
@@ -310,7 +340,8 @@
    "base_experience": 227,
    "type1": 4,
    "type2": 5,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 2
  },
  {
    "id": 32,
@@ -320,7 +351,8 @@
    "base_experience": 55,
    "type1": 4,
    "type2": 0,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 1
  },
  {
    "id": 33,
@@ -330,7 +362,8 @@
    "base_experience": 128,
    "type1": 4,
    "type2": 0,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 2
  },
  {
    "id": 34,
@@ -340,7 +373,8 @@
    "base_experience": 227,
    "type1": 4,
    "type2": 5,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 2
  },
  {
    "id": 35,
@@ -350,7 +384,8 @@
    "base_experience": 113,
    "type1": 18,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 1
  },
  {
    "id": 36,
@@ -360,7 +395,8 @@
    "base_experience": 217,
    "type1": 18,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 3
  },
  {
    "id": 37,
@@ -370,7 +406,8 @@
    "base_experience": 60,
    "type1": 10,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 1
  },
  {
    "id": 38,
@@ -380,7 +417,8 @@
    "base_experience": 177,
    "type1": 10,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 2
  },
  {
    "id": 39,
@@ -390,7 +428,8 @@
    "base_experience": 95,
    "type1": 1,
    "type2": 18,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 1
  },
  {
    "id": 40,
@@ -400,7 +439,8 @@
    "base_experience": 196,
    "type1": 1,
    "type2": 18,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 2
  },
  {
    "id": 41,
@@ -410,7 +450,8 @@
    "base_experience": 49,
    "type1": 4,
    "type2": 3,
-   "rarity": 1
+   "rarity": 1,
+   "obtain": 1
  },
  {
    "id": 42,
@@ -420,7 +461,8 @@
    "base_experience": 159,
    "type1": 4,
    "type2": 3,
-   "rarity": 1
+   "rarity": 1,
+   "obtain": 2
  },
  {
    "id": 43,
@@ -430,7 +472,8 @@
    "base_experience": 64,
    "type1": 12,
    "type2": 4,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 1
  },
  {
    "id": 44,
@@ -440,17 +483,19 @@
    "base_experience": 138,
    "type1": 12,
    "type2": 4,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 2
  },
  {
    "id": 45,
    "identifier": "vileplume",
-   "evolved_species_id": 71,
-   "evolve_level": 32,
+   "evolved_species_id": -1,
+   "evolve_level": -1,
    "base_experience": 221,
    "type1": 12,
    "type2": 4,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 2
  },
  {
    "id": 46,
@@ -460,7 +505,8 @@
    "base_experience": 57,
    "type1": 7,
    "type2": 12,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 1
  },
  {
    "id": 47,
@@ -470,7 +516,8 @@
    "base_experience": 142,
    "type1": 7,
    "type2": 12,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 2
  },
  {
    "id": 48,
@@ -480,7 +527,8 @@
    "base_experience": 61,
    "type1": 7,
    "type2": 4,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 1
  },
  {
    "id": 49,
@@ -490,7 +538,8 @@
    "base_experience": 158,
    "type1": 7,
    "type2": 4,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 2
  },
  {
    "id": 50,
@@ -500,7 +549,8 @@
    "base_experience": 53,
    "type1": 5,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 1
  },
  {
    "id": 51,
@@ -510,7 +560,8 @@
    "base_experience": 149,
    "type1": 5,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 2
  },
  {
    "id": 52,
@@ -520,7 +571,8 @@
    "base_experience": 58,
    "type1": 1,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 1
  },
  {
    "id": 53,
@@ -530,7 +582,8 @@
    "base_experience": 154,
    "type1": 1,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 2
  },
  {
    "id": 54,
@@ -540,7 +593,8 @@
    "base_experience": 64,
    "type1": 11,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 1
  },
  {
    "id": 55,
@@ -550,7 +604,8 @@
    "base_experience": 175,
    "type1": 11,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 2
  },
  {
    "id": 56,
@@ -560,7 +615,8 @@
    "base_experience": 61,
    "type1": 2,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 1
  },
  {
    "id": 57,
@@ -570,7 +626,8 @@
    "base_experience": 159,
    "type1": 2,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 2
  },
  {
    "id": 58,
@@ -580,7 +637,8 @@
    "base_experience": 70,
    "type1": 10,
    "type2": 0,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 1
  },
  {
    "id": 59,
@@ -590,7 +648,8 @@
    "base_experience": 194,
    "type1": 10,
    "type2": 0,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 2
  },
  {
    "id": 60,
@@ -600,7 +659,8 @@
    "base_experience": 60,
    "type1": 11,
    "type2": 0,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 1
  },
  {
    "id": 61,
@@ -610,7 +670,8 @@
    "base_experience": 135,
    "type1": 11,
    "type2": 0,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 2
  },
  {
    "id": 62,
@@ -620,7 +681,8 @@
    "base_experience": 230,
    "type1": 11,
    "type2": 2,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 2
  },
  {
    "id": 63,
@@ -630,7 +692,8 @@
    "base_experience": 62,
    "type1": 14,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 1
  },
  {
    "id": 64,
@@ -640,7 +703,8 @@
    "base_experience": 140,
    "type1": 14,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 2
  },
  {
    "id": 65,
@@ -650,7 +714,8 @@
    "base_experience": 225,
    "type1": 14,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 3
  },
  {
    "id": 66,
@@ -660,7 +725,8 @@
    "base_experience": 61,
    "type1": 2,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 1
  },
  {
    "id": 67,
@@ -670,7 +736,8 @@
    "base_experience": 142,
    "type1": 2,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 2
  },
  {
    "id": 68,
@@ -680,7 +747,8 @@
    "base_experience": 227,
    "type1": 2,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 2
  },
  {
    "id": 69,
@@ -690,7 +758,8 @@
    "base_experience": 60,
    "type1": 12,
    "type2": 4,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 1
  },
  {
    "id": 70,
@@ -700,7 +769,8 @@
    "base_experience": 137,
    "type1": 12,
    "type2": 4,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 2
  },
  {
    "id": 71,
@@ -710,7 +780,8 @@
    "base_experience": 221,
    "type1": 12,
    "type2": 4,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 2
  },
  {
    "id": 72,
@@ -720,7 +791,8 @@
    "base_experience": 67,
    "type1": 11,
    "type2": 4,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 1
  },
  {
    "id": 73,
@@ -730,7 +802,8 @@
    "base_experience": 180,
    "type1": 11,
    "type2": 4,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 2
  },
  {
    "id": 74,
@@ -740,7 +813,8 @@
    "base_experience": 60,
    "type1": 6,
    "type2": 5,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 1
  },
  {
    "id": 75,
@@ -750,7 +824,8 @@
    "base_experience": 137,
    "type1": 6,
    "type2": 5,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 2
  },
  {
    "id": 76,
@@ -760,7 +835,8 @@
    "base_experience": 223,
    "type1": 6,
    "type2": 5,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 2
  },
  {
    "id": 77,
@@ -770,7 +846,8 @@
    "base_experience": 82,
    "type1": 10,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 1
  },
  {
    "id": 78,
@@ -780,7 +857,8 @@
    "base_experience": 175,
    "type1": 10,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 2
  },
  {
    "id": 79,
@@ -790,7 +868,8 @@
    "base_experience": 63,
    "type1": 11,
    "type2": 14,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 1
  },
  {
    "id": 80,
@@ -800,7 +879,8 @@
    "base_experience": 172,
    "type1": 11,
    "type2": 14,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 2
  },
  {
    "id": 81,
@@ -810,7 +890,8 @@
    "base_experience": 65,
    "type1": 13,
    "type2": 9,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 1
  },
  {
    "id": 82,
@@ -820,7 +901,8 @@
    "base_experience": 163,
    "type1": 13,
    "type2": 9,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 2
  },
  {
    "id": 83,
@@ -830,7 +912,8 @@
    "base_experience": 132,
    "type1": 1,
    "type2": 3,
-   "rarity": 5
+   "rarity": 5,
+   "obtain": 1
  },
  {
    "id": 84,
@@ -840,7 +923,8 @@
    "base_experience": 62,
    "type1": 1,
    "type2": 3,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 1
  },
  {
    "id": 85,
@@ -850,7 +934,8 @@
    "base_experience": 165,
    "type1": 1,
    "type2": 3,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 2
  },
  {
    "id": 86,
@@ -860,17 +945,19 @@
    "base_experience": 65,
    "type1": 11,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 1
  },
  {
    "id": 87,
    "identifier": "dewgong",
-   "evolved_species_id": 157,
+   "evolved_species_id": -1,
    "evolve_level": -1,
    "base_experience": 166,
    "type1": 11,
    "type2": 15,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 2
  },
  {
    "id": 88,
@@ -880,7 +967,8 @@
    "base_experience": 65,
    "type1": 4,
    "type2": 0,
-   "rarity": 4
+   "rarity": 4,
+   "obtain": 1
  },
  {
    "id": 89,
@@ -890,7 +978,8 @@
    "base_experience": 175,
    "type1": 4,
    "type2": 0,
-   "rarity": 4
+   "rarity": 4,
+   "obtain": 2
  },
  {
    "id": 90,
@@ -900,7 +989,8 @@
    "base_experience": 61,
    "type1": 11,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 1
  },
  {
    "id": 91,
@@ -910,7 +1000,8 @@
    "base_experience": 184,
    "type1": 11,
    "type2": 15,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 2
  },
  {
    "id": 92,
@@ -920,7 +1011,8 @@
    "base_experience": 62,
    "type1": 8,
    "type2": 4,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 1
  },
  {
    "id": 93,
@@ -930,7 +1022,8 @@
    "base_experience": 142,
    "type1": 8,
    "type2": 4,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 2
  },
  {
    "id": 94,
@@ -940,7 +1033,8 @@
    "base_experience": 225,
    "type1": 8,
    "type2": 4,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 2
  },
  {
    "id": 95,
@@ -950,7 +1044,8 @@
    "base_experience": 77,
    "type1": 6,
    "type2": 5,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 1
  },
  {
    "id": 96,
@@ -960,7 +1055,8 @@
    "base_experience": 66,
    "type1": 14,
    "type2": 0,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 1
  },
  {
    "id": 97,
@@ -970,7 +1066,8 @@
    "base_experience": 169,
    "type1": 14,
    "type2": 0,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 2
  },
  {
    "id": 98,
@@ -980,7 +1077,8 @@
    "base_experience": 65,
    "type1": 11,
    "type2": 0,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 1
  },
  {
    "id": 99,
@@ -990,7 +1088,8 @@
    "base_experience": 166,
    "type1": 11,
    "type2": 0,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 2
  },
  {
    "id": 100,
@@ -1000,7 +1099,8 @@
    "base_experience": 66,
    "type1": 13,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 1
  },
  {
    "id": 101,
@@ -1010,7 +1110,8 @@
    "base_experience": 172,
    "type1": 13,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 2
  },
  {
    "id": 102,
@@ -1020,7 +1121,8 @@
    "base_experience": 65,
    "type1": 12,
    "type2": 14,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 1
  },
  {
    "id": 103,
@@ -1030,7 +1132,8 @@
    "base_experience": 186,
    "type1": 12,
    "type2": 14,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 2
  },
  {
    "id": 104,
@@ -1040,17 +1143,19 @@
    "base_experience": 64,
    "type1": 5,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 1
  },
  {
    "id": 105,
    "identifier": "marowak",
-   "evolved_species_id": 188,
-   "evolve_level": 18,
+   "evolved_species_id": -1,
+   "evolve_level": -1,
    "base_experience": 149,
    "type1": 5,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 2
  },
  {
    "id": 106,
@@ -1060,7 +1165,8 @@
    "base_experience": 159,
    "type1": 2,
    "type2": 0,
-   "rarity": 4
+   "rarity": 4,
+   "obtain": 1
  },
  {
    "id": 107,
@@ -1070,7 +1176,8 @@
    "base_experience": 159,
    "type1": 2,
    "type2": 0,
-   "rarity": 4
+   "rarity": 4,
+   "obtain": 1
  },
  {
    "id": 108,
@@ -1080,7 +1187,8 @@
    "base_experience": 77,
    "type1": 1,
    "type2": 0,
-   "rarity": 4
+   "rarity": 4,
+   "obtain": 1
  },
  {
    "id": 109,
@@ -1090,7 +1198,8 @@
    "base_experience": 68,
    "type1": 4,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 1
  },
  {
    "id": 110,
@@ -1100,7 +1209,8 @@
    "base_experience": 172,
    "type1": 4,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 2
  },
  {
    "id": 111,
@@ -1110,7 +1220,8 @@
    "base_experience": 69,
    "type1": 5,
    "type2": 6,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 1
  },
  {
    "id": 112,
@@ -1120,7 +1231,8 @@
    "base_experience": 170,
    "type1": 5,
    "type2": 6,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 2
  },
  {
    "id": 113,
@@ -1130,7 +1242,8 @@
    "base_experience": 395,
    "type1": 1,
    "type2": 0,
-   "rarity": 4
+   "rarity": 4,
+   "obtain": 1
  },
  {
    "id": 114,
@@ -1140,7 +1253,8 @@
    "base_experience": 87,
    "type1": 12,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 1
  },
  {
    "id": 115,
@@ -1150,7 +1264,8 @@
    "base_experience": 172,
    "type1": 1,
    "type2": 0,
-   "rarity": 5
+   "rarity": 5,
+   "obtain": 1
  },
  {
    "id": 116,
@@ -1160,7 +1275,8 @@
    "base_experience": 59,
    "type1": 11,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 1
  },
  {
    "id": 117,
@@ -1170,7 +1286,8 @@
    "base_experience": 154,
    "type1": 11,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 2
  },
  {
    "id": 118,
@@ -1180,7 +1297,8 @@
    "base_experience": 64,
    "type1": 11,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 1
  },
  {
    "id": 119,
@@ -1190,7 +1308,8 @@
    "base_experience": 158,
    "type1": 11,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 2
  },
  {
    "id": 120,
@@ -1200,7 +1319,8 @@
    "base_experience": 68,
    "type1": 11,
    "type2": 0,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 1
  },
  {
    "id": 121,
@@ -1210,7 +1330,8 @@
    "base_experience": 182,
    "type1": 11,
    "type2": 14,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 2
  },
  {
    "id": 122,
@@ -1220,7 +1341,8 @@
    "base_experience": 161,
    "type1": 14,
    "type2": 18,
-   "rarity": 5
+   "rarity": 5,
+   "obtain": 1
  },
  {
    "id": 123,
@@ -1230,17 +1352,19 @@
    "base_experience": 100,
    "type1": 7,
    "type2": 3,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 1
  },
  {
    "id": 124,
    "identifier": "jynx",
-   "evolved_species_id": 232,
-   "evolve_level": 25,
+   "evolved_species_id": -1,
+   "evolve_level": -1,
    "base_experience": 159,
    "type1": 15,
    "type2": 14,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 1
  },
  {
    "id": 125,
@@ -1250,7 +1374,8 @@
    "base_experience": 172,
    "type1": 13,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 1
  },
  {
    "id": 126,
@@ -1260,7 +1385,8 @@
    "base_experience": 173,
    "type1": 10,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 1
  },
  {
    "id": 127,
@@ -1270,7 +1396,8 @@
    "base_experience": 175,
    "type1": 7,
    "type2": 0,
-   "rarity": 2
+   "rarity": 2,
+   "obtain": 1
  },
  {
    "id": 128,
@@ -1280,7 +1407,8 @@
    "base_experience": 172,
    "type1": 1,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 1
  },
  {
    "id": 129,
@@ -1290,7 +1418,8 @@
    "base_experience": 40,
    "type1": 11,
    "type2": 0,
-   "rarity": 4
+   "rarity": 4,
+   "obtain": 1
  },
  {
    "id": 130,
@@ -1300,7 +1429,8 @@
    "base_experience": 189,
    "type1": 11,
    "type2": 3,
-   "rarity": 4
+   "rarity": 4,
+   "obtain": 2
  },
  {
    "id": 131,
@@ -1310,7 +1440,8 @@
    "base_experience": 187,
    "type1": 11,
    "type2": 15,
-   "rarity": 5
+   "rarity": 5,
+   "obtain": 1
  },
  {
    "id": 132,
@@ -1320,7 +1451,8 @@
    "base_experience": 101,
    "type1": 1,
    "type2": 0,
-   "rarity": 5
+   "rarity": 5,
+   "obtain": 1
  },
  {
    "id": 133,
@@ -1330,7 +1462,8 @@
    "base_experience": 65,
    "type1": 1,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 1
  },
  {
    "id": 134,
@@ -1340,7 +1473,8 @@
    "base_experience": 184,
    "type1": 11,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 3
  },
  {
    "id": 135,
@@ -1350,7 +1484,8 @@
    "base_experience": 184,
    "type1": 13,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 3
  },
  {
    "id": 136,
@@ -1360,7 +1495,8 @@
    "base_experience": 184,
    "type1": 10,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 3
  },
  {
    "id": 137,
@@ -1370,7 +1506,8 @@
    "base_experience": 79,
    "type1": 1,
    "type2": 0,
-   "rarity": 4
+   "rarity": 4,
+   "obtain": 1
  },
  {
    "id": 138,
@@ -1380,7 +1517,8 @@
    "base_experience": 71,
    "type1": 6,
    "type2": 11,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 1
  },
  {
    "id": 139,
@@ -1390,7 +1528,8 @@
    "base_experience": 173,
    "type1": 6,
    "type2": 11,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 2
  },
  {
    "id": 140,
@@ -1400,7 +1539,8 @@
    "base_experience": 71,
    "type1": 6,
    "type2": 11,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 1
  },
  {
    "id": 141,
@@ -1410,7 +1550,8 @@
    "base_experience": 173,
    "type1": 6,
    "type2": 11,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 2
  },
  {
    "id": 142,
@@ -1420,7 +1561,8 @@
    "base_experience": 180,
    "type1": 6,
    "type2": 3,
-   "rarity": 4
+   "rarity": 4,
+   "obtain": 1
  },
  {
    "id": 143,
@@ -1430,7 +1572,8 @@
    "base_experience": 189,
    "type1": 1,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 1
  },
  {
    "id": 144,
@@ -1440,7 +1583,8 @@
    "base_experience": 261,
    "type1": 15,
    "type2": 3,
-   "rarity": 5
+   "rarity": 5,
+   "obtain": 1
  },
  {
    "id": 145,
@@ -1450,7 +1594,8 @@
    "base_experience": 261,
    "type1": 13,
    "type2": 3,
-   "rarity": 5
+   "rarity": 5,
+   "obtain": 1
  },
  {
    "id": 146,
@@ -1460,7 +1605,8 @@
    "base_experience": 261,
    "type1": 10,
    "type2": 3,
-   "rarity": 5
+   "rarity": 5,
+   "obtain": 1
  },
  {
    "id": 147,
@@ -1470,7 +1616,8 @@
    "base_experience": 60,
    "type1": 16,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 1
  },
  {
    "id": 148,
@@ -1480,7 +1627,8 @@
    "base_experience": 147,
    "type1": 16,
    "type2": 0,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 2
  },
  {
    "id": 149,
@@ -1490,7 +1638,8 @@
    "base_experience": 270,
    "type1": 16,
    "type2": 3,
-   "rarity": 3
+   "rarity": 3,
+   "obtain": 2
  },
  {
    "id": 150,
@@ -1500,7 +1649,8 @@
    "base_experience": 306,
    "type1": 14,
    "type2": 0,
-   "rarity": 5
+   "rarity": 5,
+   "obtain": 1
  },
  {
    "id": 151,
@@ -1510,6 +1660,7 @@
    "base_experience": 270,
    "type1": 14,
    "type2": 0,
-   "rarity": 5
+   "rarity": 5,
+   "obtain": 1
  }
 ]

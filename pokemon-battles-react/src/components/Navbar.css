@@ -4,9 +4,20 @@
   border-radius: 6px 6px 0 0;
   width: 100%;
   grid-column: 1 / 2;
-  padding: 1rem;
+  padding: 1rem 1rem .25rem 1rem;
   display: flex;
+  flex-direction: column;
   align-items: center;
+}
+#navbar-content {
+  display: flex;
+  width: 100%;
+  height: auto;
+}
+
+#navbar-links {
+  display: flex;
+  width: 100%;
 }
 
 #navbar .profile-pic {
@@ -73,6 +84,10 @@
   box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
 }
 
+.navbar-pokemon:hover {
+  filter: blur(1px) grayscale(1);
+}
+
 .navbar-level {
   position: absolute;
   top: -5px;
@@ -99,8 +114,17 @@
   color: var(--black) !important;
 }
 
-#navbar > a:hover{
+#navbar a:hover{
   background-color: transparent !important; 
+}
+
+#navbar-content a:hover {
+  background-color: transparent !important;
+}
+
+#navbar-links a:hover {
+  color: var(--yellow-text) !important;
+  background-color: transparent;
 }
 
 #navbar .links {
@@ -115,4 +139,18 @@
 #navbar h5 {
   font-family: var(--classic);
   font-size: 1rem;
+  color: var(--black);
+}
+
+.navbar-wallet {
+  cursor: pointer;
+}
+
+.navbar-coin {
+  transition: all ease .25s;
+}
+
+.navbar-wallet:hover {
+  filter: grayscale(1);
+  transform: scale(1.1);
 }
