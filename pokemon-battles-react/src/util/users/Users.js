@@ -1,4 +1,4 @@
-import { doc, getDoc, updateDoc, setDoc, arrayUnion } from "firebase/firestore";
+import { doc, getDoc, updateDoc, setDoc, arrayUnion} from "firebase/firestore";
 import { db } from "../Firebase";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../Firebase";

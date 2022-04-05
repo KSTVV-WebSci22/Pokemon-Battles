@@ -12,6 +12,7 @@ import { useMachine } from "@xstate/react";
 // Firebase
 import { auth } from '../../util/Firebase'
 import { getMyPokemon } from '../../util/users/Users'
+import { findBattle, newBattle, takeTurn } from '../../util/battle/Battle'
 
 //xstate machine
 const turnMachine = createMachine({
@@ -119,6 +120,13 @@ const Battle = () => {
         setMyHp(hp);
     }
 
+    const newBattle = async () => {
+        const op = await findBattle()
+        if(op != false) {
+            console.log("Opponent => ", op.turns[0]);
+        }
+    }
+
     //when your opponent takes their turn
     const recieveTurn=() => { 
         console.log("recieveTurn");
@@ -205,57 +213,25 @@ const Battle = () => {
     }
 
     useEffect(()=>{
-        // test data represents your pokemon
-        var testData = [
-            {
-                pokemon: 1,
-                level: 6,
-                moves: [1, 2, 3, 4]
-            },
-            {
-                pokemon: 2,
-                level: 6,
-                moves: [5, 6, 7, 8]
-            },
-            {
-                pokemon: 3,
-                level: 6,
-                moves: [9, 10, 11, 12]
-            },
-            {
-                pokemon: 4,
-                level: 6,
-                moves: [13, 14, 15, 16]
-            },
-            {
-                pokemon: 5,
-                level: 6,
-                moves: [17, 18, 19, 20]
-            },
-            {
-                pokemon: 6,
-                level: 6,
-                moves: [21, 22, 23, 24]
-            }
-        ];
 
-        //setMyPokemonData(testData); // Set pokemon test data
-        //setMyHp([100, 100, 100, 100, 100, 100]); //initial hp percents
         setMyTurn(true); //you go first in this example false = opponent goes first
 
         //opponent initial test data
         setMyOpponent({
             name: "Opponent",
-            pokemon: "pikachu",
+            pokemon: "pikachu", //change to pokemon info object
             hp: 100,
             level: 7,
-            move: null,
+            move: null, //all move info
             won: null,
         });
 
         //get all info from api
         fillPokemon();
-        //fillMoves(testData);
+
+        //firebase battle test
+        newBattle();
+        takeTurn("Mn0MedqRWwBYNaUfTJ8l", {}); //test send turn
 
       }, []);
 
