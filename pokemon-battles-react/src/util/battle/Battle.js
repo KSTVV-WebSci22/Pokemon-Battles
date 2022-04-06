@@ -1,4 +1,4 @@
-import { doc, getDoc, getDocs, updateDoc, setDoc, arrayUnion, query, where, collection  } from "firebase/firestore";
+import { doc, getDoc, getDocs, updateDoc, setDoc, addDoc, arrayUnion, query, where, collection, onSnapshot } from "firebase/firestore";
 import { db } from "../Firebase";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../Firebase";
@@ -30,6 +30,41 @@ export const takeTurn = async (id, move) => {
     });
 }
 
-export const newBattle = async () => { 
+export const sendLose = async (dId, pId) => { 
+    const lose = doc(db, "battles", dId);
+    await updateDoc(lose, {
+        winner: pId
+    });
+}
 
+export const newUser = async (dId, pId) => { 
+    const nu = doc(db, "battles", dId);
+    await updateDoc(nu, {
+        user2: pId
+    });
+}
+
+export const createBattle = async (data) => { 
+    const newDoc = await addDoc(battles, data);
+    return new Promise((res) => {
+        res(newDoc.id);
+    });
+}
+
+export const getTurns = async (dId, pId) => { 
+    console.log(dId, pId);
+    return new Promise((res) => {
+        const turn = onSnapshot(doc(db, "battles", dId), (doc) => {
+            console.log("Turn ", doc.data());
+            if(doc.data().turns[doc.data().turns.length - 1].userId != pId) {
+                if( doc.data().winner == "") {
+                    res(doc.data().turns[doc.data().turns.length - 1]);
+                    turn();
+                } else if(doc.data().winner == pId) {
+                    res("win");
+                    turn();
+                }
+            }
+        });
+    });
 }

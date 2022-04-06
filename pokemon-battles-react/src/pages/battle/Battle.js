@@ -12,7 +12,9 @@ import { useMachine } from "@xstate/react";
 // Firebase
 import { auth } from '../../util/Firebase'
 import { getMyPokemon } from '../../util/users/Users'
-import { findBattle, newBattle, takeTurn } from '../../util/battle/Battle'
+import { findBattle, createBattle, takeTurn, getTurns, newUser, sendLose } from '../../util/battle/Battle'
+import { onAuthStateChanged } from 'firebase/auth';
+import { getUser, updateUser } from '../../util/users/Users';
 
 //xstate machine
 const turnMachine = createMachine({
@@ -95,7 +97,10 @@ const Battle = () => {
     const [myOpponent, setMyOpponent] = useState(null);
     const [myTurn, setMyTurn] = useState(true);
     const signatureRef = useRef(null);
+    const [docId, setDocId] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [uid, setUID] = useState("");
+    const [name, setName] = useState("")
 
     const { setSong, website } = useContext(ClientContext);
 
@@ -111,25 +116,136 @@ const Battle = () => {
 
     const fillPokemon = async () => { 
         const mycPokemon = await getMyPokemon(auth.currentUser.uid);
-        setMyPokemon(mycPokemon.slice(0, 6));
-        console.log(mycPokemon);
-        var hp = [];
-        for(let x in mycPokemon){
-            hp.push(100);
-        }
-        setMyHp(hp);
+        return new Promise(res =>{
+            setMyPokemon(mycPokemon.slice(0, 6));
+            console.log(mycPokemon);
+            var hp = [];
+            for(let x in mycPokemon){
+                hp.push(100);
+            }
+            setMyHp(hp);
+            res([mycPokemon.slice(0, 6)[0], hp]);
+        })
     }
 
-    const newBattle = async () => {
-        const op = await findBattle()
+    const newBattle = async (pokemon, hp) => {
+        const op = await findBattle();
+        const myName = await getUser(auth.currentUser.uid); 
+        var pokemonData = {...pokemon};
+        delete pokemonData.moves;
+        //moved from in if statement
         if(op != false) {
             console.log("Opponent => ", op.turns[0]);
+            setDocId(op.docId);
+            setMyOpponent(op.turns[0]);
+            setName(myName);
+            console.log("pd =>", pokemonData);
+            let me = {
+                hp: 100,
+                pokemon: pokemonData,
+                type: "start",
+                userName: await myName.username,
+                userId: await auth.currentUser.uid
+            }
+            console.log("Me => ", me);
+            //newUser(op.docId, auth.currentUser.uid); //uncomment when finished
+            takeTurn(op.docId, me);
+            setMyTurn(false);
+            console.log("hp =>", myHp);
+            recieveTurn(op.docId, auth.currentUser.uid, hp);
+        } else {
+            
+            if(window.confirm("No battles found, start a new battle?")) {
+                let battle = {
+                    date: new Date().getTime(),
+                    status: "started",
+                    user1: auth.currentUser.uid,
+                    user2: "",
+                    winner: "",
+                    turns: [
+                        {
+                            hp: 100,
+                            type: "start",
+                            pokemon: pokemonData,
+                            userId: auth.currentUser.uid,
+                            userName: myName.username,
+                        }
+                    ]
+                }
+                console.log(battle);
+                const newDoc = await createBattle(battle);
+                setDocId(newDoc);
+                console.log("hp =>", myHp);
+                recieveTurn(newDoc, auth.currentUser.uid, hp);
+            } else {
+                //go back a page
+            }
+            
         }
     }
 
     //when your opponent takes their turn
-    const recieveTurn=() => { 
-        console.log("recieveTurn");
+    const recieveTurn= async (dId, pId, hp) => { 
+        getTurns(dId, pId).then(turn => {
+            if(turn.type != 'start') {
+                console.log("Recieved Turn");
+                console.log(turn);
+
+                setMyOpponent(turn);
+
+                if(turn == "win") {
+                    setWon(true);
+                    next("ENDGAME");
+                    setMyTurn(false);
+                    return 0;
+                }
+        
+                if(turn.move != null) {
+                    //will have to calculate damage from type & pp / other stats
+                    let newHp = [...hp];
+                    newHp[selectedPokemon] -= turn.damage;
+                    setMyHp(newHp);
+                    console.log(newHp);
+                    
+                    let max = -1;
+                    //if pokemon died switch pokemon
+                    if(newHp[selectedPokemon] == 0) {
+                        newHp.every((x, i) => {
+                            if(x > 0) {
+                                max = i;
+                                return false;
+                            }
+                            return true;
+                        });
+                        //if all pokemon are dead you lose
+                        if(max == -1) {
+                            setWon(false);
+                            next("ENDGAME");
+                            setMyTurn(false);
+                            sendLose(docId, myOpponent.userId);
+                        } else {
+                            //if a pokemon dead switch pokemon
+                            next({ type: "DEAD", id: max }); 
+                            setMyTurn(true);
+                        }
+                    } else {
+                        //if pokemon not dead
+                        next("NEWTURN");
+                        setMyTurn(true);
+        
+                    }
+
+                } else if (turn.move == null) {
+                    next("NEWTURN");
+                    setMyTurn(true);
+                }
+        } else if(turn.type == 'start') {
+            console.log("Recieved Turn => ", turn);
+            setMyOpponent(turn);
+            setMyTurn(true);
+        }
+        });
+        /*
         //test recieved oppenent data
         const opponent = {
             name: "Opponent",
@@ -185,53 +301,74 @@ const Battle = () => {
                 setMyTurn(true);
             }
         }
+        */
     }
 
     const sendTurn = async () => { 
         let move = null;
+        let damage = null;
         if (selectedMove != -1) {
-            move = {
-                name: myPokemon[selectedPokemon].moves[selectedMove].name,
-                type: myPokemon[selectedPokemon].moves[selectedMove].type,
-                pp: myPokemon[selectedPokemon].moves[selectedMove].pp
-            }
+            move = myPokemon[selectedPokemon].moves[selectedMove];
+            damage = 50;
         }
+        var pokemonData = {...myPokemon[selectedPokemon]};
+        delete pokemonData.moves;
         const turn = {
-            name: "Me",
-            pokemon: myPokemon[selectedPokemon].identifier,
+            userName: name,
+            userId: auth.currentUser.uid,
+            pokemon: pokemonData,
             hp: myHp[selectedPokemon],
-            level: myPokemon[selectedPokemon].level,
             move: move,
+            damage: damage,
             won: won,
+            type: "turn",
         }
         //send turn here
         console.log(turn);
+        takeTurn(docId, turn);
+
+        if(damage != null) {
+            myOpponent.hp -= damage;
+        }
 
         if(myTurn) {
             setMyTurn(false);
         }
+        recieveTurn(docId, auth.currentUser.uid, myHp);
     }
 
-    useEffect(()=>{
+    useEffect(async ()=>{
 
-        setMyTurn(true); //you go first in this example false = opponent goes first
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is Signed In
+                setUID(user.uid);
+                console.log(user.uid);
 
-        //opponent initial test data
-        setMyOpponent({
-            name: "Opponent",
-            pokemon: "pikachu", //change to pokemon info object
-            hp: 100,
-            level: 7,
-            move: null, //all move info
-            won: null,
-        });
+                //opponent initial test data
+                /*
+                setMyOpponent({
+                    name: "Opponent",
+                    pokemon: "pikachu", //change to pokemon info object
+                    hp: 100,
+                    level: 7,
+                    move: null, //all move info
+                    won: null,
+                });*/
 
-        //get all info from api
-        fillPokemon();
+                //get all info from api
+                fillPokemon().then((data)=>{
+                    //firebase battle test
+                    newBattle(data[0], data[1]);
+                    //takeTurn("Mn0MedqRWwBYNaUfTJ8l", {}); //test send turn
+                });
 
-        //firebase battle test
-        newBattle();
-        takeTurn("Mn0MedqRWwBYNaUfTJ8l", {}); //test send turn
+            } else {
+              // User is signed out
+              //navigate('/');
+            }
+        })
+
 
       }, []);
 
@@ -355,10 +492,6 @@ const Battle = () => {
                 return (
                     <>
                         <h1 id="oppT">Opponent's Turn</h1>
-                        <br/>
-                        <button onClick={() => recieveTurn()}>
-                            Send Opponent's turn (for testing)
-                        </button>
                     </>
                 );
               }
@@ -373,7 +506,7 @@ const Battle = () => {
             <div className='battle content-item'>
             {/*when all data has been recieved stop loading*/}
             {/*change this to myPokemonData.length == 6 when finalized*/}
-            {myPokemon.length > 0 && myOpponent != null ? (
+            {myPokemon.length > 0 && myOpponent != null && docId != null && myHp.length == myPokemon.length ? (
                 <>
                     {won == null ? (
                         <>   
@@ -386,8 +519,8 @@ const Battle = () => {
                                         {myOpponent && 
                                             <>
                                             <div id="opponent-pokemon-name">
-                                                {myOpponent.pokemon}
-                                                <span id="opponent-pokemon-stats">{myOpponent.level}</span>
+                                                {myOpponent.pokemon.identifier}
+                                                <span id="opponent-pokemon-stats">{myOpponent.pokemon.current_level}</span>
                                             </div>
                                             <div id="opponent-pokemon-health">
                                                 {"HP: " + myOpponent.hp + "%"}
@@ -398,7 +531,7 @@ const Battle = () => {
                                 </div>
                                 <div id="opponent-pokemon-img">
                                     {myOpponent && 
-                                        <img src={require("../../img/pokemon/" + myOpponent.pokemon + ".png")} alt={myOpponent.pokemon} />
+                                        <img src={require("../../img/pokemon/" + myOpponent.pokemon.identifier + ".png")} alt={myOpponent.pokemon.identifier} />
                                     }
                                 </div>
 
