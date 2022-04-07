@@ -10,6 +10,7 @@ const moveList = require("./data/movelist.json");
 const pokemonData = require("./data/pokemondata.json");
 const typeData = require("./data/typedamage.json");
 const typeConvert = require("./data/types.json");
+const pokestats = require("./data/stats.json");
 
 // Cors
 var cors = require("cors");
@@ -61,6 +62,12 @@ app.get('/api/newPokemon/:id/:level', (req, res) => {
   
   pokemon['type1'] = t1;
   pokemon['type2'] = t2;
+  pokemon['hp'] = pokestats[parseInt(id)-1].hp;
+  pokemon['attack'] = pokestats[parseInt(id)-1].attack;
+  pokemon['defense'] = pokestats[parseInt(id)-1].defense;
+  pokemon['specialatk'] = pokestats[parseInt(id)-1].specialatk;
+  pokemon['specialdef'] = pokestats[parseInt(id)-1].specialdef;
+  pokemon['speed'] = pokestats[parseInt(id)-1].speed;
   pokemon.win = 0
   pokemon.loss = 0
   pokemon.final_win = 0 
