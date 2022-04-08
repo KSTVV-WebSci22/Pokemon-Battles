@@ -4,6 +4,7 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../Firebase";
 
 const battles = collection(db, "battles");
+var turn = false;
 
 //test find batlle
 export const findBattle = async () => {
@@ -28,6 +29,15 @@ export const takeTurn = async (id, move) => {
     await updateDoc(turn, {
         turns: arrayUnion(move)
     });
+    console.log("send turn => " + id, move);
+    const newDoc = doc(db, "battles", id);
+    const result = await getDoc(newDoc);
+    if(result.exists()) {
+        console.log("re => ", move, result.data().turns[result.data().turns.length - 1]);
+        if(result.data().turns[result.data().turns.length - 1].time == move.time) {
+            console.log("Turn sent");
+        }
+    }
 }
 
 export const sendLose = async (dId, pId) => { 
@@ -52,17 +62,21 @@ export const createBattle = async (data) => {
 }
 
 export const getTurns = async (dId, pId) => { 
+    if(turn != false) {
+        turn();
+    }
     console.log(dId, pId);
     return new Promise((res) => {
-        const turn = onSnapshot(doc(db, "battles", dId), (doc) => {
-            console.log("Turn ", doc.data());
+        turn = onSnapshot(doc(db, "battles", dId), (doc) => {
+            console.log("Turnjh =>", doc.data());
             if(doc.data().turns[doc.data().turns.length - 1].userId != pId) {
                 if( doc.data().winner == "") {
+                    turn();
+                    console.log("Turn #" + doc.data().turns.length);
                     res(doc.data().turns[doc.data().turns.length - 1]);
-                    turn();
                 } else if(doc.data().winner == pId) {
+                    turn(); //moght have to move after res
                     res("win");
-                    turn();
                 }
             }
         });

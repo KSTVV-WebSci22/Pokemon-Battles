@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useContext } from 'react';
+import { useNavigate } from 'react-router-dom'
 import './Battle.css'
 import axios from 'axios'
 import Moves from './components/Moves';
@@ -104,6 +105,13 @@ const Battle = () => {
 
     const { setSong, website } = useContext(ClientContext);
 
+    let navigate = useNavigate();
+    onAuthStateChanged(auth, (user) => {
+        if (!user) {
+          navigate('/');
+        }
+    });
+
     useEffect(()=>{
       setSong(3)
     }, []);
@@ -148,11 +156,13 @@ const Battle = () => {
                 userId: await auth.currentUser.uid
             }
             console.log("Me => ", me);
-            //newUser(op.docId, auth.currentUser.uid); //uncomment when finished
-            takeTurn(op.docId, me);
-            setMyTurn(false);
-            console.log("hp =>", myHp);
-            recieveTurn(op.docId, auth.currentUser.uid, hp);
+            newUser(op.docId, auth.currentUser.uid); //uncomment when finished
+            if(takeTurn(op.docId, me)) {
+                setMyTurn(false);
+                console.log("hp =>", myHp);
+                recieveTurn(op.docId, auth.currentUser.uid, hp);
+            }
+            
         } else {
             
             if(window.confirm("No battles found, start a new battle?")) {
@@ -169,6 +179,7 @@ const Battle = () => {
                             pokemon: pokemonData,
                             userId: auth.currentUser.uid,
                             userName: myName.username,
+                            time: new Date().getTime()
                         }
                     ]
                 }
@@ -178,7 +189,7 @@ const Battle = () => {
                 console.log("hp =>", myHp);
                 recieveTurn(newDoc, auth.currentUser.uid, hp);
             } else {
-                //go back a page
+                navigate('/');
             }
             
         }
@@ -186,10 +197,10 @@ const Battle = () => {
 
     //when your opponent takes their turn
     const recieveTurn= async (dId, pId, hp) => { 
+        console.log("in recieve");
         getTurns(dId, pId).then(turn => {
             if(turn.type != 'start') {
-                console.log("Recieved Turn");
-                console.log(turn);
+                console.log("Recieved Turn +> ", turn);
 
                 setMyOpponent(turn);
 
@@ -245,66 +256,11 @@ const Battle = () => {
             setMyTurn(true);
         }
         });
-        /*
-        //test recieved oppenent data
-        const opponent = {
-            name: "Opponent",
-            pokemon: "pikachu",
-            hp: 100,
-            level: 7,
-            move: {
-                name: "Thunderbolt",
-                type: "Normal",
-                pp: 50
-            },
-            won: null,
-        }
-        setMyOpponent(opponent);
-
-        //if opponent lost
-        if(opponent.won == false) {
-            setWon(true);
-            next("ENDGAME");
-            setMyTurn(false);
-            return 0;
-        }
-
-        if(opponent.move != null) {
-            //will have to calculate damage from type & pp / other stats
-            myHp[selectedPokemon] -= opponent.move.pp;
-            console.log(myHp);
-            
-            let max = -1;
-            //if pokemon died switch pokemon
-            if(myHp[selectedPokemon] == 0) {
-                myHp.every((x, i) => {
-                    if(x > 0) {
-                        max = i;
-                        return false;
-                    }
-                    return true;
-                });
-                //if all pokemon are dead you lose
-                if(max == -1) {
-                    setWon(false);
-                    next("ENDGAME");
-                    setMyTurn(false);
-                    sendTurn();
-                } else {
-                    //if a pokemon dead switch pokemon
-                    next({ type: "DEAD", id: max }); 
-                    setMyTurn(true);
-                }
-            } else {
-                //if pokemon not dead
-                next("NEWTURN");
-                setMyTurn(true);
-            }
-        }
-        */
     }
 
-    const sendTurn = async () => { 
+    const sendTurn = async (hp) => { 
+        console.log("in send");
+        const myName = await getUser(auth.currentUser.uid); 
         let move = null;
         let damage = null;
         if (selectedMove != -1) {
@@ -314,27 +270,30 @@ const Battle = () => {
         var pokemonData = {...myPokemon[selectedPokemon]};
         delete pokemonData.moves;
         const turn = {
-            userName: name,
+            userName: myName.username,
             userId: auth.currentUser.uid,
-            pokemon: pokemonData,
-            hp: myHp[selectedPokemon],
+            pokemon: await pokemonData,
+            hp: hp[selectedPokemon],
             move: move,
             damage: damage,
             won: won,
             type: "turn",
+            time: new Date().getTime()
         }
         //send turn here
-        console.log(turn);
-        takeTurn(docId, turn);
-
-        if(damage != null) {
-            myOpponent.hp -= damage;
-        }
-
-        if(myTurn) {
-            setMyTurn(false);
-        }
-        recieveTurn(docId, auth.currentUser.uid, myHp);
+        console.log("myturn =>", turn);
+        if(takeTurn(docId, turn)) {
+            if(damage != null) {
+                let opponent = {...myOpponent};
+                opponent.hp -= damage;
+                setMyOpponent(opponent);
+            }
+    
+            if(myTurn) {
+                setMyTurn(false);
+            }
+            recieveTurn(docId, auth.currentUser.uid, hp);
+        };
     }
 
     useEffect(async ()=>{
@@ -363,10 +322,7 @@ const Battle = () => {
                     //takeTurn("Mn0MedqRWwBYNaUfTJ8l", {}); //test send turn
                 });
 
-            } else {
-              // User is signed out
-              //navigate('/');
-            }
+            } 
         })
 
 
@@ -482,7 +438,7 @@ const Battle = () => {
               if(myTurn) {
                 return (
                     <button
-                        onClick={() => {sendTurn(); setMyTurn(false);}}
+                        onClick={() => {sendTurn(myHp); setMyTurn(false);}}
                         className="send"
                     >
                         Send my turn
