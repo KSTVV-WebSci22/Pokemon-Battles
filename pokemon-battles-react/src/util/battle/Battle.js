@@ -7,8 +7,8 @@ const battles = collection(db, "battles");
 var turn = false;
 
 //test find batlle
-export const findBattle = async () => {
-    console.log("find battle"); 
+export const findBattle = async () => { 
+    console.log("find battle"); //add check to see if you are joining your own game
     const find = query(battles, where("user1", "!=", ""), where("user2", "==", ""), where("status", "==", "started"));
     const docs = await getDocs(find);
     console.log(docs.docs.length);
@@ -25,19 +25,22 @@ export const findBattle = async () => {
 }
 
 export const takeTurn = async (id, move) => { 
-    const turn = doc(db, "battles", id);
-    await updateDoc(turn, {
-        turns: arrayUnion(move)
-    });
-    console.log("send turn => " + id, move);
-    const newDoc = doc(db, "battles", id);
-    const result = await getDoc(newDoc);
-    if(result.exists()) {
-        console.log("re => ", move, result.data().turns[result.data().turns.length - 1]);
-        if(result.data().turns[result.data().turns.length - 1].time == move.time) {
-            console.log("Turn sent");
+    return new Promise(async (res) => {
+        const turn = doc(db, "battles", id);
+        await updateDoc(turn, {
+            turns: arrayUnion(move)
+        });
+        console.log("send turn => " + id, move);
+        const newDoc = doc(db, "battles", id);
+        const result = await getDoc(newDoc);
+        if(result.exists()) {
+            console.log("re => ", move, result.data().turns[result.data().turns.length - 1]);
+            if(result.data().turns[result.data().turns.length - 1].time == move.time) {
+                console.log("Turn sent");
+                res(true);
+            }
         }
-    }
+    });
 }
 
 export const sendLose = async (dId, pId) => { 
