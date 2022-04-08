@@ -99,6 +99,10 @@ app.get('/api/type/:type', (req, res) => {
   res.json(typeData.type_damage[type]);
 });
 
+app.get('/api/typeDamage/', (req, res) => {
+  res.json(typeData.type_damage);
+});
+
 
 // Pokemon Rarity
 app.get('/api/pokemon/:rarity', (req, res) => {

@@ -73,12 +73,12 @@ export const getTurns = async (dId, pId) => {
         turn = onSnapshot(doc(db, "battles", dId), (doc) => {
             console.log("Turnjh =>", doc.data());
             if(doc.data().turns[doc.data().turns.length - 1].userId != pId) {
-                if( doc.data().winner == "") {
+                if(doc.data().winner == "") {
                     turn();
                     console.log("Turn #" + doc.data().turns.length);
                     res(doc.data().turns[doc.data().turns.length - 1]);
-                } else if(doc.data().winner == pId) {
-                    turn(); //moght have to move after res
+                } else if(doc.data().winner == false) {
+                    turn(); //might have to move after res
                     res("win");
                 }
             }
