@@ -2,7 +2,7 @@
 
 ## Reporting a Vulnerability
 
-If there are any vulnerabilities in **{{Pokemon Battles}}**, don't hesitate to _report them_.
+If there are any vulnerabilities in **Pokemon Battles**, don't hesitate to _report them_.
 
 1. Use any of the private contact addresses
 seanrblock@gmail.com
