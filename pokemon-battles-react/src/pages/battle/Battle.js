@@ -128,9 +128,13 @@ const Battle = () => {
             setMyPokemon(mycPokemon.slice(0, 6));
             console.log(mycPokemon);
             var hp = [];
-            for(let x in mycPokemon){
-                hp.push(100);
-            }
+            mycPokemon.forEach(x => {
+                if(x.hp != undefined){ 
+                    hp.push(x.hp); //add hp from pokemon info, (old pokemon will not have this stat)
+                } else {
+                    hp.push(100); //delete when finished
+                }
+            });
             setMyHp(hp);
             res([mycPokemon.slice(0, 6)[0], hp]);
         })
@@ -149,7 +153,7 @@ const Battle = () => {
             setName(myName);
             console.log("pd =>", pokemonData);
             let me = {
-                hp: 100,
+                hp: ((pokemonData.hp != undefined) ? pokemonData.hp : 100), //delete 100 when finished
                 pokemon: pokemonData,
                 type: "start",
                 userName: await myName.username,
@@ -215,12 +219,15 @@ const Battle = () => {
                     //will have to calculate damage from type & pp / other stats
                     let newHp = [...hp];
                     newHp[selectedPokemon] -= turn.damage;
+                    if(newHp[selectedPokemon] <= 0) {
+                        newHp[selectedPokemon] = 0;
+                    }
                     setMyHp(newHp);
                     console.log(newHp);
                     
                     let max = -1;
                     //if pokemon died switch pokemon
-                    if(newHp[selectedPokemon] == 0) {
+                    if(newHp[selectedPokemon] <= 0) {
                         newHp.every((x, i) => {
                             if(x > 0) {
                                 max = i;
@@ -234,6 +241,7 @@ const Battle = () => {
                             next("ENDGAME");
                             setMyTurn(false);
                             sendLose(docId, myOpponent.userId);
+                            //sendTurn(newHp, false);
                         } else {
                             //if a pokemon dead switch pokemon
                             next({ type: "DEAD", id: max }); 
@@ -258,6 +266,48 @@ const Battle = () => {
         });
     }
 
+    const damageCalc = async () => {
+        return new Promise(res => {
+            let h = Math.floor(Math.random() * (101 - 1)) + 1;
+            if(h > myPokemon[selectedPokemon].accuracy) {       
+                res(0);
+            } 
+            let move = myPokemon[selectedPokemon].moves[selectedMove];
+            axios.get(website + "/api/typeDamage/").then((response) => {
+                let t = response.data[move.type];
+                let typeDamage1 = t[myOpponent.pokemon.type1];
+                let typeDamage2 = typeDamage1;
+                if(myOpponent.pokemon.type2 != 'None') {
+                    typeDamage2 = t[myOpponent.pokemon.type2];
+                }
+                let totalTypeDamage = (typeDamage1 + typeDamage2) / 2;
+                let a = (((2 * myPokemon[selectedPokemon].current_level) / 5) + 2) * move.power ;
+                let b = 0;
+                let c = 0;
+                if(response.data.damage_class == 'physical') {
+                    b = myPokemon[selectedPokemon].attack;
+                    c = myOpponent.pokemon.defense;
+                } else if (response.data[move.type].damage_class = 'special') {
+                    b = myPokemon[selectedPokemon].specialatk;
+                    c = myOpponent.pokemon.specialdef;
+                }
+                let d = a * b / c;
+                let e = (d / 50) + 2;
+                let f = e * (totalTypeDamage / 100);
+                if(myPokemon[selectedPokemon].type1 == move.type || myPokemon[selectedPokemon].type2 == move.type) {
+                    f = f * 1.5;
+                }
+                let g = Math.floor(Math.random() * (101 - 85)) + 85;
+                g = g / 100;
+                let i = Math.round(f * g);
+                console.log("damage => ", i);
+                res(i);
+            }).catch(err => {
+                console.log(err);
+            })
+        });
+    }
+
     const sendTurn = async (hp) => { 
         console.log("in send");
         const myName = await getUser(auth.currentUser.uid); 
@@ -265,7 +315,8 @@ const Battle = () => {
         let damage = null;
         if (selectedMove != -1) {
             move = myPokemon[selectedPokemon].moves[selectedMove];
-            damage = 50;
+            //damage = 50; //calculate damage here
+            damage = await damageCalc();
         }
         var pokemonData = {...myPokemon[selectedPokemon]};
         delete pokemonData.moves;
@@ -275,7 +326,7 @@ const Battle = () => {
             pokemon: await pokemonData,
             hp: hp[selectedPokemon],
             move: move,
-            damage: damage,
+            damage: await damage,
             won: won,
             type: "turn",
             time: new Date().getTime()
@@ -286,6 +337,9 @@ const Battle = () => {
             if(damage != null) {
                 let opponent = {...myOpponent};
                 opponent.hp -= damage;
+                if(opponent.hp <= 0) {
+                    opponent.hp = 0;
+                }
                 setMyOpponent(opponent);
             }
     
@@ -384,7 +438,7 @@ const Battle = () => {
                                     backgroundImage:
                                     `linear-gradient(
                                       to left,
-                                      #C1C1C1 ${myHp[i] < 100 ? 100 - myHp[i] : ''}%,
+                                      #C1C1C1 ${myHp[i] < myPokemon[i].hp ? ( myHp[i] / myPokemon[i].hp ) * 100 : ''}%,
                                       #ffffff00 0%
                                     )`}}
                                     key={x.identifier}
@@ -479,7 +533,7 @@ const Battle = () => {
                                                 <span id="opponent-pokemon-stats">{myOpponent.pokemon.current_level}</span>
                                             </div>
                                             <div id="opponent-pokemon-health">
-                                                {"HP: " + myOpponent.hp + "%"}
+                                                {"HP: " + myOpponent.hp}
                                             </div>
                                             </>
                                         }
@@ -507,7 +561,7 @@ const Battle = () => {
                                                 <span id="my-pokemon-stats" title='Pokemon Level'>{myPokemon[selectedPokemon].current_level}</span>
                                             </div>
                                             <div id="player-pokemon-health">
-                                                {"HP: " + myHp[selectedPokemon] + "%"}
+                                                {"HP: " + myHp[selectedPokemon]}
                                             </div>
                                             </>
                                         }
