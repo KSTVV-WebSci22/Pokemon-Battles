@@ -105,9 +105,8 @@ app.get('/api/typeDamage/', (req, res) => {
 
 
 // Pokemon Rarity
-app.get('/api/pokemon/:rarity', (req, res) => {
-  var rarity = req.params.rarity;
-  // res.json(typeData.type_damage[rarity]);
+app.get('/api/pokemon/:id/rarity', (req, res) => {
+  // res.json(pokemonData[id].rarity);
 });
 
 // Pokemon Shop Item - 1

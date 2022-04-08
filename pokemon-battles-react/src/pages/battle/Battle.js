@@ -178,7 +178,7 @@ const Battle = () => {
                     winner: "",
                     turns: [
                         {
-                            hp: 100,
+                            hp: pokemonData.hp,
                             type: "start",
                             pokemon: pokemonData,
                             userId: auth.currentUser.uid,

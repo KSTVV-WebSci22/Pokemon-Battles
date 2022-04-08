@@ -1172,7 +1172,7 @@
     "speed":80
  }, {
     "id":147,
-    "hp":250,
+    "hp":25,
     "attack":5,
     "defense":5,
     "specialatk":35,
