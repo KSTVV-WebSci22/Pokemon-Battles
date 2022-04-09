@@ -150,5 +150,5 @@
    {"hp":61,"attack":84,"defense":65,"specialatk":70,"specialdef":70},
    {"hp":91,"attack":134,"defense":95,"specialatk":100,"specialdef":100},
    {"hp":106,"attack":110,"defense":90,"specialatk":154,"specialdef":90},
-   {"hp":100,"attack":100,"defense":100,"specialatk":100,"specialdef":100},
+   {"hp":100,"attack":100,"defense":100,"specialatk":100,"specialdef":100}
 ]
