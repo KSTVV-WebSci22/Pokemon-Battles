@@ -5,6 +5,7 @@ import { auth } from "../Firebase";
 
 const battles = collection(db, "battles");
 var turn = false;
+var prevTurn = {};
 
 //test find batlle
 export const findBattle = async () => { 
@@ -43,11 +44,12 @@ export const takeTurn = async (id, move) => {
     });
 }
 
-export const sendLose = async (dId, pId) => { 
+export const sendLose = async (dId, pId, turn) => { 
     const lose = doc(db, "battles", dId);
     await updateDoc(lose, {
         winner: pId
     });
+    takeTurn(dId, turn);
 }
 
 export const newUser = async (dId, pId) => { 
@@ -72,12 +74,16 @@ export const getTurns = async (dId, pId) => {
     return new Promise((res) => {
         turn = onSnapshot(doc(db, "battles", dId), (doc) => {
             console.log("Turnjh =>", doc.data());
-            if(doc.data().turns[doc.data().turns.length - 1].userId != pId) {
+            var lastTurn = doc.data().turns[doc.data().turns.length - 1];
+            if(lastTurn.userId != pId) {
                 if(doc.data().winner == "") {
-                    turn();
-                    console.log("Turn #" + doc.data().turns.length);
-                    res(doc.data().turns[doc.data().turns.length - 1]);
-                } else if(doc.data().winner == false) {
+                    if(lastTurn != prevTurn) {
+                        turn();
+                        console.log("Turn #" + doc.data().turns.length);
+                        prevTurn = lastTurn;
+                        res(lastTurn);
+                    }
+                } else if(doc.data().winner == pId && lastTurn.won == false) {
                     turn(); //might have to move after res
                     res("win");
                 }

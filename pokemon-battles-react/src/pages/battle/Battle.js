@@ -102,6 +102,7 @@ const Battle = () => {
     const [loading, setLoading] = useState(true);
     const [uid, setUID] = useState("");
     const [name, setName] = useState("")
+    const [toast, setToast] = useState("hide")
 
     const { setSong, website } = useContext(ClientContext);
 
@@ -206,14 +207,14 @@ const Battle = () => {
             if(turn.type != 'start') {
                 console.log("Recieved Turn +> ", turn);
 
-                setMyOpponent(turn);
-
                 if(turn == "win") {
                     setWon(true);
                     next("ENDGAME");
                     setMyTurn(false);
                     return 0;
                 }
+
+                setMyOpponent(turn);
         
                 if(turn.move != null) {
                     //will have to calculate damage from type & pp / other stats
@@ -239,8 +240,19 @@ const Battle = () => {
                         if(max == -1) {
                             setWon(false);
                             next("ENDGAME");
-                            setMyTurn(false);
-                            sendLose(docId, myOpponent.userId);
+                            setMyTurn(false); 
+                            var pokemonData = {...myPokemon[selectedPokemon]};
+                            delete pokemonData.moves;
+                            const turn = {
+                                userName: name.username,
+                                userId: auth.currentUser.uid,
+                                pokemon: pokemonData,
+                                hp: newHp[selectedPokemon],
+                                won: false,
+                                type: "end",
+                                time: new Date().getTime()
+                            }
+                            sendLose(docId, myOpponent.userId, turn);
                             //sendTurn(newHp, false);
                         } else {
                             //if a pokemon dead switch pokemon
@@ -313,13 +325,17 @@ const Battle = () => {
         const myName = await getUser(auth.currentUser.uid); 
         let move = null;
         let damage = null;
+        let summary = "";
+        var pokemonData = {...myPokemon[selectedPokemon]};
+        delete pokemonData.moves;
         if (selectedMove != -1) {
             move = myPokemon[selectedPokemon].moves[selectedMove];
             //damage = 50; //calculate damage here
             damage = await damageCalc();
+            summary = "Opponent's " + pokemonData.identifier + " used " + move.name + ", it did " + damage + " damage";
+        } else {
+            summary = " Opponent switched to " + pokemonData.identifier;
         }
-        var pokemonData = {...myPokemon[selectedPokemon]};
-        delete pokemonData.moves;
         const turn = {
             userName: myName.username,
             userId: auth.currentUser.uid,
@@ -329,6 +345,7 @@ const Battle = () => {
             damage: await damage,
             won: won,
             type: "turn",
+            summary: summary,
             time: new Date().getTime()
         }
         //send turn here
@@ -386,6 +403,17 @@ const Battle = () => {
     const [state, send] = useMachine(turnMachine, actions);
     const { selectedPokemon, selectedMove } = state.context;
 
+    useEffect(()=>{
+        if(myTurn) {
+            setToast("show");
+            const y = setTimeout(function(){
+                setToast("hide");
+            }, 4000);
+        } else {
+            setToast("hide");
+        }
+      }, [myTurn]);
+
     //xstate advance
     function next(string) {
         send(string);
@@ -400,6 +428,8 @@ const Battle = () => {
               <>
                 <button id="move-selection" className="battle-buttons" onClick={() => next("ATTACK")}>Attack</button>
                 <button id="pokemon-selection" className="battle-buttons" onClick={() => next("SWITCH")}>Switch Pokemon</button>
+
+                
               </>
             );
           case "pickmove":
@@ -438,7 +468,7 @@ const Battle = () => {
                                     backgroundImage:
                                     `linear-gradient(
                                       to left,
-                                      #C1C1C1 ${myHp[i] < myPokemon[i].hp ? ( myHp[i] / myPokemon[i].hp ) * 100 : ''}%,
+                                      #C1C1C1 ${100 - ((myHp[i] / myPokemon[i].hp ) * 100)}%,
                                       #ffffff00 0%
                                     )`}}
                                     key={x.identifier}
@@ -565,6 +595,17 @@ const Battle = () => {
                                             </div>
                                             </>
                                         }
+                                    </div>
+                                </div>
+
+                                <div className="toast-container bg-background-color-red">
+                                    <div id="liveToast" className={"toast " + toast} role="status" aria-live="polite" aria-atomic="true" data-delay="1000">
+                                        <div class="d-flex">
+                                            <div class="toast-body">
+                                                {myOpponent.summary}
+                                            </div>
+                                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
