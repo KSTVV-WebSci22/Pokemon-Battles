@@ -1,66 +1,48 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
 import './Shop.css';
 import axios from 'axios';
 import { Row, Col } from 'react-bootstrap';
 import ShopItem from './components/ShopItem';
+import { ClientContext } from '../../context/ClientContext';
+import Back from '../../components/Back'
 
 
 const Shop = () => {
-	let [items, setItems] = useState();
+	let [shopItems, setShopItems] = useState();
+	const website = useContext(ClientContext)
 
-	// get all first gen pokemons total 150?
-	const getStorePokemons = async () => {
-		await axios.get("https://pokeapi.co/api/v2/generation/1/")
-            .then((res) => {
-				let items = shuffle(res.data.pokemon_species);
-                setItems(items);
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-	};
-
-	// get random numbers by shuffling array
-	// https://stackoverflow.com/questions/18806210/generating-non-repeating-random-numbers-in-js
-	function shuffle(array) {
-		var i = array.length,
-			j = 0,
-			temp;
-	
-		while (i--) {
-
-			j = Math.floor(Math.random() * (i+1));
-			// swap randomly chosen element with current element
-			temp = array[i];
-			array[i] = array[j];
-			array[j] = temp;
-		}
-		return array;
+	const getShopItems = async () => {
+		await axios.get("http://localhost:3001/api/shop/mystery-egg")
+		.then( res => {
+			setShopItems(res.data)
+		})
+		.catch((error) => {
+			console.log(error)
+		})
 	}
 
 	useEffect( () => {
-		getStorePokemons();
+		getShopItems();
     }, []);
 
 
 	return (
 		<>
-		{ items &&
-			<div id="shop" className="full-screen">
+			<div id="shop" className="content">
+			<Back name="Back" to="/welcome" />
 				<h3>Shop</h3>
 				<div id='shop-container'>
 					<Row md={2} id='shop-row' className='row-cols-2'>
 						{
-							items.map((item) => (
+							shopItems && shopItems.map((item) => (
 								<div>
-									<ShopItem className="itemCard" itemUrl={item.url}/>
+									<ShopItem className="itemCard" item={item}/>
 								</div>
 							))
 						}
 					</Row>
 				</div>
 			</div>
-		}
 		</>
 	);
 
