@@ -136,13 +136,14 @@ function rand(arr, freq) {
   return arr[index];
 }
 
-// expose only name and id of egg objects to the frontend
+// respond with all shop items of a chosen type
 // http://localhost:3001/api/shop/egg
 app.get('/api/shop/:itemType', (req, res) => {
   let itemType = req.params.itemType;
   let result = shopItems[itemType].map(
     item => 
     {
+      // return only seleccted fields
       return {
         name: item.name,
         description: item.description,
@@ -156,19 +157,19 @@ app.get('/api/shop/:itemType', (req, res) => {
   res.json(result);
 });
 
-// Shop Item
-// http://localhost:3001/api/shop/egg/eggid
+
+// http://localhost:3001/api/shop/mysteryegg/id
 app.get('/api/shop/:itemType/:itemId', (req, res) => {
   let {itemType, itemId} = req.params;
   console.log(`/api/shop/${itemType}/${itemId} was called`)
-  // find the item
+  // find the shop item
   let item = shopItems[itemType].find(item => item.id == itemId);
   
   if (itemType == 'mystery-egg') {
     let cost = item.cost;
     let currency = item.currency;
     let rarityTarget = rand(item.raritypool, item.rarityweights);
-    // pokemons of obtain method 1 and of the rarity == target
+    // pokemons of obtainmethod == 1 and rarity == target
     let selectedPokemons = pokemonData
     .filter(p => p.rarity == rarityTarget && p.obtain == 1)
     .map(
@@ -178,12 +179,13 @@ app.get('/api/shop/:itemType/:itemId', (req, res) => {
           identifier: p.identifier
         }
     });
-    
+    // choose pokemon at random
     let retPokemon = selectedPokemons[Math.floor(Math.random() * selectedPokemons.length)];
-
+    // response data
     res.json({cost: cost, currency: currency, retItem: retPokemon, retType: 'pokemon'});
+  } else {
+    res.status(404);
   }
-  // res.json({data: "data"})
 });
 
 

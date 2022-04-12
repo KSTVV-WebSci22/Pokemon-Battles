@@ -5,6 +5,8 @@ import { ClientContext } from '../../../context/ClientContext';
 
 const ShopItem = ({item}) => {
 
+	// global variables from shop.js parent component 
+	// to set item to purchase and to pass modal data
 	const {setShopItem, setShopModal} = useContext(ClientContext);
 
 	return (
@@ -12,8 +14,10 @@ const ShopItem = ({item}) => {
 		{item &&
 			<Col md={6}>
 				<Card className='shop-item'>
+					{/* shop item image */}
 					<Card.Img className='shop-item-img' variant='top' 
-					src={require(`../../../img/shopitems/${item.description}.png`)}/>
+						src={require(`../../../img/shopitems/${item.description}.png`)}
+					/>
 					<div className="shop-item-name">{item.name}</div>
 					<Button 
 						className="shop-item-purchase mt-auto mb-3"

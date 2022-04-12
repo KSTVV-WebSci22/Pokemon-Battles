@@ -19,7 +19,14 @@ const Shop = () => {
 	const [animatePokemon, setAnimatePokemon] = useState(false)
 	const [newPokemon, setNewPokemon] = useState()
 	const [button, setButton] = useState(false)
-	const {website, setLoading, shopModal, setShopModal, setShopItem, shopItem, user, setUser} = useContext(ClientContext)
+	// use global variable in client context to 
+	// shopModal <bool> : determines if modal pop-up is on display
+	// shopItem: item return by api call axios.get(`${website}/api/shop/mystery-egg`)
+	//           state set upon clicking cost button in ShopItem.js, 
+	// 					 acts as global variable that passes information from 
+	// 					 child component to parent. 
+	// declared at App.js
+	const {website, setLoading, shopModal, setShopModal, shopItem, user, setUser} = useContext(ClientContext)
 
 	let navigate = useNavigate()
 
