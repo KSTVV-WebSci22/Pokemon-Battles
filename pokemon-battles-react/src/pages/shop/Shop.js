@@ -1,18 +1,29 @@
-import { useState, useEffect, useRef, useContext } from 'react';
 import './Shop.css';
+import { useState, useEffect, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import { Row, Col } from 'react-bootstrap';
 import ShopItem from './components/ShopItem';
 import { ClientContext } from '../../context/ClientContext';
 import Back from '../../components/Back'
+// Firebase
+import { getUser } from '../../util/users/Users'
+import { auth } from '../../util/Firebase'
 
 
 const Shop = () => {
 	let [shopItems, setShopItems] = useState();
-	const website = useContext(ClientContext)
+	const {website} = useContext(ClientContext)
+	// let navigate = useNavigate()
+
+	// const authenticate = async () => {
+	// 	if(!auth.currentUser) {
+  //     navigate('/')
+  //   }
+	// }
 
 	const getShopItems = async () => {
-		await axios.get("http://localhost:3001/api/shop/mystery-egg")
+		await axios.get(`${website}/api/shop/mystery-egg`)
 		.then( res => {
 			setShopItems(res.data)
 		})
@@ -22,8 +33,9 @@ const Shop = () => {
 	}
 
 	useEffect( () => {
+		// authenticate();
 		getShopItems();
-    }, []);
+  }, []);
 
 
 	return (
