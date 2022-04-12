@@ -1,4 +1,4 @@
-#shop {
+/* #shop {
   background-image: url('../../img/items/pokestop.png');
   background-size: cover;
   background-repeat: no-repeat;
@@ -10,18 +10,8 @@
 	position: relative;
 	height: 100%;
 	width: 100%;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-}
+} */
 
 #shop-row div {
   margin-bottom: 1rem;
-}
-
-#shop::-webkit-scrollbar {
-  display: none;
-}
-
-#shop-container {
-	overflow: auto !important;
 }
