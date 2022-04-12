@@ -16,16 +16,45 @@
   margin-bottom: 1rem;
 }
 
+.modal-images {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
 
-.new-pokemon {
+.mystery-img{
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  opacity: 1;
+  animation: hideMystery 1.5s forwards;
+  height: 200px;
+}
+
+
+.new-pokemon-img{
+  position: relative;
   opacity: 0;
-  animation: showPokemon 1s forwards;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: showPokemon 3.5s forwards;
+  height: 250px;
+}
+
+@keyframes hideMystery {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 @keyframes showPokemon {
   from {
     opacity: 0;
-    filter: brightness(0)
+    filter: brightness(10%)
   }
   to {
     opacity: 1;

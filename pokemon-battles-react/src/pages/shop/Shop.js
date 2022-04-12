@@ -18,7 +18,7 @@ const Shop = () => {
 	const [shopItems, setShopItems] = useState(); 
 	const [animatePokemon, setAnimatePokemon] = useState(false)
 	const [newPokemon, setNewPokemon] = useState()
-
+	const [button, setButton] = useState(false)
 	const {website, setLoading, shopModal, setShopModal, setShopItem, shopItem, user, setUser} = useContext(ClientContext)
 
 	let navigate = useNavigate()
@@ -40,7 +40,7 @@ const Shop = () => {
 	}
 
 
-	const setUserInfo = () => {
+	const setUserInfo = async () => {
 		if (auth.currentUser) {
 			userInfo(auth.currentUser.uid);
 		} else {
@@ -48,25 +48,28 @@ const Shop = () => {
 		}
 	}
 
-	const doPokemonAnimate = async (pokemon) => {
-		// Do animation
-		setAnimatePokemon(true)
+	const doPokemonAnimate = async (pokemonName) => {
 
+		setButton(false);
+		setNewPokemon(pokemonName)
+		setAnimatePokemon(true)
 		// hide modal after animation
 		setTimeout(() => {
-			setAnimatePokemon(false)
 			setShopModal(false)
-		}, 2000);
+			setAnimatePokemon(false)
+			setButton(true);
+		}, 2500);
 	}
 
 	const purchase = async (item) => {
 		
 		if (user.wallet < shopItem.cost) {
 			alert("Balance Insufficient, Go Battle")
+			navigate('/')
 		} else {
 			// obtain weighted random pokemon id
-			let {data: fetchedShopItem} = await axios.get(`${website}/api/shop/${item.type}/${item.id}`);
-			let newPokemonId = fetchedShopItem.retItem.id;
+			let {data: chosenPokemon} = await axios.get(`${website}/api/shop/${item.type}/${item.id}`);
+			let newPokemonId = chosenPokemon.retItem.id;
 			await axios.get(`${website}/api/newPokemon/${newPokemonId}/5`)
 			.then( response => {
 				addPokemon(response.data);
@@ -76,17 +79,17 @@ const Shop = () => {
 			})
 			// update balance after purchase
 			await addToWallet(-1 * (shopItem.cost));
-			userInfo(auth.currentUser.uid)
+			await setUserInfo();
+			await doPokemonAnimate(chosenPokemon.retItem.identifier);
 		}
-		doPokemonAnimate(newPokemonId)
 	};
 
 	useEffect( () => {
-		setUserInfo()
+		setUserInfo();
 		getShopItems();
-		setLoading(false)
-  	}, []);
-
+		setLoading(false);
+		setButton(true)
+  }, []);
 
 
 	return (
@@ -94,7 +97,7 @@ const Shop = () => {
 			<Back name="Back" to="/welcome" />
 
 			<div className="content-item">
-			<Navbar />
+				<Navbar />
 
 				<h3>Shop</h3>
 				<Row id='shop-row'>
@@ -106,37 +109,56 @@ const Shop = () => {
 				</Row>
 
 				{user && shopItem &&
+				// Need both user and shopItem to be set
 					<Modal 
 						show={shopModal} 
 						onHide={()=>{setShopModal(false)}}
+						centered
 					>
 					<Modal.Header closeButton>
-						<Modal.Title>Current Balance: {user.wallet} coins</Modal.Title>
+					<Modal.Title>Current Balance: {user.wallet} coins</Modal.Title>
 					</Modal.Header>
-						<Modal.Body>
-							Do you wish to purchase 
-							<strong> {shopItem.name} </strong> 
-							for {shopItem.cost} {shopItem.currency}s?
+						<Modal.Body style={{
+									display: "flex",
+									justifyContent: "center",
+									alignItems: "center",
+					  		}}>
 							{/* Animation of pokemon */}
-							{animatePokemon && newPokemon &&
-								<div className='new-pokemon'>
-									<img src={require("../../img/pokemon/" + myPokemon[selectedPokemon].identifier  + ".png")} alt={myPokemon[selectedPokemon].identifier}/>
+							{/* Hide text when animation shows */}
+							{(animatePokemon && newPokemon) ?
+								<div className='modal-images'>
+									<img className='mystery-img' variant='top' 
+										src={require(`../../img/shopitems/${shopItem.description}.png`)}/>
+									<img className='new-pokemon-img' variant='top'
+										src={require(`../../img/pokemon/${newPokemon}.png`)} alt={newPokemon}
+										/>
+								</div>
+								:
+								<div>
+									Do you wish to purchase a
+									<strong> {shopItem.name.toUpperCase()} </strong> 
+									for {shopItem.cost} {shopItem.currency}s?
 								</div>
 							}
 						</Modal.Body>
-						<Modal.Footer 
-							style={{
-								display: "flex",
-								justifyContent: "center",
-								alignItems: "center",
-							}}>
-							<Button variant="primary" onClick={()=>{purchase(shopItem)}}>
-								Yes
-							</Button>
-							<Button variant="primary" onClick={()=>{setShopModal(false)}}>
-								No
-							</Button>
-						</Modal.Footer>
+							{ 
+							// hide buttons during animation
+							button &&
+								<Modal.Footer 
+									style={{
+										display: "flex",
+										justifyContent: "center",
+										alignItems: "center",
+									}}>
+								
+									<Button variant="primary" onClick={()=>{purchase(shopItem); }}>
+										Yes
+									</Button>
+									<Button variant="primary" onClick={()=>{setShopModal(false)}}>
+										No
+									</Button>
+								</Modal.Footer>
+							}
 					</Modal>
 				}
 			</div>
