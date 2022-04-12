@@ -13,7 +13,7 @@ import { useMachine } from "@xstate/react";
 // Firebase
 import { auth } from '../../util/Firebase'
 import { getMyPokemon } from '../../util/users/Users'
-import { findBattle, createBattle, takeTurn, getTurns, newUser, sendLose } from '../../util/battle/Battle'
+import { findBattle, createBattle, takeTurn, getTurns, newUser, sendLose, prevTurn } from '../../util/battle/Battle'
 import { onAuthStateChanged } from 'firebase/auth';
 import { getUser, updateUser } from '../../util/users/Users';
 
@@ -65,10 +65,6 @@ const turnMachine = createMachine({
       },
       endturn: {
         on : {
-            DEAD: {
-                target: "startturn",
-                actions: "setpokemon"
-            },
             NEWTURN: "startturn",
             ENDGAME: "endgame"
         }
@@ -103,6 +99,7 @@ const Battle = () => {
     const [uid, setUID] = useState("");
     const [name, setName] = useState("")
     const [toast, setToast] = useState("hide")
+    const [fainted, setFainted] = useState(false)
 
     const { setSong, website } = useContext(ClientContext);
 
@@ -130,11 +127,7 @@ const Battle = () => {
             console.log(mycPokemon);
             var hp = [];
             mycPokemon.forEach(x => {
-                if(x.hp != undefined){ 
-                    hp.push(x.hp); //add hp from pokemon info, (old pokemon will not have this stat)
-                } else {
-                    hp.push(100); //delete when finished
-                }
+                hp.push(x.hp); 
             });
             setMyHp(hp);
             res([mycPokemon.slice(0, 6)[0], hp]);
@@ -154,7 +147,7 @@ const Battle = () => {
             setName(myName);
             console.log("pd =>", pokemonData);
             let me = {
-                hp: ((pokemonData.hp != undefined) ? pokemonData.hp : 100), //delete 100 when finished
+                hp: pokemonData.hp, //delete 100 when finished
                 pokemon: pokemonData,
                 type: "start",
                 userName: await myName.username,
@@ -163,13 +156,10 @@ const Battle = () => {
             console.log("Me => ", me);
             newUser(op.docId, auth.currentUser.uid); //uncomment when finished
             if(takeTurn(op.docId, me)) {
-                setMyTurn(false);
-                console.log("hp =>", myHp);
-                recieveTurn(op.docId, auth.currentUser.uid, hp);
+                setMyTurn(true);
+                //recieveTurn(op.docId, auth.currentUser.uid, 1);
             }
-            
         } else {
-            
             if(window.confirm("No battles found, start a new battle?")) {
                 let battle = {
                     date: new Date().getTime(),
@@ -182,8 +172,7 @@ const Battle = () => {
                             hp: pokemonData.hp,
                             type: "start",
                             pokemon: pokemonData,
-                            userId: auth.currentUser.uid,
-                            userName: myName.username,
+                            userId: await auth.currentUser.uid,
                             time: new Date().getTime()
                         }
                     ]
@@ -192,7 +181,8 @@ const Battle = () => {
                 const newDoc = await createBattle(battle);
                 setDocId(newDoc);
                 console.log("hp =>", myHp);
-                recieveTurn(newDoc, auth.currentUser.uid, hp);
+                setMyTurn(true);
+                recieveTurn(newDoc, auth.currentUser.uid, 0);
             } else {
                 navigate('/');
             }
@@ -201,126 +191,56 @@ const Battle = () => {
     }
 
     //when your opponent takes their turn
-    const recieveTurn= async (dId, pId, hp) => { 
-        console.log("in recieve");
-        getTurns(dId, pId).then(turn => {
-            if(turn.type != 'start') {
-                console.log("Recieved Turn +> ", turn);
-
-                if(turn == "win") {
-                    setWon(true);
-                    next("ENDGAME");
-                    setMyTurn(false);
-                    return 0;
-                }
-
-                setMyOpponent(turn);
-        
-                if(turn.move != null) {
-                    //will have to calculate damage from type & pp / other stats
-                    let newHp = [...hp];
-                    newHp[selectedPokemon] -= turn.damage;
-                    if(newHp[selectedPokemon] <= 0) {
-                        newHp[selectedPokemon] = 0;
-                    }
-                    setMyHp(newHp);
-                    console.log(newHp);
-                    
-                    let max = -1;
-                    //if pokemon died switch pokemon
-                    if(newHp[selectedPokemon] <= 0) {
-                        newHp.every((x, i) => {
-                            if(x > 0) {
-                                max = i;
-                                return false;
-                            }
-                            return true;
+    const recieveTurn = async (dId, pId, type) => { 
+        return new Promise(res => {
+            console.log("in recieve");
+            getTurns(dId, pId, type).then(turn => {
+                if(turn.type != 'start') {
+                    console.log("Recieved Turn => ", turn);
+                    var newHp = [...myHp];
+                    if(turn.turn1 == auth.currentUser.uid) {
+                        newHp[selectedPokemon] = turn.turn1Hp;
+                        setMyHp(newHp);
+                        setMyOpponent({
+                            hp: turn.turn2Hp,
+                            pokemon: (turn.turn2Pokemon != null ? turn.turn2Pokemon : "Switching Pokemon"),
+                            userId: turn.turn2,
+                            summary: turn.turn2Summary
                         });
-                        //if all pokemon are dead you lose
-                        if(max == -1) {
-                            setWon(false);
-                            next("ENDGAME");
-                            setMyTurn(false); 
-                            var pokemonData = {...myPokemon[selectedPokemon]};
-                            delete pokemonData.moves;
-                            const turn = {
-                                userName: name.username,
-                                userId: auth.currentUser.uid,
-                                pokemon: pokemonData,
-                                hp: newHp[selectedPokemon],
-                                won: false,
-                                type: "end",
-                                time: new Date().getTime()
-                            }
-                            sendLose(docId, myOpponent.userId, turn);
-                            //sendTurn(newHp, false);
-                        } else {
-                            //if a pokemon dead switch pokemon
-                            next({ type: "DEAD", id: max }); 
-                            setMyTurn(true);
+                        if(turn.turn2Hp == 0) {
+                            sendTurn(newHp, 1);
+                            res(true);
                         }
                     } else {
-                        //if pokemon not dead
-                        next("NEWTURN");
-                        setMyTurn(true);
-        
+                        newHp[selectedPokemon] = turn.turn2Hp;
+                        setMyHp(newHp);
+                        setMyOpponent({
+                            hp: turn.turn1Hp,
+                            pokemon: (turn.turn1Pokemon != null ? turn.turn1Pokemon : "Switching Pokemon"),
+                            userId: turn.turn1,
+                            summary: turn.turn1Summary
+                        });
+                        if(turn.turn1Hp == 0) {
+                            sendTurn(newHp, 1);
+                            res(true);
+                        }
                     }
-
-                } else if (turn.move == null) {
+                    if(newHp[selectedPokemon] == 0) {
+                        setFainted(true);
+                    }
                     next("NEWTURN");
                     setMyTurn(true);
+                    res(true);
+                } else if(turn.type == 'start') {
+                    console.log("Recieved Turn => ", turn);
+                    setMyOpponent(turn);
+                    res(true);
                 }
-        } else if(turn.type == 'start') {
-            console.log("Recieved Turn => ", turn);
-            setMyOpponent(turn);
-            setMyTurn(true);
-        }
+            });
         });
     }
 
-    const damageCalc = async () => {
-        return new Promise(res => {
-            let h = Math.floor(Math.random() * (101 - 1)) + 1;
-            if(h > myPokemon[selectedPokemon].accuracy) {       
-                res(0);
-            } 
-            let move = myPokemon[selectedPokemon].moves[selectedMove];
-            axios.get(website + "/api/typeDamage/").then((response) => {
-                let t = response.data[move.type];
-                let typeDamage1 = t[myOpponent.pokemon.type1];
-                let typeDamage2 = typeDamage1;
-                if(myOpponent.pokemon.type2 != 'None') {
-                    typeDamage2 = t[myOpponent.pokemon.type2];
-                }
-                let totalTypeDamage = (typeDamage1 + typeDamage2) / 2;
-                let a = (((2 * myPokemon[selectedPokemon].current_level) / 5) + 2) * move.power ;
-                let b = 0;
-                let c = 0;
-                if(response.data.damage_class == 'physical') {
-                    b = myPokemon[selectedPokemon].attack;
-                    c = myOpponent.pokemon.defense;
-                } else if (response.data[move.type].damage_class = 'special') {
-                    b = myPokemon[selectedPokemon].specialatk;
-                    c = myOpponent.pokemon.specialdef;
-                }
-                let d = a * b / c;
-                let e = (d / 50) + 2;
-                let f = e * (totalTypeDamage / 100);
-                if(myPokemon[selectedPokemon].type1 == move.type || myPokemon[selectedPokemon].type2 == move.type) {
-                    f = f * 1.5;
-                }
-                let g = Math.floor(Math.random() * (101 - 85)) + 85;
-                g = g / 100;
-                let i = Math.round(f * g);
-                console.log("damage => ", i);
-                res(i);
-            }).catch(err => {
-                console.log(err);
-            })
-        });
-    }
-
-    const sendTurn = async (hp) => { 
+    const sendTurn = async (hp, type = 0) => { 
         console.log("in send");
         const myName = await getUser(auth.currentUser.uid); 
         let move = null;
@@ -330,40 +250,40 @@ const Battle = () => {
         delete pokemonData.moves;
         if (selectedMove != -1) {
             move = myPokemon[selectedPokemon].moves[selectedMove];
-            //damage = 50; //calculate damage here
-            damage = await damageCalc();
-            summary = "Opponent's " + pokemonData.identifier + " used " + move.name + ", it did " + damage + " damage";
-        } else {
-            summary = " Opponent switched to " + pokemonData.identifier;
+            //damage = await damageCalc();
         }
-        const turn = {
-            userName: myName.username,
-            userId: auth.currentUser.uid,
-            pokemon: await pokemonData,
-            hp: hp[selectedPokemon],
-            move: move,
-            damage: await damage,
-            won: won,
-            type: "turn",
-            summary: summary,
-            time: new Date().getTime()
+        var turn = {};
+        if(type == 0) {
+            turn = {
+                userId: auth.currentUser.uid,
+                pokemon: await pokemonData,
+                hp: hp[selectedPokemon],
+                move: move,
+                damage: null,
+                won: won,
+                type: (!fainted ? "turn" : "fainted-switch"),
+                time: new Date().getTime()
+            }
+        } else {
+            turn = {
+                userId: auth.currentUser.uid,
+                pokemon: myPokemon[selectedPokemon],
+                hp: hp[selectedPokemon],
+                move: null,
+                damage: null,
+                won: won,
+                type: "opponent-fainted",
+                time: new Date().getTime(),
+            }
         }
         //send turn here
         console.log("myturn =>", turn);
         if(takeTurn(docId, turn)) {
-            if(damage != null) {
-                let opponent = {...myOpponent};
-                opponent.hp -= damage;
-                if(opponent.hp <= 0) {
-                    opponent.hp = 0;
-                }
-                setMyOpponent(opponent);
-            }
-    
             if(myTurn) {
                 setMyTurn(false);
+                setFainted(false);
+                recieveTurn(docId, auth.currentUser.uid, 1);
             }
-            recieveTurn(docId, auth.currentUser.uid, hp);
         };
     }
 
@@ -404,13 +324,11 @@ const Battle = () => {
     const { selectedPokemon, selectedMove } = state.context;
 
     useEffect(()=>{
-        if(myTurn) {
+        if(myTurn /*&& myOpponent.summary != undefined*/) {
             setToast("show");
             const y = setTimeout(function(){
                 setToast("hide");
-            }, 4000);
-        } else {
-            setToast("hide");
+            }, 6000);
         }
       }, [myTurn]);
 
@@ -426,10 +344,15 @@ const Battle = () => {
           case "startturn":
             return (
               <>
-                <button id="move-selection" className="battle-buttons" onClick={() => next("ATTACK")}>Attack</button>
+                <button 
+                    id="move-selection" 
+                    className="battle-buttons" 
+                    onClick={() => next("ATTACK")}
+                    disabled={(fainted ? "true" : "")}
+                    >
+                        Attack
+                </button>
                 <button id="pokemon-selection" className="battle-buttons" onClick={() => next("SWITCH")}>Switch Pokemon</button>
-
-                
               </>
             );
           case "pickmove":
@@ -531,7 +454,7 @@ const Battle = () => {
               } else {
                 return (
                     <>
-                        <h1 id="oppT">Opponent's Turn</h1>
+                        <h1 id="oppT">Waiting for Opponent...</h1>
                     </>
                 );
               }
@@ -570,8 +493,11 @@ const Battle = () => {
                                     </div>
                                 </div>
                                 <div id="opponent-pokemon-img">
-                                    {myOpponent && 
+                                    {myOpponent && (myOpponent.pokemon != "Switching Pokemon") ? (
                                         <img src={require("../../img/pokemon/" + myOpponent.pokemon.identifier + ".png")} alt={myOpponent.pokemon.identifier} />
+                                    ) : (
+                                        <></>
+                                    )
                                     }
                                 </div>
 
