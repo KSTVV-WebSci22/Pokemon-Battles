@@ -15,3 +15,20 @@
 #shop-row div {
   margin-bottom: 1rem;
 }
+
+
+.new-pokemon {
+  opacity: 0;
+  animation: showPokemon 1s forwards;
+}
+
+@keyframes showPokemon {
+  from {
+    opacity: 0;
+    filter: brightness(0)
+  }
+  to {
+    opacity: 1;
+    filter: brightness(100%)
+  }
+}

@@ -15,7 +15,9 @@ import Navbar from '../../components/Navbar';
 
 
 const Shop = () => {
-	let [shopItems, setShopItems] = useState();
+	const [shopItems, setShopItems] = useState(); 
+	const [animatePokemon, setAnimatePokemon] = useState(false)
+	const [newPokemon, setNewPokemon] = useState()
 
 	const {website, setLoading, shopModal, setShopModal, setShopItem, shopItem, user, setUser} = useContext(ClientContext)
 
@@ -25,7 +27,6 @@ const Shop = () => {
 	const getShopItems = async () => {
 		await axios.get(`${website}/api/shop/mystery-egg`)
 		.then( res => {
-			console.log(res.data)
 			setShopItems(res.data)
 		})
 		.catch((error) => {
@@ -47,6 +48,17 @@ const Shop = () => {
 		}
 	}
 
+	const doPokemonAnimate = async (pokemon) => {
+		// Do animation
+		setAnimatePokemon(true)
+
+		// hide modal after animation
+		setTimeout(() => {
+			setAnimatePokemon(false)
+			setShopModal(false)
+		}, 2000);
+	}
+
 	const purchase = async (item) => {
 		
 		if (user.wallet < shopItem.cost) {
@@ -54,7 +66,6 @@ const Shop = () => {
 		} else {
 			// obtain weighted random pokemon id
 			let {data: fetchedShopItem} = await axios.get(`${website}/api/shop/${item.type}/${item.id}`);
-			console.log(fetchedShopItem);
 			let newPokemonId = fetchedShopItem.retItem.id;
 			await axios.get(`${website}/api/newPokemon/${newPokemonId}/5`)
 			.then( response => {
@@ -67,7 +78,7 @@ const Shop = () => {
 			await addToWallet(-1 * (shopItem.cost));
 			userInfo(auth.currentUser.uid)
 		}
-		setShopModal(false)
+		doPokemonAnimate(newPokemonId)
 	};
 
 	useEffect( () => {
@@ -89,7 +100,6 @@ const Shop = () => {
 				<Row id='shop-row'>
 					{
 						shopItems && shopItems.map((item) => {
-							console.log(item)
 							return(<ShopItem className="itemCard" item={item}/>)
 						})
 					}
@@ -107,6 +117,12 @@ const Shop = () => {
 							Do you wish to purchase 
 							<strong> {shopItem.name} </strong> 
 							for {shopItem.cost} {shopItem.currency}s?
+							{/* Animation of pokemon */}
+							{animatePokemon && newPokemon &&
+								<div className='new-pokemon'>
+									<img src={require("../../img/pokemon/" + myPokemon[selectedPokemon].identifier  + ".png")} alt={myPokemon[selectedPokemon].identifier}/>
+								</div>
+							}
 						</Modal.Body>
 						<Modal.Footer 
 							style={{
