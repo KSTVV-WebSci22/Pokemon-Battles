@@ -148,7 +148,8 @@ app.get('/api/shop/:itemType', (req, res) => {
         description: item.description,
         id: item.id,
         type: item.type,
-        cost: item.cost
+        cost: item.cost,
+        currency: item.currency
       }
     }
   );
