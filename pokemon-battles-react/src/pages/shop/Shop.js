@@ -103,11 +103,11 @@ const Shop = () => {
 		<div id="shop" className="content">
 			<Back name="Back" to="/welcome" />
 
-			<div className="content-item">
+			<div className='content-item'>
 				<Navbar />
 
 				<h3>Shop</h3>
-				<Row id='shop-row'>
+				<Row className='shop-row'>
 					{
 						shopItems && shopItems.map((item) => {
 							return(<ShopItem className="itemCard" item={item}/>)
