@@ -140,6 +140,10 @@
     height: 75%;
 }
 
+#move-selection[disabled] {
+    filter: brightness(80%);
+}
+
 #pokemon-selection {
     margin-top: 1rem;
     background-color: var(--yellow);
@@ -269,6 +273,10 @@
     filter: brightness(75%);
     background-color: gray !important;
     background-image: none;
+}
+
+.selected {
+    filter: brightness(75%);
 }
 
 .cancel {

@@ -13,7 +13,7 @@ import { useMachine } from "@xstate/react";
 // Firebase
 import { auth } from '../../util/Firebase'
 import { getMyPokemon } from '../../util/users/Users'
-import { findBattle, createBattle, takeTurn, getTurns, newUser, sendLose, prevTurn } from '../../util/battle/Battle'
+import { findBattle, createBattle, takeTurn, getTurns, newUser } from '../../util/battle/Battle'
 import { onAuthStateChanged } from 'firebase/auth';
 import { getUser, updateUser } from '../../util/users/Users';
 
@@ -97,9 +97,10 @@ const Battle = () => {
     const [docId, setDocId] = useState(null);
     const [loading, setLoading] = useState(true);
     const [uid, setUID] = useState("");
-    const [name, setName] = useState("")
-    const [toast, setToast] = useState("hide")
-    const [fainted, setFainted] = useState(false)
+    const [name, setName] = useState("");
+    const [toast, setToast] = useState("hide");
+    const [fainted, setFainted] = useState(false);
+    const [showPokemon, setShowPokemon] = useState(true);
 
     const { setSong, website } = useContext(ClientContext);
 
@@ -135,11 +136,10 @@ const Battle = () => {
     }
 
     const newBattle = async (pokemon, hp) => {
-        const op = await findBattle();
+        const op = await findBattle(auth.currentUser.uid);
         const myName = await getUser(auth.currentUser.uid); 
         var pokemonData = {...pokemon};
         delete pokemonData.moves;
-        //moved from in if statement
         if(op != false) {
             console.log("Opponent => ", op.turns[0]);
             setDocId(op.docId);
@@ -147,17 +147,16 @@ const Battle = () => {
             setName(myName);
             console.log("pd =>", pokemonData);
             let me = {
-                hp: pokemonData.hp, //delete 100 when finished
+                hp: pokemonData.hp, 
                 pokemon: pokemonData,
                 type: "start",
                 userName: await myName.username,
                 userId: await auth.currentUser.uid
             }
             console.log("Me => ", me);
-            newUser(op.docId, auth.currentUser.uid); //uncomment when finished
+            newUser(op.docId, auth.currentUser.uid); 
             if(takeTurn(op.docId, me)) {
                 setMyTurn(true);
-                //recieveTurn(op.docId, auth.currentUser.uid, 1);
             }
         } else {
             if(window.confirm("No battles found, start a new battle?")) {
@@ -195,8 +194,21 @@ const Battle = () => {
         return new Promise(res => {
             console.log("in recieve");
             getTurns(dId, pId, type).then(turn => {
+
+                if(turn == "win") {
+                    setWon(true);
+                    next("ENDGAME");
+                    setMyTurn(false);
+                }
+                if(turn == "lose") {
+                    setWon(false);
+                    next("ENDGAME");
+                    setMyTurn(false);
+                }
+
                 if(turn.type != 'start') {
                     console.log("Recieved Turn => ", turn);
+
                     var newHp = [...myHp];
                     if(turn.turn1 == auth.currentUser.uid) {
                         newHp[selectedPokemon] = turn.turn1Hp;
@@ -255,28 +267,22 @@ const Battle = () => {
         var turn = {};
         if(type == 0) {
             turn = {
-                userId: auth.currentUser.uid,
-                pokemon: await pokemonData,
-                hp: hp[selectedPokemon],
                 move: move,
-                damage: null,
-                won: won,
                 type: (!fainted ? "turn" : "fainted-switch"),
-                time: new Date().getTime()
             }
         } else {
             turn = {
-                userId: auth.currentUser.uid,
-                pokemon: myPokemon[selectedPokemon],
-                hp: hp[selectedPokemon],
                 move: null,
-                damage: null,
-                won: won,
-                type: "opponent-fainted",
-                time: new Date().getTime(),
+                type: "opponent-fainted"
             }
         }
         //send turn here
+        turn.userId = auth.currentUser.uid;
+        turn.pokemon = await pokemonData;
+        turn.hp = hp[selectedPokemon];
+        turn.time = new Date().getTime();
+        turn.damage = null;
+        turn.pokemonLeft = hp.filter(x => x > 0).length;
         console.log("myturn =>", turn);
         if(takeTurn(docId, turn)) {
             if(myTurn) {
@@ -294,23 +300,9 @@ const Battle = () => {
                 // User is Signed In
                 setUID(user.uid);
                 console.log(user.uid);
-
-                //opponent initial test data
-                /*
-                setMyOpponent({
-                    name: "Opponent",
-                    pokemon: "pikachu", //change to pokemon info object
-                    hp: 100,
-                    level: 7,
-                    move: null, //all move info
-                    won: null,
-                });*/
-
                 //get all info from api
                 fillPokemon().then((data)=>{
-                    //firebase battle test
                     newBattle(data[0], data[1]);
-                    //takeTurn("Mn0MedqRWwBYNaUfTJ8l", {}); //test send turn
                 });
 
             } 
@@ -331,6 +323,12 @@ const Battle = () => {
             }, 6000);
         }
       }, [myTurn]);
+
+      useEffect(()=>{
+        if(!showPokemon) {
+            setShowPokemon(true);
+        }
+      }, [selectedPokemon]);
 
     //xstate advance
     function next(string) {
@@ -386,7 +384,7 @@ const Battle = () => {
                       myPokemon.map((x, i) => {
                         return (
                             <>
-                                <div className={'pokemon ' + (myHp[i] > 0 ? '' : 'dead')} 
+                                <div className={'pokemon ' + (myHp[i] > 0 ? (i == selectedPokemon ? 'selected' : '') : 'dead')} 
                                     style={{backgroundColor: `var(--${(x.type1).toLowerCase()})`,
                                     backgroundImage:
                                     `linear-gradient(
@@ -395,7 +393,10 @@ const Battle = () => {
                                       #ffffff00 0%
                                     )`}}
                                     key={x.identifier}
-                                    onClick={(myHp[i] > 0 ? () => next({ type: "POKEMON", id: i }) : () => {})}
+                                    onClick={(myHp[i] > 0 && i != selectedPokemon ? () => {
+                                        next({ type: "POKEMON", id: i });
+                                        setShowPokemon(false);
+                                    } : () => {})}
                                 >
                                 <img className="pokemon-select-img" src={require("../../img/pokemon/" + x.identifier  + ".png")} alt={x.identifier}/>
                                 <span class="pokemon-info">
@@ -431,9 +432,6 @@ const Battle = () => {
                                         })}
                                     </span>
                                 </span>
-                                {/*<span className="hp">
-                                    {" HP: " + myHp[i]}
-                        </span>*/}
                                 </div>
                           </>
                         );
@@ -468,7 +466,6 @@ const Battle = () => {
         <div id="battle" className='content'>
             <div className='battle content-item'>
             {/*when all data has been recieved stop loading*/}
-            {/*change this to myPokemonData.length == 6 when finalized*/}
             {myPokemon.length > 0 && myOpponent != null && docId != null && myHp.length == myPokemon.length ? (
                 <>
                     {won == null ? (
@@ -503,8 +500,9 @@ const Battle = () => {
 
                                 {/* Players Pokemon */}
                                 <div id="player-pokemon-img">
-                                    {myPokemon[selectedPokemon] && 
+                                    {myPokemon[selectedPokemon] && showPokemon ? (
                                         <img src={require("../../img/pokemon/" + myPokemon[selectedPokemon].identifier  + ".png")} alt={myPokemon[selectedPokemon].identifier}/>
+                                    ) : (<></>)
                                     }
                                     
                                 </div>
@@ -523,17 +521,24 @@ const Battle = () => {
                                         }
                                     </div>
                                 </div>
-
-                                <div className="toast-container bg-background-color-red">
-                                    <div id="liveToast" className={"toast " + toast} role="status" aria-live="polite" aria-atomic="true" data-delay="1000">
-                                        <div class="d-flex">
-                                            <div class="toast-body">
-                                                {myOpponent.summary}
+                                {myOpponent.summary != undefined && myOpponent.summary != "" ? (
+                                    <>
+                                        {/*Opponent move toast notification*/}
+                                        <div className="toast-container bg-background-color-red">
+                                            <div id="liveToast" className={"toast " + toast} role="status" aria-live="polite" aria-atomic="true" data-delay="1000">
+                                                <div class="d-flex">
+                                                    <div class="toast-body">
+                                                        {myOpponent.summary}
+                                                    </div>
+                                                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                                                </div>
                                             </div>
-                                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                                         </div>
-                                    </div>
-                                </div>
+                                    </>
+                                ) : (
+                                    <></>
+                                )}
+                                
                             </div>
                             {myTurn ? (
                                 <>

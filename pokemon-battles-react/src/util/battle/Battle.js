@@ -6,26 +6,27 @@ import axios from 'axios';
 
 const battles = collection(db, "battles");
 var turn = false;
-export var prevTurn = {};
+var prevTurn = {};
 var rounds = 0;
 
 //test find batlle
-export const findBattle = async () => { 
+export const findBattle = async (id) => { 
     var prevTurn = {};
     var rounds = 0;
-    console.log("find battle"); //add check to see if you are joining your own game
-    const find = query(battles, where("user1", "!=", ""), where("user2", "==", ""), where("status", "==", "started"));
+    console.log("find battle"); 
+    const find = query(battles, where("user1", "!=", id), where("user2", "==", ""), where("status", "==", "started"));
     const docs = await getDocs(find);
     console.log(docs.docs.length);
     return new Promise((res) => {
         if(docs.docs.length > 0) {
             docs.forEach((doc) => {
                 console.log(doc.id, " => ", doc.data());
+                if(doc.data().date <= new Date(new Date().getTime() + 15 * 60000)) { //don't join open battle created more than 15 minutes ago
+                    res({docId: doc.id, ...doc.data()});
+                }
             });
-            res({docId: docs.docs[0].id, ...docs.docs[0].data()});
-        } else {
-            res(false);
         }
+        res(false);
     });
 }
 
@@ -48,13 +49,15 @@ export const takeTurn = async (id, move) => {
     });
 }
 
-export const sendLose = async (dId, pId, turn) => { 
-    const lose = doc(db, "battles", dId);
-    await updateDoc(lose, {
+export const sendWin = async (dId, pId) => { 
+    const win = doc(db, "battles", dId);
+    const update = await updateDoc(win, {
         winner: pId,
         status: "ended"
     });
-    takeTurn(dId, turn);
+    return new Promise(async (res) => {
+        res(update);
+    });
 }
 
 export const newUser = async (dId, pId) => { 
@@ -72,87 +75,58 @@ export const createBattle = async (data) => {
 }
 
 const calculate = async (turn1, turn2, id) => { 
-    //this code can be shortened but it's like this for now cause I wanted to clearly visualize eveything
     return new Promise(async (res) => {
         var result = {};
+        result.winner = null;
         console.log("turn1 => ", turn1);
         console.log("turn2 => ", turn2);
-        if(turn1.type == "fainted-switch") {
+        if(turn1.type == "fainted-switch" || turn2.type == "fainted-switch") {
+            let t1 = (turn1.type == "fainted-switch") ? true : false;
             console.log("in fainted switch");
             result = {
-                time: new Date().getTime(),
-                type: "turn-result",
-                first: null,
                 turn1Hp: turn1.hp,
                 turn2Hp: turn2.hp,
                 turn1Pokemon: turn1.pokemon,
                 turn2Pokemon: turn2.pokemon,
-                turn1Summary: "Opponent switched to " + turn1.pokemon.identifier,
-                turn2Summary: ""
-            }
-        } else if(turn2.type == "fainted-switch") {
-            console.log("in fainted switch");
-            result = {
-                time: new Date().getTime(),
-                type: "turn-result",
-                first: null,
-                turn1Hp: turn1.hp,
-                turn2Hp: turn2.hp,
-                turn1Pokemon: turn1.pokemon,
-                turn2Pokemon: turn2.pokemon,
-                turn1Summary: "",
-                turn2Summary: "Opponent switched to " + turn2.pokemon.identifier
-            }
-        }
-        else if(turn1.move == null) { //if turn 1 is a switch
-            let damage = await damageCalc(turn2.pokemon, turn2.move, turn1.pokemon);
-            let hp = null;
-            if (turn1.hp - damage <= 0) {
-                hp = 0;
-            } else {
-                hp = turn1.hp - damage;
-            }
-            result = {
-                time: new Date().getTime(),
-                type: "turn-result",
-                first: turn1.userId,
-                turn1Hp: hp,
-                turn2Hp: turn2.hp,
-                turn1Pokemon: turn1.pokemon,
-                turn2Pokemon: turn2.pokemon,
-                turn1Summary: "Opponent switched to " + turn1.pokemon.identifier,
-                turn2Summary: "Opponent used " + turn1.move.name + ", it did " + damage + " damage!"
-            }
-        } else if(turn2.move == null) { //if turn 2 is a switch
-            let damage = await damageCalc(turn1.pokemon, turn1.move, turn2.pokemon);
-            let hp = null;
-            if (turn2.hp - damage <= 0) {
-                hp = 0;
-            } else {
-                hp = turn2.hp - damage;
-            }
-            result = {
-                time: new Date().getTime(),
-                type: "turn-result",
-                first: turn2.userId,
-                turn1Hp: turn1.hp,
-                turn2Hp: hp,
-                turn1Pokemon: turn1.pokemon,
-                turn2Pokemon: turn2.pokemon,
-                turn1Summary: "Opponent used " + turn1.move.name + ", it did " + damage + " damage!",
-                turn2Summary: "Opponent switched to " + turn2.pokemon.identifier
+                turn1Summary: (t1) ? "Opponent switched to " + turn1.pokemon.identifier : "",
+                turn2Summary: (t1) ? "" : "Opponent switched to " + turn2.pokemon.identifier
             }
         } else if (turn2.move == null && turn1.move == null) { // if both are switches
             result = {
-                time: new Date().getTime(),
-                type: "turn-result",
-                first: null,
                 turn1Hp: turn1.hp,
                 turn2Hp: turn2.hp,
                 turn1Pokemon: turn1.pokemon,
                 turn2Pokemon: turn2.pokemon,
                 turn1Summary: "Opponent switched to " + turn1.pokemon.identifier,
                 turn2Summary: "Opponent switched to " + turn2.pokemon.identifier
+            }
+        } else if(turn1.move == null || turn2.move == null) { //one is a switch
+            let t1 = (turn1.move == null) ? true : false;
+            let damage = (t1) ? await damageCalc(turn2.pokemon, turn2.move, turn1.pokemon) : await damageCalc(turn1.pokemon, turn1.move, turn2.pokemon);
+            result = {
+                turn2Hp: turn2.hp,
+                turn1Hp: turn1.hp,
+                turn1Pokemon: turn1.pokemon,
+                turn2Pokemon: turn2.pokemon,
+                turn1Summary: (t1) ? "Opponent switched to " + turn1.pokemon.identifier : "Opponent used " + turn1.move.name + ", it did " + damage + " damage!",
+                turn2Summary: (t1) ? "Opponent used " + turn2.move.name + ", it did " + damage + " damage!" : "Opponent switched to " + turn2.pokemon.identifier
+            }
+            if(t1) {
+                if (turn1.hp - damage <= 0) {
+                    turn1.pokemonLeft -= 1;
+                    result.turn1Hp = 0;
+                    result.turn1Summary = "Opponent's " + turn1.pokemon.identifier + " fainted!";
+                } else {
+                    result.turn1Hp = turn1.hp - damage;
+                }
+            } else {
+                if (turn2.hp - damage <= 0) {
+                    turn2.pokemonLeft -= 1;
+                    result.turn2Hp = 0;
+                    result.turn2Summary = "Opponent's " + turn2.pokemon.identifier + " fainted!";
+                } else {
+                    result.turn2Hp = turn2.hp - damage;
+                }
             }
         } else { //if both are moves
             let first = null;
@@ -162,98 +136,65 @@ const calculate = async (turn1, turn2, id) => {
                 first = 2;
             } else {
                 let random = Math.floor(Math.random() * 2);
-                if(random == 0) {
-                    first = 1;
+                first = (random == 0) ? 1 : 2;
+            }
+            if(first == 1 || first == 2) {
+                let damage1 = await damageCalc(turn1.pokemon, turn1.move, turn2.pokemon);
+                let damage2 = await damageCalc(turn2.pokemon, turn2.move, turn1.pokemon);
+                result = {
+                    turn1Pokemon: turn1.pokemon,
+                    turn2Pokemon: turn2.pokemon,
+                    turn1Summary: "Opponent used " + turn1.move.name + ", it did " + damage1 + " damage!",
+                    turn2Summary: "Opponent used " + turn2.move.name + ", it did " + damage2 + " damage!"
+                }
+                if(first == 1) {
+                    if (turn2.hp - damage1 <= 0) {
+                        turn2.pokemonLeft -= 1;
+                        result.turn1Hp = turn1.hp;
+                        result.turn2Hp = 0;
+                        result.turn2Pokemon = null;
+                        result.turn1Summary = "Opponent's " + turn2.pokemon.identifier + " fainted!";
+                    } else if (turn1.hp - damage2 <= 0) {
+                        turn1.pokemonLeft -= 1;
+                        result.turn1Hp = 0;
+                        result.turn2Hp = turn2.hp - damage1;
+                        result.turn1Pokemon = null;
+                        result.turn1Summary = "Opponent's " + turn1.pokemon.identifier + " fainted!";
+                    } else {
+                        result.turn1Hp = turn1.hp - damage2;
+                        result.turn2Hp = turn2.hp - damage1;
+                    }
                 } else {
-                    first = 2;
+                    if (turn1.hp - damage2 <= 0) {
+                        turn1.pokemonLeft -= 1;
+                        result.turn1Hp = 0;
+                        result.turn2Hp = turn2.hp - damage1;
+                        result.turn1Pokemon = null;
+                        result.turn1Summary = "Opponent's " + turn1.pokemon.identifier + " fainted!";
+                    } else if (turn2.hp - damage1 <= 0) {
+                        turn2.pokemonLeft -= 1;
+                        result.turn1Hp = turn1.hp;
+                        result.turn2Hp = 0;
+                        result.turn2Pokemon = null;
+                        result.turn1Summary = "Opponent's " + turn2.pokemon.identifier + " fainted!";
+                    } else {
+                        result.turn1Hp = turn1.hp - damage2;
+                        result.turn2Hp = turn2.hp - damage1;
+                    }
                 }
             }
-            if(first == 1) {
-                let damage1 = await damageCalc(turn1.pokemon, turn1.move, turn2.pokemon);
-                let damage2 = await damageCalc(turn2.pokemon, turn2.move, turn1.pokemon);
-                let hp1 = null;
-                if (turn2.hp - damage1 <= 0) {
-                    result = {
-                        time: new Date().getTime(),
-                        type: "turn-result",
-                        first: turn1.userId,
-                        turn1Hp: turn1.hp,
-                        turn2Hp: 0,
-                        turn1Pokemon: turn1.pokemon,
-                        turn2Pokemon: null,
-                        turn1Summary: "Opponent used " + turn1.move.name + ", it did " + damage1 + " damage!",
-                        turn2Summary: "Opponent's " + turn2.pokemon.identifier + " fainted!"
-                    }
-                } else if (turn1.hp - damage2 <= 0) {
-                    result = {
-                        time: new Date().getTime(),
-                        type: "turn-result",
-                        first: turn1.userId,
-                        turn1Hp: 0,
-                        turn2Hp: turn2.hp - damage1,
-                        turn1Pokemon: null,
-                        turn2Pokemon: turn2.pokemon,
-                        turn1Summary: "Opponent's " + turn1.pokemon.identifier + " fainted!",
-                        turn2Summary: "Opponent used " + turn2.move.name + ", it did " + damage2 + " damage!"
-                    }
-                } else {
-                    result = {
-                        time: new Date().getTime(),
-                        type: "turn-result",
-                        first: turn1.userId,
-                        turn1Hp: turn1.hp - damage2,
-                        turn2Hp: turn2.hp - damage1,
-                        turn1Pokemon: turn1.pokemon,
-                        turn2Pokemon: turn2.pokemon,
-                        turn1Summary: "Opponent used " + turn1.move.name + ", it did " + damage1 + " damage!",
-                        turn2Summary: "Opponent used " + turn2.move.name + ", it did " + damage2 + " damage!"
-                    }
-                }
-            } else if(first == 2) {
-                let damage2 = await damageCalc(turn2.pokemon, turn2.move, turn1.pokemon);
-                let damage1 = await damageCalc(turn1.pokemon, turn1.move, turn2.pokemon);
-                let hp2 = null;
-                if (turn1.hp - damage2 <= 0) {
-                    result = {
-                        time: new Date().getTime(),
-                        type: "turn-result",
-                        first: turn2.userId,
-                        turn1Hp: 0,
-                        turn2Hp: turn2.hp,
-                        turn1Pokemon: null,
-                        turn2Pokemon: turn2.pokemon,
-                        turn1Summary: "Opponent's " + turn1.pokemon.identifier + " fainted!",
-                        turn2Summary: "Opponent used " + turn2.move.name + ", it did " + damage2 + " damage!"
-                    }
-                } else if (turn2.hp - damage1 <= 0) {
-                    result = {
-                        time: new Date().getTime(),
-                        type: "turn-result",
-                        first: turn2.userId,
-                        turn1Hp: turn1.hp - damage2,
-                        turn2Hp: 0,
-                        turn1Pokemon: turn1.pokemon,
-                        turn2Pokemon: null,
-                        turn1Summary: "Opponent used " + turn1.move.name + ", it did " + damage1 + " damage!",
-                        turn2Summary: "Opponent's " + turn2.pokemon.identifier + " fainted!"
-                    }
-                } else {
-                    result = {
-                        time: new Date().getTime(),
-                        type: "turn-result",
-                        first: turn2.userId,
-                        turn1Hp: turn1.hp - damage2,
-                        turn2Hp: turn2.hp - damage1,
-                        turn1Pokemon: turn1.pokemon,
-                        turn2Pokemon: turn2.pokemon,
-                        turn1Summary: "Opponent used " + turn1.move.name + ", it did " + damage1 + " damage!",
-                        turn2Summary: "Opponent used " + turn2.move.name + ", it did " + damage2 + " damage!"
-                    }
-                }
-            } 
         }
-        result["turn1"] = turn1.userId;
-        result["turn2"] = turn2.userId;
+        result.turn1 = turn1.userId;
+        result.turn2 = turn2.userId;
+        result.time = new Date().getTime();
+        result.type = "turn-result"
+        if(turn1.pokemonLeft == 0) {
+            result.winner = "turn2";
+            await sendWin(id, turn2.userId);
+        } else if(turn2.pokemonLeft == 0) {
+            result.winner = "turn1";
+            await sendWin(id, turn1.userId);
+        }
         if(await takeTurn(id, result)) {
             res(result);
         }
@@ -273,7 +214,6 @@ export const getTurns = async (dId, pId, type) => {
                 if(doc.data().winner == "") {
                     if(lastTurn != prevTurn) {
                         if(type == 1 && lastTurn.type != "start" && doc.data().turns.length > 2) {
-                            turn();
                             console.log("Turn #" + doc.data().turns.length);
 
                             rounds = 0;
@@ -284,12 +224,14 @@ export const getTurns = async (dId, pId, type) => {
                             });
                             
                             if((doc.data().turns.length - rounds ) % 2 == 0 && doc.data().turns[doc.data().turns.length - 2].type != "turn-result" && lastTurn.type != "turn-result") {
-                                //rounds += 1;
-                                res(await calculate(doc.data().turns[doc.data().turns.length - 2], lastTurn, dId));
+                                prevTurn = await calculate(doc.data().turns[doc.data().turns.length - 2], lastTurn, dId);
+                                turn();
+                                res(prevTurn);
                             } 
                             
-                            if(lastTurn.type == "turn-result") {
-                                //rounds += 1;
+                            if(lastTurn.type == "turn-result" && lastTurn != prevTurn) {
+                                prevTurn = lastTurn;
+                                turn();
                                 res(lastTurn);
                             }
                         } else if (type == 0 && lastTurn.type == "start") {
@@ -299,9 +241,12 @@ export const getTurns = async (dId, pId, type) => {
                             res(lastTurn);
                         }
                     }
-                } else if(doc.data().winner == pId && lastTurn.won == false) {
-                    turn(); //might have to move after res
+                } else if(doc.data().winner == pId) {
+                    turn(); 
                     res("win");
+                } else if(doc.data().winner != pId) {
+                    turn(); 
+                    res("lose");
                 }
             }
         });
