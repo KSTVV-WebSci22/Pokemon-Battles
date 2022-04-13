@@ -41,7 +41,7 @@ const Party = () => {
 
       <h3 xs={12} className='yellow-text'>Pokemon in Storage</h3>
 
-      {pokemon && pokemon.slice(0,6).map((poke) => {
+      {pokemon && pokemon.slice(6).map((poke) => {
         return (
           <Col xs={12} md={6} lg={4}>
             <PokemonStats poke={poke} showMoves={true}/>
