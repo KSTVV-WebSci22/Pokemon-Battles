@@ -130,3 +130,4 @@ dist
 .pnp.*
 
 .angular/cache/
+pokemon-battles-react/package-lock.json

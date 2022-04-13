@@ -1,17 +1,18 @@
 import './Navbar.css'
 import { Link, useNavigate } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 // Firebase
 import { getUser } from '../util/users/Users'
 import { auth } from '../util/Firebase'
+import { ClientContext } from '../context/ClientContext'
 
 const Navbar = () => {
 
-  let navigate = useNavigate()
-  const [user, setUser] = useState()
+  const {user, setUser} = useContext(ClientContext)
 
+  let navigate = useNavigate()
   const userInfo = async (uid) => {
     const info = await getUser(uid)
     setUser(info)

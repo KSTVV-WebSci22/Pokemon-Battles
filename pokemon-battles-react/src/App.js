@@ -23,6 +23,9 @@ function App() {
   const [disclaimer, setDisclaimer] = useState(true);
   const [website] = useState("http://localhost:3001")
   const [loading, setLoading] = useState(true)
+  const [shopItem, setShopItem] = useState(null)
+  const [shopModal, setShopModal] = useState(false)
+  const [user, setUser] = useState()
 
   useEffect(()=>{
     if (localStorage.getItem("volume") === null) {
@@ -41,8 +44,10 @@ function App() {
       song, setSong,
       loading, setLoading,
       website,
-      // settings, setSettings,
-      disclaimer, setDisclaimer
+      disclaimer, setDisclaimer,
+      shopItem, setShopItem,
+      shopModal, setShopModal,
+      user, setUser
     }}>
 
     {/* Sound Manager */}
