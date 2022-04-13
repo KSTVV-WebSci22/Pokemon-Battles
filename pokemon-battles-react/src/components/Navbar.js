@@ -4,13 +4,18 @@ import { useState, useEffect } from 'react'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 // Firebase
-import { getUser } from '../util/users/Users'
-import { auth } from '../util/Firebase'
+import { getUser, getUserStatus } from '../util/users/Users'
+import { auth, db, rdb} from '../util/Firebase'
+import { doc, getDoc, updateDoc, setDoc, onSnapshot } from "firebase/firestore";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { getDatabase, ref, onValue, set, get} from "firebase/database";
+
 
 const Navbar = () => {
 
   let navigate = useNavigate()
   const [user, setUser] = useState()
+  const [status, setStatus] = useState()
 
   const userInfo = async (uid) => {
     const info = await getUser(uid)
@@ -18,9 +23,28 @@ const Navbar = () => {
     // return info
   }
 
+  const statusInfo = async (uid) => {
+    onValue(ref(rdb, '/status/' + uid), (snapshot) => { 
+      var isOnline = snapshot.val().state == 'online';
+      // ... use isOnline
+      
+      if(isOnline){
+        setStatus("Online");
+      } else {
+        setStatus("Offline");
+      }
+      
+    });
+ 
+    
+    // return info
+  }
+
   useEffect(() => {
+    getUserStatus(auth.currentUser.uid);
     if(auth.currentUser){
-      userInfo(auth.currentUser.uid)
+      userInfo(auth.currentUser.uid);
+      statusInfo(auth.currentUser.uid);
     } else {
       navigate('/')
     }
@@ -29,14 +53,15 @@ const Navbar = () => {
   return ( 
     
     <div id="navbar">
-      {user ? <> 
+      { user?
+       <> 
       <div id="navbar-content">
         <Link to='/profile'>
           <img className='profile-pic' src={user.profilePic} alt="profile" />
         </Link>
         <div className='brand'>
           <h1>{user.username}</h1>
-          <small>Status: <span className='navbar-status online'>Online</span></small>
+          <small>Status: <span className='navbar-status online'>{status}</span></small>
         </div>
 
         

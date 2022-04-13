@@ -12,10 +12,12 @@ import Loading from '../../components/Loading'
 import MainMenu from './MainMenu'
 
 // Firebase
-import { auth } from '../../util/Firebase'
-import { updateUser, getUser, addPokemon } from '../../util/users/Users'
+import { auth, db, rdb } from '../../util/Firebase'
+import { updateUser, getUser, addPokemon, getUserStatus } from '../../util/users/Users'
 import axios from 'axios'
-import { onAuthStateChanged } from 'firebase/auth'
+import { doc, getDoc, updateDoc, setDoc,   } from "firebase/firestore";
+import { GoogleAuthProvider, signInWithPopup, onAuthStateChanged  } from "firebase/auth";
+import { ref, onValue, push, onDisconnect, set, serverTimestamp } from "firebase/database";
 
 
 const Welcome = () => {
@@ -69,6 +71,7 @@ const Welcome = () => {
   }
 
   useEffect(()=>{
+    getUserStatus(auth.currentUser.uid);
     setSong(2)
     if(auth.currentUser){
       userInfo()

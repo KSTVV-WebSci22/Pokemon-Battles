@@ -1,7 +1,9 @@
-import { doc, getDoc, updateDoc, setDoc, arrayUnion } from "firebase/firestore";
-import { db } from "../Firebase";
+import { doc, getDoc, updateDoc, setDoc, arrayUnion, getFirestore, onSnapshot, serverTimestamp as fsTime } from "firebase/firestore";
+import { db, rdb } from "../Firebase";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../Firebase";
+import { getDatabase, ref, onValue, push, onDisconnect, set, get, serverTimestamp} from "firebase/database";
+
 
 // Login with Google
 export const signInWithGoogle = async () => {  
@@ -38,6 +40,7 @@ export const getUser = async (uid) => {
     return false
   }
 }
+
 
 // Check User
 const checkIfUserExists = async (user, name, email, profilePic) => {
@@ -113,3 +116,83 @@ export const getMyPokemon = async(uid) => {
     return false
   }
 }
+
+//Get User Status
+export const getUserStatus = async(uid) => {
+  
+
+  // Since I can connect from multiple devices or browser tabs, we store each connection instance separately
+  // any time that connectionsRef's value is null (i.e. has no children) I am offline
+  
+  const userId = uid;
+  console.log(userId);
+  const userStatusDatabaseRef = ref(rdb, 'status/' + userId );
+  
+ 
+  
+  // We'll create two constants which we will write to 
+// the Realtime database when this device is offline
+// or online.
+var isOfflineForDatabase = {
+  state: 'offline',
+  lastChanged: serverTimestamp(),
+};
+
+var isOnlineForDatabase = {
+  state: 'online',
+  lastChanged: serverTimestamp(),
+};
+
+
+var userStatusFirestoreRef = doc(db, '/status/' + userId);
+
+// Firestore uses a different server timestamp value, so we'll 
+// create two more constants for Firestore state.
+var isOfflineForFirestore = {
+    state: 'offline',
+    last_changed: fsTime(),
+};
+
+var isOnlineForFirestore = {
+    state: 'online',
+    last_changed: fsTime(),
+};
+
+
+
+const connectedRef = ref(rdb, '.info/connected');
+onValue(connectedRef, (snap) => {
+console.log(snap.val());
+
+if (snap.val() === false) {
+ setDoc(userStatusFirestoreRef, isOfflineForFirestore);
+  return;
+}
+const con = userStatusDatabaseRef;
+ // If we are currently connected, then use the 'onDisconnect()' 
+  // method to add a set which will only trigger once this 
+  // client has disconnected by closing the app, 
+  // losing internet, or any other means.
+  // When I disconnect, update the last time I was seen online
+  
+  onDisconnect(con).set(isOfflineForDatabase).then(function() {
+    // The promise returned from .onDisconnect().set() will
+    // resolve as soon as the server acknowledges the onDisconnect() 
+    // request, NOT once we've actually disconnected:
+    // https://firebase.google.com/docs/reference/js/firebase.database.OnDisconnect
+
+    // We can now safely set ourselves as 'online' knowing that the
+    // server will mark us as offline once we lose connection.
+    set(con, isOnlineForDatabase);
+
+    setDoc(userStatusFirestoreRef, isOnlineForFirestore);
+});
+
+
+
+});
+
+
+
+}
+

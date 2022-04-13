@@ -6,6 +6,10 @@ import { getAuth } from 'firebase/auth'
 // Firebase FireStore
 import { getFirestore } from 'firebase/firestore'
 
+//Realtime DB
+import { getDatabase } from 'firebase/database'
+
+
 const firebaseConfig = {
   apiKey: "AIzaSyC2eABQ11POuOO0nf3jGR2-wjQoGrGN11g",
   authDomain: "pokemon-battle-rpi.firebaseapp.com",
@@ -20,6 +24,9 @@ const app = initializeApp(firebaseConfig);
 
 // Firebase Database
 export const db = getFirestore(app);
+
+// Firebase Realtime Database
+export const rdb = getDatabase(app);
 
 // Firebase Authorization
 export const auth = getAuth(app);
