@@ -117,6 +117,8 @@ export const getMyPokemon = async(uid) => {
   }
 }
 
+//Get Users Friends
+
 //Get User Status
 export const getUserStatus = async(uid) => {
   

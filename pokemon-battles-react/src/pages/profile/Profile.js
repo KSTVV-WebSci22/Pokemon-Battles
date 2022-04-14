@@ -4,13 +4,14 @@ import { useState, useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { ClientContext } from '../../context/ClientContext';
 import { Button, FloatingLabel, Form, Modal } from 'react-bootstrap';
+import { onDisconnect, goOffline, ref, set} from 'firebase/database';
 
 // Firebase
-import { auth } from '../../util/Firebase';
+import { auth, rdb} from '../../util/Firebase';
 import { signOut, onAuthStateChanged } from 'firebase/auth';
 
 // Firebase Users
-import { getUser, updateUser } from '../../util/users/Users';
+import { getUser, updateUser, getUserStatus } from '../../util/users/Users';
 
 const Profile = () => {
     let navigate = useNavigate();
@@ -24,9 +25,11 @@ const Profile = () => {
     const{ setSong } = useContext(ClientContext);
 
     const logout = () => {
+        const userStatusDatabaseRef = ref(rdb, 'status/' + auth.currentUser.uid + '/state');
+        set(userStatusDatabaseRef, "offline");
         signOut(auth)
             .then(() => {
-                navigate('/')
+                navigate('/');
             })
             .catch((error) => {
                 console.log(error)
@@ -42,7 +45,6 @@ const Profile = () => {
     
     useEffect(() => {
         setSong(2)
-
         onAuthStateChanged(auth, (user) => {
             if (user) {
               // User is Signed In

@@ -23,28 +23,11 @@ const Navbar = () => {
     // return info
   }
 
-  const statusInfo = async (uid) => {
-    onValue(ref(rdb, '/status/' + uid), (snapshot) => { 
-      var isOnline = snapshot.val().state == 'online';
-      // ... use isOnline
-      
-      if(isOnline){
-        setStatus("Online");
-      } else {
-        setStatus("Offline");
-      }
-      
-    });
- 
-    
-    // return info
-  }
 
   useEffect(() => {
-    getUserStatus(auth.currentUser.uid);
     if(auth.currentUser){
+      getUserStatus(auth.currentUser.uid);
       userInfo(auth.currentUser.uid);
-      statusInfo(auth.currentUser.uid);
     } else {
       navigate('/')
     }
@@ -61,7 +44,7 @@ const Navbar = () => {
         </Link>
         <div className='brand'>
           <h1>{user.username}</h1>
-          <small>Status: <span className='navbar-status online'>{status}</span></small>
+          <small>Status: <span className='navbar-status online'>Online</span></small>
         </div>
 
         

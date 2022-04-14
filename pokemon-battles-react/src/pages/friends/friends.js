@@ -5,6 +5,9 @@ import ash from '../../img/people/ashketchum.png'
 import add from '../../img/components/add.png'
 import cancel from '../../img/components/cancel.png'
 import Back from '../../components/Back'
+import { auth } from '../../util/Firebase';
+import { setDoc, doc } from "firebase/firestore";
+import { db } from '../../util/Firebase';
 
 const Friends = () => {
     const [friends, setFriends] = useState([
@@ -15,7 +18,20 @@ const Friends = () => {
         {name: 'Vishal', online: false}
     ]);
 
+
     const [addFriend, setAddFriend] = useState(false);
+
+  const AddFriend = async (uid) =>{
+      setAddFriend(false);
+    var userStatusFirestoreRef = doc(db, '/users/' + uid);
+    var input = document.getElementById('addFriendInput').innerHTML;
+    var FriendFirestore = {
+      name: input,
+    };
+    setDoc(userStatusFirestoreRef, FriendFirestore);
+   }
+
+
 
     return (
         <div className='content'>
@@ -71,7 +87,7 @@ const Friends = () => {
                         <img src={add} alt="add"/> 
                         <img src={add} alt="add"/> 
                     </div>
-                    <div id="cancel-friend" className="menu-item add-friend-btn" onClick={()=>{setAddFriend(false)}}>Cancel
+                    <div id="cancel-friend" className="menu-item add-friend-btn" onClick={()=>{AddFriend(auth.currentUser.uid)}}>Cancel
                         <img src={cancel} alt="cancel"/> 
                         <img src={cancel} alt="cancel"/> 
                     </div>
