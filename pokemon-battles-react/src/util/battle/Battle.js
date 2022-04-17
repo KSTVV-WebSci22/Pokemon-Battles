@@ -8,6 +8,7 @@ const battles = collection(db, "battles");
 var turn = false;
 var prevTurn = {};
 var rounds = 0;
+var prevTurns = [];
 
 //test find batlle
 export const findBattle = async (id) => { 
@@ -225,19 +226,23 @@ export const getTurns = async (dId, pId, type) => {
                             
                             if((doc.data().turns.length - rounds ) % 2 == 0 && doc.data().turns[doc.data().turns.length - 2].type != "turn-result" && lastTurn.type != "turn-result") {
                                 prevTurn = await calculate(doc.data().turns[doc.data().turns.length - 2], lastTurn, dId);
+                                prevTurns.push(prevTurn);
                                 turn();
                                 res(prevTurn);
                             } 
                             
-                            if(lastTurn.type == "turn-result" && lastTurn != prevTurn) {
+                            if(lastTurn.type == "turn-result" && !searchArray(prevTurns, lastTurn)) {
+                                console.log(false);
                                 prevTurn = lastTurn;
                                 turn();
+                                prevTurns.push(prevTurn);
                                 res(lastTurn);
                             }
                         } else if (type == 0 && lastTurn.type == "start") {
                             turn();
                             console.log("Turn #" + doc.data().turns.length);
                             prevTurn = lastTurn;
+                            prevTurns.push(prevTurn);
                             res(lastTurn);
                         }
                     }
@@ -251,6 +256,15 @@ export const getTurns = async (dId, pId, type) => {
             }
         });
     });
+}
+
+const searchArray = (array, search) => {
+    for(let x in array) {
+        if(JSON.stringify(x) == JSON.stringify(search)) {
+            return true;
+        }
+    }
+    return false;
 }
 
 const damageCalc = async (pokemon, move, opponent) => {
