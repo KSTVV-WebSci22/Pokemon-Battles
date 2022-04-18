@@ -51,10 +51,8 @@ const Navbar = () => {
               </Tooltip>
             }
           >
-          <Link to='/party'
-              className='navbar-pokemon'
-          >
-            {user.pokemon[0] && <>
+          <Link to='/party' className='navbar-pokemon' >
+            {user.pokemon && <>
               <img className="" src={require("../img/pokemon/" + user.pokemon[0].identifier + ".png")} alt={"my pokemon"} />
               <span className='navbar-level'>{user.pokemon[0].current_level}</span>
             </>} 

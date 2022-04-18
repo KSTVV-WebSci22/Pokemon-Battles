@@ -8,7 +8,6 @@ import Players from './pages/players/players';
 import Party from './pages/party/party';
 import Friends from './pages/friends/Friends';
 import Shop from './pages/shop/Shop';
-import Settings from './pages/settings/settings'
 import { ClientContext } from './context/ClientContext';
 import { useState, useEffect } from 'react';
 import SoundManager from './components/SoundManager';
@@ -18,21 +17,25 @@ import Loading from './components/Loading';
 
 function App() {
   const [mute, setMute] = useState(false)  
+  const [mute2, setMute2] = useState(false)
   const [volume, setVolume] = useState(localStorage.getItem("volume"));
+  const [soundEffects, setSoundEffects] = useState()
   const [song, setSong] = useState(1);
   const [disclaimer, setDisclaimer] = useState(true);
   const [website] = useState("http://localhost:3001")
   const [loading, setLoading] = useState(true)
   const [shopItem, setShopItem] = useState(null)
   const [shopModal, setShopModal] = useState(false)
-  const [user, setUser] = useState()
+  const [user, setUser] = useState(localStorage.getItem("soundEffect"))
 
   useEffect(()=>{
     if (localStorage.getItem("volume") === null) {
       localStorage.setItem("volume", 50);
       setVolume(50);
-    } else {
-      console.log("Volume Already Set: " + volume)
+    }
+    if (localStorage.getItem("soundEffect") === null) {
+      localStorage.setItem("soundEffect", 50);
+      setSoundEffects(50)
     }
   }, [])
 
@@ -40,7 +43,9 @@ function App() {
   return (
     <ClientContext.Provider value={{
       mute, setMute,
+      mute2, setMute2,
       volume, setVolume,
+      soundEffects, setSoundEffects,
       song, setSong,
       loading, setLoading,
       website,
@@ -65,6 +70,7 @@ function App() {
                     className='sbutton'
                     onClick={()=>{
                         setMute(true)
+                        setMute2(true)
                         setDisclaimer(false)
                     }}
                 >I Understand</button>  
@@ -85,7 +91,6 @@ function App() {
               <Route path='/party' element={<Party/>} />
               <Route path='/friends' element={<Friends/>} />
               <Route path='/shop' element={<Shop/>} />
-              <Route path='/settings' element={<Settings/>} />
               <Route path='/profile' element={<Profile/>} />
             </Routes>
           </Router>

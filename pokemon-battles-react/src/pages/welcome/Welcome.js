@@ -25,7 +25,6 @@ const Welcome = () => {
   const [name, setName] = useState("")
   const [newUser, setNewUser] = useState(true)
   const [stage, setStage] = useState(0)
-  // const [loading, setLoading] = useState(true)
   const [profilePic, setProfilePic] = useState()
   const [user, setUser] = useState(null);
   
@@ -34,7 +33,7 @@ const Welcome = () => {
   const [firstQ, setFirstQ] = useState(null)
 
   // Context
-  const{ setSong, website, loading, setLoading } = useContext(ClientContext);
+  const{ setSong, website, setLoading } = useContext(ClientContext);
 
   // Authorized
   onAuthStateChanged(auth, (user) => {
