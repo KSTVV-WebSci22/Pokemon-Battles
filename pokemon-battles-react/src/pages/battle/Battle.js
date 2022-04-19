@@ -4,7 +4,6 @@ import './Battle.css'
 import axios from 'axios'
 import Moves from './components/Moves';
 import { ClientContext } from '../../context/ClientContext';
-import Loading from '../../components/Loading';
 
 //xstate
 import { createMachine, interpret, assign } from "xstate";
@@ -95,14 +94,13 @@ const Battle = () => {
     const [myTurn, setMyTurn] = useState(true);
     const signatureRef = useRef(null);
     const [docId, setDocId] = useState(null);
-    const [loading, setLoading] = useState(true);
     const [uid, setUID] = useState("");
     const [name, setName] = useState("");
     const [toast, setToast] = useState("hide");
     const [fainted, setFainted] = useState(false);
     const [showPokemon, setShowPokemon] = useState(true);
 
-    const { setSong, website } = useContext(ClientContext);
+    const { setSong, setLoading } = useContext(ClientContext);
 
     let navigate = useNavigate();
     onAuthStateChanged(auth, (user) => {
@@ -468,6 +466,7 @@ const Battle = () => {
             {/*when all data has been recieved stop loading*/}
             {myPokemon.length > 0 && myOpponent != null && docId != null && myHp.length == myPokemon.length ? (
                 <>
+                    {setLoading(false)}
                     {won == null ? (
                         <>   
                             {/*battle view*/}
@@ -568,9 +567,11 @@ const Battle = () => {
                         </>
                     )}
                 </>
-            ) : (
-                <Loading/>
-            )}
+            ) : 
+                <>
+                    {setLoading(true)}
+                </>
+            }
             </div>
         </div>
         

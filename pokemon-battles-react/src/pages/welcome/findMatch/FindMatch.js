@@ -2,10 +2,12 @@ import { Row, Col, Modal, Button } from "react-bootstrap";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { ClientContext } from "../../../context/ClientContext";
 
 const Score = ({user}) => {
   const navigate = useNavigate()
+  const { setLoading } = useContext(ClientContext)
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -29,7 +31,11 @@ const Score = ({user}) => {
       <Row className='mb-3'>
         <Col xs={12} md={6} lg={4} className="mb-2 p-1">
           <div 
-            onClick={()=>{ navigate('/battle') }}
+            onClick={()=>{ 
+              setLoading(true)
+              navigate('/battle') 
+            
+            }}
             className='match-button'
           >
             <div className="find-match-1"></div>
