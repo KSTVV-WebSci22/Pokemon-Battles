@@ -1,4 +1,4 @@
-import { doc, getDoc, updateDoc, setDoc, arrayUnion} from "firebase/firestore";
+import { doc, getDoc, updateDoc, setDoc, arrayUnion, increment } from "firebase/firestore";
 import { db } from "../Firebase";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../Firebase";
@@ -112,4 +112,16 @@ export const getMyPokemon = async(uid) => {
   } else {
     return false
   }
+}
+
+// Update User Wallet
+export const addToWallet = async( value ) => {
+  const user = doc(db, 'users/', auth.currentUser.uid);
+  await updateDoc(user, {
+    wallet: increment(value)
+  }).then(()=> {
+    return true
+  }).catch(() => {
+    return false
+  })
 }

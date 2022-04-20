@@ -1,9 +1,38 @@
-[
-    {
-        "id": 1,
-        "type": "egg",
-        "name": "mystery egg small",
-        "description": "blah blah blah",
-        "cost": 10
-    }
-]
+{
+	
+	"mystery-egg": 
+	[
+		{
+			"id": 1,
+			"name": "normal egg",
+			"type": "mystery-egg",
+			"description": "mystery1",
+			"raritypool": [1, 2, 3],
+			"rarityweights": [3, 5, 2],
+			"cost": 10,
+			"currency": "coin"
+		},
+		{
+			"id": 2,
+			"name": "prime egg",
+			"type": "mystery-egg",
+			"description": "mystery2",
+			"raritypool": [2, 3, 4],
+			"rarityweights": [3, 5, 2],
+			"cost": 50,
+			"currency": "coin"
+		},
+		{
+			"id": 3,
+			"name": "legendary egg",
+			"type": "mystery-egg",
+			"description": "mystery3",
+			"raritypool": [3, 4, 5],
+			"rarityweights": [90, 9, 1],
+			"cost": 100,
+			"currency": "coin"
+		}
+	],
+
+	"card": []
+}
