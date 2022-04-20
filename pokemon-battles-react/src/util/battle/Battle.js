@@ -215,7 +215,7 @@ export const getTurns = async (dId, pId, type) => {
         turn = onSnapshot(doc(db, "battles", dId), async (doc) => {
             console.log("Turnjh =>", doc.data());
             var lastTurn = doc.data().turns[doc.data().turns.length - 1];
-            if(lastTurn.userId != pId) {
+            
                 if(doc.data().winner == "") {
                     if(lastTurn != prevTurn) {
                         if(type == 1 && lastTurn.type != "start" && doc.data().turns.length > 2) {
@@ -228,7 +228,7 @@ export const getTurns = async (dId, pId, type) => {
                                 }
                             });
                             
-                            if((doc.data().turns.length - rounds ) % 2 == 0 && doc.data().turns[doc.data().turns.length - 2].type != "turn-result" && lastTurn.type != "turn-result") {
+                            if((doc.data().turns.length - rounds ) % 2 == 0 && doc.data().turns[doc.data().turns.length - 2].type != "turn-result" && lastTurn.type != "turn-result" && lastTurn.userId == pId) {
                                 prevTurn = await calculate(doc.data().turns[doc.data().turns.length - 2], lastTurn, dId);
                                 turn();
                                 res(prevTurn);
@@ -244,11 +244,13 @@ export const getTurns = async (dId, pId, type) => {
                                 }
                             }
                         } else if (type == 0 && lastTurn.type == "start") {
+                            if(lastTurn.userId != pId) {
                             turn();
                             console.log("Turn #" + doc.data().turns.length);
                             prevTurn = lastTurn;
                             prevTurns.add(prevTurn);
                             res(lastTurn);
+                            }
                         }
                     }
                 } else if(doc.data().winner == pId) {
@@ -258,7 +260,7 @@ export const getTurns = async (dId, pId, type) => {
                     turn(); 
                     res("lose");
                 }
-            }
+            
         });
     });
 }

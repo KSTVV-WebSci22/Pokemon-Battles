@@ -96,6 +96,7 @@ const Battle = () => {
     const [docId, setDocId] = useState(null);
     const [uid, setUID] = useState("");
     const [name, setName] = useState("");
+    const [opName, setOpName] = useState("");
     const [toast, setToast] = useState("hide");
     const [fainted, setFainted] = useState(false);
     const [showPokemon, setShowPokemon] = useState(true);
@@ -149,6 +150,7 @@ const Battle = () => {
 				console.log(error)
 			})
         }
+        
     }
 
     const gamePrize = async () => {
@@ -161,6 +163,7 @@ const Battle = () => {
                     x.current_experience += 10;         //            
 
                     // If able to level up
+                    
                     if(x.current_experience >= x.base_experience) {
                         x.current_experience = x.current_experience - x.base_experience     // Carry over Experience
                         x.base_experience += Math.ceil((100 - x.current_level) * .1)                            // Increase Base Experience
@@ -168,6 +171,7 @@ const Battle = () => {
                         checkEvolution(x)                // Check if pokemon can evolve
                         checkMoves(x)
                     }
+                    
                 }
             });
             updateUserBattleStats(3, 1, 0, updatedPokemon)
@@ -200,7 +204,10 @@ const Battle = () => {
             console.log("Opponent => ", op.turns[0]);
             setDocId(op.docId);
             setMyOpponent(op.turns[0]);
-            setName(myName);
+            let opN = await getUser(op.turns[0].userId);
+            setOpName(opN.username);
+            console.log("username= ", opN.username);
+            setName(myName.username);
             console.log("pd =>", pokemonData);
             let me = {
                 hp: pokemonData.hp, 
@@ -235,6 +242,7 @@ const Battle = () => {
                         }
                     ]
                 }
+                setName(myName.username);
                 console.log(battle);
                 const newDoc = await createBattle(battle);
                 setDocId(newDoc);
@@ -250,9 +258,9 @@ const Battle = () => {
 
     //when your opponent takes their turn
     const recieveTurn = async (dId, pId, type) => { 
-        return new Promise(res => {
+        return new Promise(async (res) => {
             console.log("in recieve");
-            getTurns(dId, pId, type).then(turn => {
+            getTurns(dId, pId, type).then(async (turn) => {
 
                 if(turn == "win") {
                     setWon(true);
@@ -305,6 +313,8 @@ const Battle = () => {
                 } else if(turn.type == 'start') {
                     console.log("Recieved Turn => ", turn);
                     setMyOpponent(turn);
+                    let opN = await getUser(turn.userId);
+                    setOpName(opN.username);
                     res(true);
                 }
             }).catch((err)=>{ 
@@ -323,7 +333,6 @@ const Battle = () => {
         delete pokemonData.moves;
         if (selectedMove != -1) {
             move = myPokemon[selectedPokemon].moves[selectedMove];
-            //damage = await damageCalc();
         }
         var turn = {};
         if(type == 0) {
@@ -342,14 +351,15 @@ const Battle = () => {
         turn.pokemon = await pokemonData;
         turn.hp = hp[selectedPokemon];
         turn.time = new Date().getTime();
-        turn.damage = null;
         turn.pokemonLeft = hp.filter(x => x > 0).length;
         console.log("myturn =>", turn);
         if(takeTurn(docId, turn)) {
             if(myTurn) {
                 setMyTurn(false);
                 setFainted(false);
-                recieveTurn(docId, auth.currentUser.uid, 1);
+                setTimeout(()=>{
+                    recieveTurn(docId, auth.currentUser.uid, 1);
+                }, 1000)
             }
         } else {
             console.log("Take Turn Error 2")
@@ -547,6 +557,9 @@ const Battle = () => {
                                     <div id="opponent-pokemon">
                                         {myOpponent && 
                                             <>
+                                            <div className='name'>
+                                                {opName}
+                                            </div>
                                             <div id="opponent-pokemon-name">
                                                 {myOpponent.pokemon.identifier}
                                                 <span id="opponent-pokemon-stats">{myOpponent.pokemon.current_level}</span>
@@ -579,6 +592,9 @@ const Battle = () => {
                                     <div id="player-pokemon">
                                         {myPokemon[selectedPokemon] &&
                                             <>
+                                            <div className='name'>
+                                                {name}
+                                            </div>
                                             <div id="my-pokemon-name">
                                                 {myPokemon[selectedPokemon].identifier} 
                                                 <span id="my-pokemon-stats" title='Pokemon Level'>{myPokemon[selectedPokemon].current_level}</span>
