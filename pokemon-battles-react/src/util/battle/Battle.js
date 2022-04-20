@@ -207,9 +207,9 @@ const calculate = async (turn1, turn2, id) => {
 }
 
 export const getTurns = async (dId, pId, type) => { 
-    if(turn != false) {
-        turn();
-    }
+    // if(turn != false) {
+    //     turn();
+    // }
     console.log(dId, pId);
     return new Promise(async (res) => {
         turn = onSnapshot(doc(db, "battles", dId), async (doc) => {

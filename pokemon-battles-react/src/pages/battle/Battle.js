@@ -125,7 +125,7 @@ const Battle = () => {
             setMyPokemon(mycPokemon.slice(0, 6));
             console.log(mycPokemon);
             var hp = [];
-            mycPokemon.forEach(x => {
+            mycPokemon.slice(0, 6).forEach(x => {
                 hp.push(x.hp); 
             });
             setMyHp(hp);
@@ -154,7 +154,10 @@ const Battle = () => {
             console.log("Me => ", me);
             newUser(op.docId, auth.currentUser.uid); 
             if(takeTurn(op.docId, me)) {
+                console.log("Testing Take Turn")
                 setMyTurn(true);
+            } else {
+                console.log("Take Turn Error")
             }
         } else {
             if(window.confirm("No battles found, start a new battle?")) {
@@ -246,6 +249,8 @@ const Battle = () => {
                     setMyOpponent(turn);
                     res(true);
                 }
+            }).catch((err)=>{ 
+                console.log("ERROR Get Turns")
             });
         });
     }
@@ -288,6 +293,8 @@ const Battle = () => {
                 setFainted(false);
                 recieveTurn(docId, auth.currentUser.uid, 1);
             }
+        } else {
+            console.log("Take Turn Error 2")
         };
     }
 
@@ -430,7 +437,7 @@ const Battle = () => {
                                         })}
                                     </span>
                                 </span>
-                                </div>
+                            </div>
                           </>
                         );
                       })}
@@ -464,9 +471,14 @@ const Battle = () => {
         <div id="battle" className='content'>
             <div className='battle content-item'>
             {/*when all data has been recieved stop loading*/}
+            {console.log(myPokemon.length > 0)}
+            {console.log(myOpponent != null )}
+            {console.log(docId != null)}
+            {console.log(myHp.length == myPokemon.length )}
+
             {myPokemon.length > 0 && myOpponent != null && docId != null && myHp.length == myPokemon.length ? (
                 <>
-                    {setLoading(false)}
+                    {setLoading(false)} 
                     {won == null ? (
                         <>   
                             {/*battle view*/}
@@ -564,12 +576,14 @@ const Battle = () => {
                     ) : (
                         <>
                             <p>{"You " + (won == true ? ("Win") : ("Lose"))}</p>
+                            {/* Formulas for evolution and coins go here */}
                         </>
                     )}
                 </>
             ) : 
                 <>
-                    {setLoading(true)}
+                    <h1>Waiting for Opponent...</h1>
+                    {/* {setLoading(true)} */}
                 </>
             }
             </div>
