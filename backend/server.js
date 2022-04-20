@@ -10,6 +10,7 @@ const moveList = require("./data/movelist.json");
 const pokemonData = require("./data/pokemondata.json");
 const typeData = require("./data/typedamage.json");
 const typeConvert = require("./data/types.json");
+const pokestats = require("./data/stats.json");
 const shopItems = require("./data/shopItems.json")
 
 // Cors
@@ -62,6 +63,12 @@ app.get('/api/newPokemon/:id/:level', (req, res) => {
   
   pokemon['type1'] = t1;
   pokemon['type2'] = t2;
+  pokemon['hp'] = pokestats[parseInt(id)].hp;
+  pokemon['attack'] = pokestats[parseInt(id)].attack;
+  pokemon['defense'] = pokestats[parseInt(id)].defense;
+  pokemon['specialatk'] = pokestats[parseInt(id)].specialatk;
+  pokemon['specialdef'] = pokestats[parseInt(id)].specialdef;
+  pokemon['speed'] = pokestats[parseInt(id)].speed;
   pokemon.win = 0
   pokemon.loss = 0
   pokemon.final_win = 0 
@@ -93,11 +100,14 @@ app.get('/api/type/:type', (req, res) => {
   res.json(typeData.type_damage[type]);
 });
 
+app.get('/api/typeDamage/', (req, res) => {
+  res.json(typeData.type_damage);
+});
+
 
 // Pokemon Rarity
-app.get('/api/pokemon/:rarity', (req, res) => {
-  var rarity = req.params.rarity;
-  // res.json(typeData.type_damage[rarity]);
+app.get('/api/pokemon/:id/rarity', (req, res) => {
+  // res.json(pokemonData[id].rarity);
 });
 
 // https://www.geeksforgeeks.org/random-number-generator-in-arbitrary-probability-distribution-fashion/

@@ -28,7 +28,6 @@ const Navbar = () => {
   }, []);
 
   return ( 
-    
     <div id="navbar">
       {user ? <> 
       <div id="navbar-content">
