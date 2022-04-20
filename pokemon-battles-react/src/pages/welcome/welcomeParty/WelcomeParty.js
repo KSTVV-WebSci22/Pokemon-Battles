@@ -161,11 +161,11 @@ const WelcomeParty = ({user}) => {
           )
         })}
       </Col>
-      <Col className="test-pokemon" xs={12}>
+      {/* <Col className="test-pokemon" xs={12}>
         <button onClick={()=>{
           testPokemonAdd()
         }}>Add Pokemon to Party. Delete Soon</button>
-      </Col>
+      </Col> */}
     </Row>
 
     <Modal show={show} onHide={handleClose}>

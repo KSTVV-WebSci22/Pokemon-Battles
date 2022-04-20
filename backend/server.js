@@ -69,10 +69,11 @@ app.get('/api/newPokemon/:id/:level', (req, res) => {
   pokemon['specialatk'] = pokestats[parseInt(id)].specialatk;
   pokemon['specialdef'] = pokestats[parseInt(id)].specialdef;
   pokemon['speed'] = pokestats[parseInt(id)].speed;
+  pokemon['current_experience'] = 0;
   pokemon.win = 0
   pokemon.loss = 0
   pokemon.final_win = 0 
-  pokemon.current_level = req.params.level
+  pokemon.current_level = parseInt(req.params.level)
 
   const moves = []
 

@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef, useContext } from 'react';
 import { useNavigate } from 'react-router-dom'
 import './Battle.css'
-import axios from 'axios'
 import Moves from './components/Moves';
 import { ClientContext } from '../../context/ClientContext';
 
@@ -11,10 +10,11 @@ import { useMachine } from "@xstate/react";
 
 // Firebase
 import { auth } from '../../util/Firebase'
-import { getMyPokemon } from '../../util/users/Users'
+import { addToLoss, addToWin, getMyPokemon } from '../../util/users/Users'
 import { findBattle, createBattle, takeTurn, getTurns, newUser } from '../../util/battle/Battle'
 import { onAuthStateChanged } from 'firebase/auth';
-import { getUser, updateUser } from '../../util/users/Users';
+import { getUser, addToWallet } from '../../util/users/Users';
+import axios from 'axios';
 
 //xstate machine
 const turnMachine = createMachine({
@@ -118,6 +118,64 @@ const Battle = () => {
             setLoading(false)
         }, 1000)
     }, []);
+
+
+
+    const checkMove = async (pokemon) => {
+        // Check moves list for current pokemon and level and method_id === 1
+        // Need a modal to appear with new move unless you have 4 moves already, then we need to change it out with that move.
+    }
+
+    const checkEvolution = async (pokemon) => {
+        if(pokemon.current_level >= pokemon.evolve_level  && !evolved_species_id.isArray()){
+            return await axios.get(`${website}/api/newPokemon/${pokemon.evolved_species_id}/${pokemon.current_level}`)
+			.then( response => {
+				let np = response.data
+                pokemon.id = np.id
+                pokemon.identifier = np.identifier
+                pokemon.evolved_species_id = np.evolved_species_id
+                pokemon.evolve_level = np.evolve_level
+                pokemon.pre_evolve = np.pre_evolve
+                pokemon.type1 = np.type1
+                pokemon.type2 = np.type2
+                pokemon.rarity = np.rarity
+                pokemon.obtain = np.obtain
+                pokemon.hp += 5
+                pokemon.attack += 5
+                pokemon.specialatk += 5
+                pokemon.specialdef += 5
+			})
+			.catch( error => {
+				console.log(error)
+			})
+        }
+    }
+
+    const gamePrize = async () => {
+
+        if(won){
+            var updatedPokemon = myPokemon   
+            updatedPokemon.map(x => {
+                x.final_win += 1                        // Add 1 to pokemons Win
+                if(x.current_level <= 100){
+                    x.current_experience += 10;         //            
+
+                    // If able to level up
+                    if(x.current_experience >= x.base_experience) {
+                        x.current_experience = x.current_experience - x.base_experience     // Carry over Experience
+                        x.base_experience += Math.ceil((100 - x.current_level) * .1)                            // Increase Base Experience
+                        x.current_level += 1                                                // Add 1 to current level
+                        checkEvolution(x)                // Check if pokemon can evolve
+                        checkMoves(x)
+                    }
+                }
+            });
+            updateUserBattleStats(3, 1, 0, updatedPokemon)
+
+        } else {
+            // Copy win but change out logic for loss
+        }
+    }
 
     const fillPokemon = async () => { 
         const mycPokemon = await getMyPokemon(auth.currentUser.uid);
@@ -576,7 +634,7 @@ const Battle = () => {
                     ) : (
                         <>
                             <p>{"You " + (won == true ? ("Win") : ("Lose"))}</p>
-                            {/* Formulas for evolution and coins go here */}
+                            {gamePrize()}
                         </>
                     )}
                 </>

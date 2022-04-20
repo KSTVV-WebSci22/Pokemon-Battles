@@ -285,7 +285,7 @@ const damageCalc = async (pokemon, move, opponent) => {
             let c = 0;
             if(response.data.damage_class == 'physical') {
                 b = pokemon.attack;
-                c = opponent.defense;
+                c = opponent.defense; 
             } else if (response.data[move.type].damage_class = 'special') {
                 b = pokemon.specialatk;
                 c = pokemon.specialdef;

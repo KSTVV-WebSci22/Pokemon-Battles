@@ -87,6 +87,21 @@ export const updateUser = async (username) => {
   });
 }
 
+// Update Users Info
+export const updateUserBattleStats = async (wallet, win, loss, pokemon) => {
+  const user = doc(db, 'users/', auth.currentUser.uid)
+  await updateDoc(user, {
+    wallet: wallet,
+    loss: loss,
+    win: win,
+    pokemon: pokemon
+  }).then(() =>{
+    return true
+  }).catch(error => {
+    console.log(error);
+  });
+}
+
 
 // Update Pokemon List with new Pokemon
 export const addPokemon = async (pokemon) => {
@@ -119,6 +134,29 @@ export const addToWallet = async( value ) => {
   const user = doc(db, 'users/', auth.currentUser.uid);
   await updateDoc(user, {
     wallet: increment(value)
+  }).then(()=> {
+    return true
+  }).catch(() => {
+    return false
+  })
+}
+
+// Update User Win/Loss
+export const addToWin = async () => {
+  const user = doc(db, 'users/', auth.currentUser.uid);
+  await updateDoc(user, {
+    win: increment(1)
+  }).then(()=> {
+    return true
+  }).catch(() => {
+    return false
+  })
+}
+
+export const addToLoss = async () => {
+  const user = doc(db, 'users/', auth.currentUser.uid);
+  await updateDoc(user, {
+    loss: increment(1)
   }).then(()=> {
     return true
   }).catch(() => {
