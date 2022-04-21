@@ -60,7 +60,7 @@ const Friends = () => {
             var tmpFriends = await getMyFriends(auth.currentUser.uid);
             var a = [];
             for(let x of tmpFriends){
-                a.push({Name: await getUsername(x), Online: await getPresence(x)});
+                a.push({Name: await getUsername(x), Online: await getPresence(x), uid: x});
             };
             setFriends(await a);
         } else {
@@ -90,7 +90,7 @@ const Friends = () => {
                                     return <><div key={i} className="menu-item friend-online">
                                                 <img className="profile-pic" src={ash} alt="ash"/>
                                                 {x.Name}
-                                                <button className="menu-item battle-btn" title="Battle"> 
+                                                <button className="menu-item battle-btn" title="Battle" onClick={() => {navigate("/battle?id=" + x.uid)}}> 
                                                     <img src={fist} alt="fist"/> 
                                                     <img src={fist} alt="fist"/> 
                                                 </button>

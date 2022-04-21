@@ -16,7 +16,6 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { getUser, addToWallet } from '../../util/users/Users';
 import axios from 'axios';
 
-
 //xstate machine
 const turnMachine = createMachine({
     id: "turn",
@@ -197,7 +196,10 @@ const Battle = () => {
     }
 
     const newBattle = async (pokemon, hp) => {
-        const op = await findBattle(auth.currentUser.uid);
+        const location = window.location.search;
+        const param = new URLSearchParams(location).get("id");
+        console.log(param);
+        const op = await findBattle(auth.currentUser.uid, param);
         const myName = await getUser(auth.currentUser.uid); 
         var pokemonData = {...pokemon};
         delete pokemonData.moves;
@@ -233,6 +235,7 @@ const Battle = () => {
                     user1: auth.currentUser.uid,
                     user2: "",
                     winner: "",
+                    opponentType: param == null ? "random" : param,
                     turns: [
                         {
                             hp: pokemonData.hp,
