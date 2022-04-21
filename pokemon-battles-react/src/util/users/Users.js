@@ -52,6 +52,7 @@ const checkIfUserExists = async (user, name, email, profilePic) => {
       email: email,
       profilePic: profilePic,
       wallet: 10,
+      friends: [],
       pokemon: [],
       backpack: [],
       win: 0,
@@ -118,6 +119,36 @@ export const getMyPokemon = async(uid) => {
 }
 
 //Get Users Friends
+export const getMyFriends = async(uid) => {
+  const user = doc(db, 'users/' + uid)
+  const docData = await getDoc(user)
+  if(docData.exists()) {
+    return docData.data().friends;
+  } else {
+    return false
+  }
+}
+
+//Get Users username
+export const getUsername = async(uid) => {
+  const user = doc(db, 'users/' + uid)
+  const docData = await getDoc(user)
+  if(docData.exists()) {
+    return docData.data().username;
+  } else {
+    return false;
+  }
+}
+
+//Get Users online status
+export const getPresence = async(uid) => {
+  let status = "";
+  const starCountRef =  ref(rdb, 'status/' + uid + '/state');
+   onValue(starCountRef, async (snapshot) => {
+    status = snapshot.val();
+   });
+   return await status;
+}
 
 //Get User Status
 export const getUserStatus = async(uid) => {
@@ -127,7 +158,6 @@ export const getUserStatus = async(uid) => {
   // any time that connectionsRef's value is null (i.e. has no children) I am offline
   
   const userId = uid;
-  console.log(userId);
   const userStatusDatabaseRef = ref(rdb, 'status/' + userId );
   
  

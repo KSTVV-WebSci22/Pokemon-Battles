@@ -73,7 +73,6 @@ const Welcome = () => {
   useEffect(()=>{
     setSong(2)
     if(auth.currentUser){
-      getUserStatus(auth.currentUser.uid);
       userInfo()
       firstPokemon()
     } else {

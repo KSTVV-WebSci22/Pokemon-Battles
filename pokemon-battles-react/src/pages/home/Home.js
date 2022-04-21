@@ -28,8 +28,6 @@ const Home = () => {
         const response = await signInWithGoogle();
         if (response){
             navigate("./welcome")
-            const userStatusDatabaseRef = ref(rdb, 'status/' + auth.currentUser.uid + '/state');
-            //set(userStatusDatabaseRef, "online");
         } else {
             console.log(`Response: ${response}`)
         }
