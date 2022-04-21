@@ -1,58 +1,40 @@
-import { useState, useEffect, useRef } from 'react';
+import { useContext } from 'react';
 import './ShopItem.css';
-import { Card, Button } from 'react-bootstrap';
-import axios from "axios";
+import { Card, Button, Col } from 'react-bootstrap';
+import { ClientContext } from '../../../context/ClientContext';
 
-const ShopItem = ({itemUrl}) => {
+const ShopItem = ({item}) => {
 
-	const [item, setItem] = useState()
-
-	const fetchItem = async () => {
-
-		await axios.get(itemUrl)
-		.then((response) => {
-			axios.get('https://pokeapi.co/api/v2/pokemon/' + response.data.id)
-			.then((response) => {           
-				setItem(
-					{
-						name: response.data.name,
-						src: response.data.sprites.other.dream_world.front_default,
-						type: response.data.types[0].type.name
-					}
-				);
-			})
-			.catch((error) => {
-					console.log(error);
-			})
-		})
-		.catch((error) => {
-			console.log(error);
-		})
-	}
-
-	useEffect(() => {
-		fetchItem();
-	}, []);
+	// global variables from shop.js parent component 
+	// to set item to purchase and to pass modal data
+	const {setShopItem, setShopModal} = useContext(ClientContext);
 
 	return (
 		<>
-		{
-			item &&
-			<Card className='shop-item'>
-				<Card.Img className='shop-item-img' variant='top' src={item.src}/>
-				<div className="shop-item-name" style={{color: `var(--${item.type})`}}>{item.name}</div>
-				<Button 
-					className="shop-item-purchase mt-auto mb-3"
-					style={
-						{
-							background: `var(--${item.type})`,
-							border: 'None'
+		{item &&
+			<Col md={6}>
+				<Card className='shop-item'>
+					{/* shop item image */}
+					<Card.Img className='shop-item-img' variant='top' 
+						src={require(`../../../img/shopitems/${item.description}.png`)}
+					/>
+					<div className="shop-item-name">{item.name}</div>
+					<Button 
+						className="shop-item-purchase mt-auto mb-3"
+						style={
+							{
+								border: 'None'
+							}
 						}
-					}
-				>
-					100
-				</Button>
-			</Card>
+						onClick={()=>{
+							setShopItem(item)
+							setShopModal(true)
+						}}
+					>
+						{item.cost}
+					</Button>
+				</Card>
+			</Col>
 		}
 		</>
 	)

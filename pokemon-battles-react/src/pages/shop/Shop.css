@@ -1,27 +1,52 @@
-#shop {
-  background-image: url('../../img/items/pokestop.png');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: left;
-  font-family: var(--museo);
-  text-shadow: -1px 2px 3px #3d3d3d6b, 0px 0px;
-  padding: 1rem;
-  gap: 0 1rem;
-	position: relative;
-	height: 100%;
-	width: 100%;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
+.content-item {
+  overflow: auto !important;
 }
 
-#shop-row div {
-  margin-bottom: 1rem;
-}
-
-#shop::-webkit-scrollbar {
+.content-item::-webkit-scrollbar {
   display: none;
 }
 
-#shop-container {
-	overflow: auto !important;
+.modal-images {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.mystery-img{
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  opacity: 1;
+  animation: hideMystery 1.5s forwards;
+  height: 200px;
+}
+
+.new-pokemon-img{
+  position: relative;
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: showPokemon 3.5s forwards;
+  height: 250px;
+}
+
+@keyframes hideMystery {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes showPokemon {
+  from {
+    opacity: 0;
+    filter: brightness(10%)
+  }
+  to {
+    opacity: 1;
+    filter: brightness(100%)
+  }
 }

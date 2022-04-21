@@ -1,12 +1,20 @@
 import { useState, useEffect, useRef, useContext } from 'react';
+import { useNavigate } from 'react-router-dom'
 import './Battle.css'
-import axios from 'axios'
 import Moves from './components/Moves';
 import { ClientContext } from '../../context/ClientContext';
 
 //xstate
 import { createMachine, interpret, assign } from "xstate";
 import { useMachine } from "@xstate/react";
+
+// Firebase
+import { auth } from '../../util/Firebase'
+import { addToLoss, addToWin, getMyPokemon } from '../../util/users/Users'
+import { findBattle, createBattle, takeTurn, getTurns, newUser } from '../../util/battle/Battle'
+import { onAuthStateChanged } from 'firebase/auth';
+import { getUser, addToWallet } from '../../util/users/Users';
+import axios from 'axios';
 
 //xstate machine
 const turnMachine = createMachine({
@@ -56,10 +64,6 @@ const turnMachine = createMachine({
       },
       endturn: {
         on : {
-            DEAD: {
-                target: "startturn",
-                actions: "setpokemon"
-            },
             NEWTURN: "startturn",
             ENDGAME: "endgame"
         }
@@ -83,16 +87,28 @@ const actions = {
 
 const Battle = () => {
 
-    const [myPokemonData, setMyPokemonData] = useState([]); 
     const [myPokemon, setMyPokemon] = useState([]);
-    const [myMoves, setMyMoves] = useState([]);
     const [myHp, setMyHp] = useState([]);
     const [won, setWon] = useState(null);
     const [myOpponent, setMyOpponent] = useState(null);
     const [myTurn, setMyTurn] = useState(true);
     const signatureRef = useRef(null);
+    const [docId, setDocId] = useState(null);
+    const [uid, setUID] = useState("");
+    const [name, setName] = useState("");
+    const [opName, setOpName] = useState("");
+    const [toast, setToast] = useState("hide");
+    const [fainted, setFainted] = useState(false);
+    const [showPokemon, setShowPokemon] = useState(true);
 
-    const { setSong, website, loading, setLoading } = useContext(ClientContext);
+    const { setSong, setLoading } = useContext(ClientContext);
+
+    let navigate = useNavigate();
+    onAuthStateChanged(auth, (user) => {
+        if (!user) {
+          navigate('/');
+        }
+    });
 
     useEffect(()=>{
       setSong(3)
@@ -104,198 +120,288 @@ const Battle = () => {
         }, 1000)
     }, []);
 
-    const getPokemon = async (number) => {
-        if(number != undefined) {
-            return new Promise((res) => {
-                axios.get(website + '/api/pokemon/'+ number).then(function (response) {
-                    //console.log(response.data);
-                    res(response.data);
-                }).catch(function (error) {
-                    console.log(error);
-                });
+
+
+    const checkMove = async (pokemon) => {
+        // Check moves list for current pokemon and level and method_id === 1
+        // Need a modal to appear with new move unless you have 4 moves already, then we need to change it out with that move.
+    }
+
+    const checkEvolution = async (pokemon) => {
+        if(pokemon.current_level >= pokemon.evolve_level  && !evolved_species_id.isArray()){
+            return await axios.get(`${website}/api/newPokemon/${pokemon.evolved_species_id}/${pokemon.current_level}`)
+			.then( response => {
+				let np = response.data
+                pokemon.id = np.id
+                pokemon.identifier = np.identifier
+                pokemon.evolved_species_id = np.evolved_species_id
+                pokemon.evolve_level = np.evolve_level
+                pokemon.pre_evolve = np.pre_evolve
+                pokemon.type1 = np.type1
+                pokemon.type2 = np.type2
+                pokemon.rarity = np.rarity
+                pokemon.obtain = np.obtain
+                pokemon.hp += 5
+                pokemon.attack += 5
+                pokemon.specialatk += 5
+                pokemon.specialdef += 5
+			})
+			.catch( error => {
+				console.log(error)
+			})
+        }
+        
+    }
+
+    const gamePrize = async () => {
+
+        if(won){
+            var updatedPokemon = myPokemon   
+            updatedPokemon.map(x => {
+                x.final_win += 1                        // Add 1 to pokemons Win
+                if(x.current_level <= 100){
+                    x.current_experience += 10;         //            
+
+                    // If able to level up
+                    
+                    if(x.current_experience >= x.base_experience) {
+                        x.current_experience = x.current_experience - x.base_experience     // Carry over Experience
+                        x.base_experience += Math.ceil((100 - x.current_level) * .1)                            // Increase Base Experience
+                        x.current_level += 1                                                // Add 1 to current level
+                        checkEvolution(x)                // Check if pokemon can evolve
+                        checkMoves(x)
+                    }
+                    
+                }
             });
+            updateUserBattleStats(3, 1, 0, updatedPokemon)
+
+        } else {
+            // Copy win but change out logic for loss
         }
     }
 
-    const getMove = async (number) => {
-        return new Promise((res) => {
-            axios.get(website + '/api/move/'+ number).then(function (response) {
-                //console.log(response.data);
-                res(response.data);
-            }).catch(function (error) {
-                console.log(error);
+    const fillPokemon = async () => { 
+        const mycPokemon = await getMyPokemon(auth.currentUser.uid);
+        return new Promise(res =>{
+            setMyPokemon(mycPokemon.slice(0, 6));
+            console.log(mycPokemon);
+            var hp = [];
+            mycPokemon.slice(0, 6).forEach(x => {
+                hp.push(x.hp); 
             });
-        });
+            setMyHp(hp);
+            res([mycPokemon.slice(0, 6)[0], hp]);
+        })
     }
 
-    const fillPokemon = async (testData) => { 
-        var pokemon = [];
-        for(const x of testData){
-            const p = await getPokemon(x.pokemon);
-            pokemon.push(p); 
-        }
-        setMyPokemon(pokemon);
-        console.log(pokemon);
-    }
-
-    const fillMoves = async (testData) => { 
-        var moves = [];
-        var i = 0;
-        for(const x of testData){
-            moves.push([]);
-            for(const y of x.moves){
-                const m = await getMove(y);
-                moves[i].push(m); 
+    const newBattle = async (pokemon, hp) => {
+        const op = await findBattle(auth.currentUser.uid);
+        const myName = await getUser(auth.currentUser.uid); 
+        var pokemonData = {...pokemon};
+        delete pokemonData.moves;
+        if(op != false) {
+            console.log("Opponent => ", op.turns[0]);
+            setDocId(op.docId);
+            setMyOpponent(op.turns[0]);
+            let opN = await getUser(op.turns[0].userId);
+            setOpName(opN.username);
+            console.log("username= ", opN.username);
+            setName(myName.username);
+            console.log("pd =>", pokemonData);
+            let me = {
+                hp: pokemonData.hp, 
+                pokemon: pokemonData,
+                type: "start",
+                userName: await myName.username,
+                userId: await auth.currentUser.uid
             }
-            i++;
+            console.log("Me => ", me);
+            newUser(op.docId, auth.currentUser.uid); 
+            if(takeTurn(op.docId, me)) {
+                console.log("Testing Take Turn")
+                setMyTurn(true);
+            } else {
+                console.log("Take Turn Error")
+            }
+        } else {
+            if(window.confirm("No battles found, start a new battle?")) {
+                let battle = {
+                    date: new Date().getTime(),
+                    status: "started",
+                    user1: auth.currentUser.uid,
+                    user2: "",
+                    winner: "",
+                    turns: [
+                        {
+                            hp: pokemonData.hp,
+                            type: "start",
+                            pokemon: pokemonData,
+                            userId: await auth.currentUser.uid,
+                            time: new Date().getTime()
+                        }
+                    ]
+                }
+                setName(myName.username);
+                console.log(battle);
+                const newDoc = await createBattle(battle);
+                setDocId(newDoc);
+                console.log("hp =>", myHp);
+                setMyTurn(true);
+                recieveTurn(newDoc, auth.currentUser.uid, 0);
+            } else {
+                navigate('/');
+            }
+            
         }
-        setMyMoves(moves);
-        console.log(moves);
     }
-
 
     //when your opponent takes their turn
-    const recieveTurn=() => { 
-        console.log("recieveTurn");
-        //test recieved oppenent data
-        const opponent = {
-            name: "Opponent",
-            pokemon: "pikachu",
-            hp: 100,
-            level: 7,
-            move: {
-                name: "Thunderbolt",
-                type: "Normal",
-                pp: 50
-            },
-            won: null,
-        }
-        setMyOpponent(opponent);
+    const recieveTurn = async (dId, pId, type) => { 
+        return new Promise(async (res) => {
+            console.log("in recieve");
+            getTurns(dId, pId, type).then(async (turn) => {
 
-        //if opponent lost
-        if(opponent.won == false) {
-            setWon(true);
-            next("ENDGAME");
-            setMyTurn(false);
-            return 0;
-        }
-
-        if(opponent.move != null) {
-            //will have to calculate damage from type & pp / other stats
-            myHp[selectedPokemon] -= opponent.move.pp;
-            
-            let max = -1;
-            //if pokemon died switch pokemon
-            if(myHp[selectedPokemon] == 0) {
-                myHp.every((x, i) => {
-                    if(x > 0) {
-                        max = i;
-                        return false;
-                    }
-                    return true;
-                });
-                //if all pokemon are dead you lose
-                if(max == -1) {
+                if(turn == "win") {
+                    setWon(true);
+                    next("ENDGAME");
+                    setMyTurn(false);
+                }
+                if(turn == "lose") {
                     setWon(false);
                     next("ENDGAME");
                     setMyTurn(false);
-                    sendTurn();
-                } else {
-                    //if a pokemon dead switch pokemon
-                    next({ type: "DEAD", id: max }); 
-                    setMyTurn(true);
                 }
-            } else {
-                //if pokemon not dead
-                next("NEWTURN");
-                setMyTurn(true);
-            }
-        }
+
+                if(turn.type != 'start') {
+                    console.log("Recieved Turn => ", turn);
+
+                    var newHp = [...myHp];
+                    if(turn.turn1 == auth.currentUser.uid) {
+                        newHp[selectedPokemon] = turn.turn1Hp;
+                        setMyHp(newHp);
+                        setMyOpponent({
+                            hp: turn.turn2Hp,
+                            pokemon: (turn.turn2Pokemon != null ? turn.turn2Pokemon : "Switching Pokemon"),
+                            userId: turn.turn2,
+                            summary: turn.turn2Summary
+                        });
+                        if(turn.turn2Hp == 0) {
+                            sendTurn(newHp, 1);
+                            res(true);
+                        }
+                    } else {
+                        newHp[selectedPokemon] = turn.turn2Hp;
+                        setMyHp(newHp);
+                        setMyOpponent({
+                            hp: turn.turn1Hp,
+                            pokemon: (turn.turn1Pokemon != null ? turn.turn1Pokemon : "Switching Pokemon"),
+                            userId: turn.turn1,
+                            summary: turn.turn1Summary
+                        });
+                        if(turn.turn1Hp == 0) {
+                            sendTurn(newHp, 1);
+                            res(true);
+                        }
+                    }
+                    if(newHp[selectedPokemon] == 0) {
+                        setFainted(true);
+                    }
+                    next("NEWTURN");
+                    setMyTurn(true);
+                    res(true);
+                } else if(turn.type == 'start') {
+                    console.log("Recieved Turn => ", turn);
+                    setMyOpponent(turn);
+                    let opN = await getUser(turn.userId);
+                    setOpName(opN.username);
+                    res(true);
+                }
+            }).catch((err)=>{ 
+                console.log("ERROR Get Turns")
+            });
+        });
     }
 
-    const sendTurn = async () => { 
+    const sendTurn = async (hp, type = 0) => { 
+        console.log("in send");
+        const myName = await getUser(auth.currentUser.uid); 
         let move = null;
+        let damage = null;
+        let summary = "";
+        var pokemonData = {...myPokemon[selectedPokemon]};
+        delete pokemonData.moves;
         if (selectedMove != -1) {
-            move = {
-                name: myMoves[selectedPokemon][selectedMove].name,
-                type: myMoves[selectedPokemon][selectedMove].type,
-                pp: myMoves[selectedPokemon][selectedMove].pp
-            }
+            move = myPokemon[selectedPokemon].moves[selectedMove];
         }
-        const turn = {
-            name: "Me",
-            pokemon: myPokemon[selectedPokemon].identifier,
-            hp: myHp[selectedPokemon],
-            level: myPokemonData[selectedPokemon].level,
-            move: move,
-            won: won,
+        var turn = {};
+        if(type == 0) {
+            turn = {
+                move: move,
+                type: (!fainted ? "turn" : "fainted-switch"),
+            }
+        } else {
+            turn = {
+                move: null,
+                type: "opponent-fainted"
+            }
         }
         //send turn here
-        console.log(turn);
-
-        if(myTurn) {
-            setMyTurn(false);
-        }
+        turn.userId = auth.currentUser.uid;
+        turn.pokemon = await pokemonData;
+        turn.hp = hp[selectedPokemon];
+        turn.time = new Date().getTime();
+        turn.pokemonLeft = hp.filter(x => x > 0).length;
+        console.log("myturn =>", turn);
+        if(takeTurn(docId, turn)) {
+            if(myTurn) {
+                setMyTurn(false);
+                setFainted(false);
+                setTimeout(()=>{
+                    recieveTurn(docId, auth.currentUser.uid, 1);
+                }, 1000)
+            }
+        } else {
+            console.log("Take Turn Error 2")
+        };
     }
 
-    useEffect(()=>{
-        // test data represents your pokemon
-        var testData = [
-            {
-                pokemon: 1,
-                level: 6,
-                moves: [1, 2, 3, 4]
-            },
-            {
-                pokemon: 2,
-                level: 6,
-                moves: [5, 6, 7, 8]
-            },
-            {
-                pokemon: 3,
-                level: 6,
-                moves: [9, 10, 11, 12]
-            },
-            {
-                pokemon: 4,
-                level: 6,
-                moves: [13, 14, 15, 16]
-            },
-            {
-                pokemon: 5,
-                level: 6,
-                moves: [17, 18, 19, 20]
-            },
-            {
-                pokemon: 6,
-                level: 6,
-                moves: [21, 22, 23, 24]
-            }
-        ];
+    useEffect(async ()=>{
 
-        setMyPokemonData(testData); // Set pokemon test data
-        setMyHp([100, 100, 100, 100, 100, 100]); //initial hp percents
-        setMyTurn(true); //you go first in this example false = opponent goes first
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is Signed In
+                setUID(user.uid);
+                console.log(user.uid);
+                //get all info from api
+                fillPokemon().then((data)=>{
+                    newBattle(data[0], data[1]);
+                });
 
-        //opponent initial test data
-        setMyOpponent({
-            name: "Opponent",
-            pokemon: "pikachu",
-            hp: 100,
-            level: 7,
-            move: null,
-            won: null,
-        });
+            } 
+        })
 
-        //get all info from api
-        fillPokemon(testData);
-        fillMoves(testData);
 
       }, []);
 
     //xstate init
     const [state, send] = useMachine(turnMachine, actions);
     const { selectedPokemon, selectedMove } = state.context;
+
+    useEffect(()=>{
+        if(myTurn /*&& myOpponent.summary != undefined*/) {
+            setToast("show");
+            const y = setTimeout(function(){
+                setToast("hide");
+            }, 6000);
+        }
+      }, [myTurn]);
+
+      useEffect(()=>{
+        if(!showPokemon) {
+            setShowPokemon(true);
+        }
+      }, [selectedPokemon]);
 
     //xstate advance
     function next(string) {
@@ -307,30 +413,38 @@ const Battle = () => {
     function display(value) {
         switch (value) {
           case "startturn":
-            console.log(myHp);
             return (
               <>
-                <div id="battle-buttons" className='battle-bottom'>
-                    <button id="move-selection" onClick={() => next("ATTACK")}>Attack</button>
-                    <button id="pokemon-selection" onClick={() => next("SWITCH")}>Switch Pokemon</button>
-                </div>
+                <button 
+                    id="move-selection" 
+                    className="battle-buttons" 
+                    onClick={() => next("ATTACK")}
+                    disabled={(fainted ? "true" : "")}
+                    >
+                        Attack
+                </button>
+                <button id="pokemon-selection" className="battle-buttons" onClick={() => next("SWITCH")}>Switch Pokemon</button>
               </>
             );
           case "pickmove":
             return (
               <>
-                <div id="battle-options" className='battle-bottom'>
-                {myMoves[selectedPokemon] &&
+                <div className="battle-grid">
+                {myPokemon[selectedPokemon].moves &&
                     [0, 1, 2, 3].map((x, i) => {
-                    return (
-                        <div
-                        className="move"
-                        key={x}
-                        onClick={() => next({ type: "MOVE", id: i })}
-                        >
-                            <Moves moveData={myMoves[selectedPokemon][x]}/>
-                        </div>
-                    );
+                        if(myPokemon[selectedPokemon].moves[i] != undefined) {
+                            return (
+                                <div
+                                className="move"
+                                key={x}
+                                onClick={() => next({ type: "MOVE", id: i })}
+                                >
+                                    <Moves moveData={myPokemon[selectedPokemon].moves[i]}/>
+                                </div>
+                            );
+                        } else {
+                            return (<></>);
+                        }
                     })}
                 </div>
               </>
@@ -338,27 +452,60 @@ const Battle = () => {
           case "changepokemon":
             return (
               <>
-                <div id="battle-options" className='battle-bottom pokemon-select'>
+                <div id="pokemon-select" className='battle-grid'>
                     {myPokemon &&
                       myPokemon.map((x, i) => {
                         return (
                             <>
-                                {myHp[i] > 0 ? (
-                                    <>
-                                        <button
-                                            className="pokemon-btn"
-                                            key={x.identifier}
-                                            style={{backgroundColor: `var(--${(x.type1).toLowerCase()})`}}
-                                            onClick={() => next({ type: "POKEMON", id: i })}
-                                        >
-                                            {x.identifier + " HP: " + myHp[i]}
-                                        </button>
-                                        <br/>
-                                    </>
-                                ) : (
-                                    <>
-                                    </>
-                                )}
+                                <div className={'pokemon ' + (myHp[i] > 0 ? (i == selectedPokemon ? 'selected' : '') : 'dead')} 
+                                    style={{backgroundColor: `var(--${(x.type1).toLowerCase()})`,
+                                    backgroundImage:
+                                    `linear-gradient(
+                                      to left,
+                                      #C1C1C1 ${100 - ((myHp[i] / myPokemon[i].hp ) * 100)}%,
+                                      #ffffff00 0%
+                                    )`}}
+                                    key={x.identifier}
+                                    onClick={(myHp[i] > 0 && i != selectedPokemon ? () => {
+                                        next({ type: "POKEMON", id: i });
+                                        setShowPokemon(false);
+                                    } : () => {})}
+                                >
+                                <img className="pokemon-select-img" src={require("../../img/pokemon/" + x.identifier  + ".png")} alt={x.identifier}/>
+                                <span class="pokemon-info">
+                                    <span className="pokemon-btn">
+                                        <span>
+                                            {x.identifier.charAt(0).toUpperCase() + x.identifier.slice(1)}
+                                        </span>
+                                        <span className="level" title='Pokemon Level'>
+                                            {x.current_level}
+                                            </span>
+                                    </span>
+                                    <span>
+                                        <span className='pokemon-subtitle'>
+                                            Type:
+                                        </span>
+                                        {' ' + x.type1}
+                                        {x.type2 != 'None' ? ', ' + x.type2 : ''}
+                                    </span>
+                                    <span>
+                                        <span className='pokemon-subtitle'>
+                                            Moves: 
+                                        </span>
+                                        {x.moves.map((y, i) => {
+                                            if(y != null) {
+                                                if(i == 0) {
+                                                    return (' ' + y.name)
+                                                } else {
+                                                    return (', ' + y.name)
+                                                }
+                                            } else {
+                                                return ('')
+                                            }
+                                        })}
+                                    </span>
+                                </span>
+                            </div>
                           </>
                         );
                       })}
@@ -369,7 +516,8 @@ const Battle = () => {
               if(myTurn) {
                 return (
                     <button
-                        onClick={() => {sendTurn(); setMyTurn(false);}}
+                        onClick={() => {sendTurn(myHp); setMyTurn(false);}}
+                        className="send"
                     >
                         Send my turn
                     </button>
@@ -377,11 +525,7 @@ const Battle = () => {
               } else {
                 return (
                     <>
-                        <h2>Opponent's Turn</h2>
-                        <br/>
-                        <button onClick={() => recieveTurn()}>
-                            Send Opponent's turn
-                        </button>
+                        <h1 id="oppT">Waiting for Opponent...</h1>
                     </>
                 );
               }
@@ -395,8 +539,14 @@ const Battle = () => {
         <div id="battle" className='content'>
             <div className='battle content-item'>
             {/*when all data has been recieved stop loading*/}
-            {myPokemonData.length == 6 && myPokemon.length == 6 && myMoves.length == 6 && myOpponent != null ? (
+            {console.log(myPokemon.length > 0)}
+            {console.log(myOpponent != null )}
+            {console.log(docId != null)}
+            {console.log(myHp.length == myPokemon.length )}
+
+            {myPokemon.length > 0 && myOpponent != null && docId != null && myHp.length == myPokemon.length ? (
                 <>
+                    {setLoading(false)} 
                     {won == null ? (
                         <>   
                             {/*battle view*/}
@@ -407,27 +557,34 @@ const Battle = () => {
                                     <div id="opponent-pokemon">
                                         {myOpponent && 
                                             <>
+                                            <div className='name'>
+                                                {opName}
+                                            </div>
                                             <div id="opponent-pokemon-name">
-                                                {myOpponent.pokemon}
-                                                <span id="opponent-pokemon-stats">{myOpponent.level}</span>
+                                                {myOpponent.pokemon.identifier}
+                                                <span id="opponent-pokemon-stats">{myOpponent.pokemon.current_level}</span>
                                             </div>
                                             <div id="opponent-pokemon-health">
-                                                {"HP: " + myOpponent.hp + "%"}
+                                                {"HP: " + myOpponent.hp}
                                             </div>
                                             </>
                                         }
                                     </div>
                                 </div>
                                 <div id="opponent-pokemon-img">
-                                    {myOpponent && 
-                                        <img src={require("../../img/pokemon/" + myOpponent.pokemon + ".png")} alt={myOpponent.pokemon} />
+                                    {myOpponent && (myOpponent.pokemon != "Switching Pokemon") ? (
+                                        <img src={require("../../img/pokemon/" + myOpponent.pokemon.identifier + ".png")} alt={myOpponent.pokemon.identifier} />
+                                    ) : (
+                                        <></>
+                                    )
                                     }
                                 </div>
 
                                 {/* Players Pokemon */}
                                 <div id="player-pokemon-img">
-                                    {myPokemon[selectedPokemon] && 
+                                    {myPokemon[selectedPokemon] && showPokemon ? (
                                         <img src={require("../../img/pokemon/" + myPokemon[selectedPokemon].identifier  + ".png")} alt={myPokemon[selectedPokemon].identifier}/>
+                                    ) : (<></>)
                                     }
                                     
                                 </div>
@@ -435,43 +592,73 @@ const Battle = () => {
                                     <div id="player-pokemon">
                                         {myPokemon[selectedPokemon] &&
                                             <>
+                                            <div className='name'>
+                                                {name}
+                                            </div>
                                             <div id="my-pokemon-name">
                                                 {myPokemon[selectedPokemon].identifier} 
-                                                <span id="my-pokemon-stats">{myPokemonData[selectedPokemon].level}</span>
+                                                <span id="my-pokemon-stats" title='Pokemon Level'>{myPokemon[selectedPokemon].current_level}</span>
                                             </div>
                                             <div id="player-pokemon-health">
-                                                {"HP: " + myHp[selectedPokemon] + "%"}
+                                                {"HP: " + myHp[selectedPokemon]}
                                             </div>
                                             </>
                                         }
                                     </div>
                                 </div>
+                                {myOpponent.summary != undefined && myOpponent.summary != "" ? (
+                                    <>
+                                        {/*Opponent move toast notification*/}
+                                        <div className="toast-container bg-background-color-red">
+                                            <div id="liveToast" className={"toast " + toast} role="status" aria-live="polite" aria-atomic="true" data-delay="1000">
+                                                <div class="d-flex">
+                                                    <div class="toast-body">
+                                                        {myOpponent.summary}
+                                                    </div>
+                                                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <></>
+                                )}
+                                
                             </div>
                             {myTurn ? (
                                 <>
-                                    {display(state.value)}
+                                    <div className='battle-bottom'>
+                                        {display(state.value)}
+                                        {!state.matches("startturn") && !state.matches("endturn") ? (
+                                            <>
+                                                <button className="cancel battle-buttons" onClick={() => next("CANCEL")}>Cancel</button>
+                                            </>
+                                        ) : (
+                                                <></>
+                                        )}
+                                    </div>
                                 </>
                             ) : (
                                 <>
-                                    {display("endturn")}
+                                    {<div className='battle-bottom'>
+                                        {display("endturn")}
+                                    </div>}
                                 </>
-                            )}
-                            {!state.matches("startturn") && !state.matches("endturn") ? (
-                                <>
-                                <button className="moves cancel shadow" onClick={() => next("CANCEL")}>Cancel</button>
-                                </>
-                            ) : (
-                                <></>
                             )}
                             
                         </>
                     ) : (
                         <>
                             <p>{"You " + (won == true ? ("Win") : ("Lose"))}</p>
+                            {gamePrize()}
                         </>
                     )}
                 </>
-            ) : <></>
+            ) : 
+                <>
+                    <h1>Waiting for Opponent...</h1>
+                    {/* {setLoading(true)} */}
+                </>
             }
             </div>
         </div>

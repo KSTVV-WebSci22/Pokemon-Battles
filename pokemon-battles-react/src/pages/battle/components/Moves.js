@@ -16,7 +16,7 @@ const Moves = (moveData) => {
     return ( 
         <>
             {move.type && 
-                <button className="moves shadow">
+                <button className="moves" title={move.flavor_text}>
                     <div className="move-name">{move.name}</div>
                     <div 
                         className="move-info" 
@@ -24,6 +24,9 @@ const Moves = (moveData) => {
                     >
                         {move.type ? <div>{move.type}</div> : <></>}
                         <div>{move.pp}/{move.pp}</div>
+                    </div>
+                    <div className="move-name move-des">
+                        {move.flavor_text}
                     </div>
                 </button>
             }

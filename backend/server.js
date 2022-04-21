@@ -10,6 +10,8 @@ const moveList = require("./data/movelist.json");
 const pokemonData = require("./data/pokemondata.json");
 const typeData = require("./data/typedamage.json");
 const typeConvert = require("./data/types.json");
+const pokestats = require("./data/stats.json");
+const shopItems = require("./data/shopItems.json")
 
 // Cors
 var cors = require("cors");
@@ -61,10 +63,17 @@ app.get('/api/newPokemon/:id/:level', (req, res) => {
   
   pokemon['type1'] = t1;
   pokemon['type2'] = t2;
+  pokemon['hp'] = pokestats[parseInt(id)].hp;
+  pokemon['attack'] = pokestats[parseInt(id)].attack;
+  pokemon['defense'] = pokestats[parseInt(id)].defense;
+  pokemon['specialatk'] = pokestats[parseInt(id)].specialatk;
+  pokemon['specialdef'] = pokestats[parseInt(id)].specialdef;
+  pokemon['speed'] = pokestats[parseInt(id)].speed;
+  pokemon['current_experience'] = 0;
   pokemon.win = 0
   pokemon.loss = 0
   pokemon.final_win = 0 
-  pokemon.current_level = req.params.level
+  pokemon.current_level = parseInt(req.params.level)
 
   const moves = []
 
@@ -92,16 +101,102 @@ app.get('/api/type/:type', (req, res) => {
   res.json(typeData.type_damage[type]);
 });
 
-
-// Pokemon Rarity
-app.get('/api/pokemon/:rarity', (req, res) => {
-  var rarity = req.params.rarity;
-  // res.json(typeData.type_damage[rarity]);
+app.get('/api/typeDamage/', (req, res) => {
+  res.json(typeData.type_damage);
 });
 
-// Pokemon Shop Item - 1
-app.get('/api/shop/:shopItem', (req, res) => {
-  var shopItem = req.params.shopItem;
+
+// Pokemon Rarity
+app.get('/api/pokemon/:id/rarity', (req, res) => {
+  // res.json(pokemonData[id].rarity);
+});
+
+// https://www.geeksforgeeks.org/random-number-generator-in-arbitrary-probability-distribution-fashion/
+// Utility function to find ceiling of r in arr[l..h]
+function findCeil(arr, r, l, h)
+{
+  let mid;
+  while (l < h)
+  {
+    mid = l + ((h - l) >> 1); // Same as mid = (l+h)/2
+    (r > arr[mid]) ? (l = mid + 1) : (h = mid);
+  }
+  return (arr[l] >= r) ? l : -1;
+}
+// The main function that returns a random number
+// from arr[] according to distribution array
+// defined by freq[] (freq[i] is int).
+function rand(arr, freq) {
+  // Create and fill prefix array
+  // e.g. freq: [7, 2, 1], then prefix: [7, 9, 10]
+  let n = arr.length;
+  let prefix= [];
+  let i;
+  prefix[0] = freq[0];
+  for (i = 1; i < n; ++i)
+      prefix[i] = prefix[i - 1] + freq[i];
+
+  // prefix[n-1] is sum of all frequencies.
+  // Generate a random number with
+  // value from 1 to this sum
+  let r = Math.floor((Math.random() * prefix[n - 1])) + 1;
+
+  // Find index of ceiling of r in prefix array
+  let index = findCeil(prefix, r, 0, n - 1);
+  console.log(r, index, arr[index])
+  return arr[index];
+}
+
+// respond with all shop items of a chosen type
+// http://localhost:3001/api/shop/egg
+app.get('/api/shop/:itemType', (req, res) => {
+  let itemType = req.params.itemType;
+  let result = shopItems[itemType].map(
+    item => 
+    {
+      // return only seleccted fields
+      return {
+        name: item.name,
+        description: item.description,
+        id: item.id,
+        type: item.type,
+        cost: item.cost,
+        currency: item.currency
+      }
+    }
+  );
+  res.json(result);
+});
+
+
+// http://localhost:3001/api/shop/mysteryegg/id
+app.get('/api/shop/:itemType/:itemId', (req, res) => {
+  let {itemType, itemId} = req.params;
+  console.log(`/api/shop/${itemType}/${itemId} was called`)
+  // find the shop item
+  let item = shopItems[itemType].find(item => item.id == itemId);
+  
+  if (itemType == 'mystery-egg') {
+    let cost = item.cost;
+    let currency = item.currency;
+    let rarityTarget = rand(item.raritypool, item.rarityweights);
+    // pokemons of obtainmethod == 1 and rarity == target
+    let selectedPokemons = pokemonData
+    .filter(p => p.rarity == rarityTarget && p.obtain == 1)
+    .map(
+      p => {
+        return {
+          id: p.id,
+          identifier: p.identifier
+        }
+    });
+    // choose pokemon at random
+    let retPokemon = selectedPokemons[Math.floor(Math.random() * selectedPokemons.length)];
+    // response data
+    res.json({cost: cost, currency: currency, retItem: retPokemon, retType: 'pokemon'});
+  } else {
+    res.status(404);
+  }
 });
 
 

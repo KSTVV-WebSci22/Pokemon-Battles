@@ -1,22 +1,18 @@
 import './Navbar.css'
 import { Link, useNavigate } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 // Firebase
+
 import { getUser, getUserStatus } from '../util/users/Users'
-import { auth, db, rdb} from '../util/Firebase'
-import { doc, getDoc, updateDoc, setDoc, onSnapshot } from "firebase/firestore";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { getDatabase, ref, onValue, set, get} from "firebase/database";
-
-
+import { auth } from '../util/Firebase'
+import { ClientContext } from '../context/ClientContext'
 const Navbar = () => {
 
-  let navigate = useNavigate()
-  const [user, setUser] = useState()
-  const [status, setStatus] = useState()
+  const {user, setUser} = useContext(ClientContext)
 
+  let navigate = useNavigate()
   const userInfo = async (uid) => {
     const info = await getUser(uid)
     setUser(info)
@@ -34,7 +30,6 @@ const Navbar = () => {
   }, []);
 
   return ( 
-    
     <div id="navbar">
       { user?
        <> 
