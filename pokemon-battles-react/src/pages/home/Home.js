@@ -11,7 +11,8 @@ import googleIcon from './google.png'
 // Firebase
 import { signInWithGoogle } from '../../util/users/Users';
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../../util/Firebase';
+import { auth, rdb } from '../../util/Firebase';
+import { set, ref } from 'firebase/database';
 
 const Home = () => {
     let navigate = useNavigate();
@@ -27,6 +28,8 @@ const Home = () => {
         const response = await signInWithGoogle();
         if (response){
             navigate("./welcome")
+            const userStatusDatabaseRef = ref(rdb, 'status/' + auth.currentUser.uid + '/state');
+            set(userStatusDatabaseRef, "online");
         } else {
             console.log(`Response: ${response}`)
         }

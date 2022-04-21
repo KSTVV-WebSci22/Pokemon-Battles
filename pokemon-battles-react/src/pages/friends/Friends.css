@@ -146,7 +146,12 @@ button {
 
 #friend-input {
   border: none;
-  background-color: white !important; 
+  background-color:  rgb(203, 206, 219) !important; 
+  color:black;
+}
+
+#friend-input:focus {
+color:black;
 }
 
 .form-floating {

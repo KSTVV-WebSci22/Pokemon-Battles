@@ -4,10 +4,10 @@ import { useState, useEffect, useContext } from 'react'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 // Firebase
-import { getUser } from '../util/users/Users'
+
+import { getUser, getUserStatus } from '../util/users/Users'
 import { auth } from '../util/Firebase'
 import { ClientContext } from '../context/ClientContext'
-
 const Navbar = () => {
 
   const {user, setUser} = useContext(ClientContext)
@@ -19,9 +19,11 @@ const Navbar = () => {
     // return info
   }
 
+
   useEffect(() => {
     if(auth.currentUser){
-      userInfo(auth.currentUser.uid)
+      getUserStatus(auth.currentUser.uid);
+      userInfo(auth.currentUser.uid);
     } else {
       navigate('/')
     }
@@ -29,7 +31,8 @@ const Navbar = () => {
 
   return ( 
     <div id="navbar">
-      {user ? <> 
+      { user?
+       <> 
       <div id="navbar-content">
         <Link to='/profile'>
           <img className='profile-pic' src={user.profilePic} alt="profile" />
@@ -63,9 +66,9 @@ const Navbar = () => {
 
       </div>
       <div id="navbar-links" className='mt-2'>
-        <Link className="me-5" to={'/welcome'}>Home</Link>
-        <Link className="me-5" to={'/friends'}>Friends</Link>
-        <Link className="me-5" to={'/shop'}>Shop</Link>
+        <Link className="me-auto" to={'/welcome'}>Home</Link>
+        <Link className="me-auto" to={'/friends'}>Friends</Link>
+        <Link className="me-auto" to={'/shop'}>Shop</Link>
         <Link className="me-auto" to={'/profile'}>Profile</Link>
 
         <OverlayTrigger
