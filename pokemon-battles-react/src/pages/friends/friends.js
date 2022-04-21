@@ -34,28 +34,29 @@ const Friends = () => {
           alert("User not found");
       }
       else{
-          console.log("user found");
-          querySnapshot.forEach((doc) => {
-          // doc.data() is never undefined for query doc snapshots
-          ids.push(doc.id);
-      });
-        let myfriends = await getMyFriends(uid)
-          if(myfriends.includes(ids[0])){
-            alert("User already added");
-           }
-           else{
-          myfriends.push(ids[0]);
-          var userStatusFirestoreRef = doc(db, '/users/' + uid);
-          var uf = {
-           friends: myfriends
-          };
-          updateDoc(userStatusFirestoreRef, uf);
-        }
+            console.log("user found");
+            querySnapshot.forEach((doc) => {
+                // doc.data() is never undefined for query doc snapshots
+                ids.push(doc.id);
+            });
+            let myfriends = await getMyFriends(uid)
+            if(myfriends.includes(ids[0])){
+                alert("User already added");
+            }
+            else{
+                myfriends.push(ids[0]);
+                var userStatusFirestoreRef = doc(db, '/users/' + uid);
+                var uf = {
+                friends: myfriends
+                };
+                updateDoc(userStatusFirestoreRef, uf);
+                getFriendList()
+            }
      }
     
     }
 
-    useEffect(async () => {
+    const getFriendList = async () => {
         if(auth.currentUser){
             var tmpFriends = await getMyFriends(auth.currentUser.uid);
             var a = [];
@@ -66,6 +67,10 @@ const Friends = () => {
         } else {
             navigate("/");
         }
+    }
+
+    useEffect(async () => {
+        getFriendList()
     }, []);
 
 
