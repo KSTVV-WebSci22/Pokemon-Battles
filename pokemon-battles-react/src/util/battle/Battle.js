@@ -10,7 +10,17 @@ var turn = false;
 var prevTurn = {};
 var rounds = 0;
 var prevTurns = new Set();
-var onlineCheck;
+
+const onlineCheck = (dId, pId, oId) => {
+    const check = setInterval(async () => { 
+        if(await getPresence(oId) == "offline") {
+            await sendWin(dId, pId);
+            console.log("win");
+            clearInterval(check);
+            return 0;
+        }
+    }, 3000);
+}
 
 export const findBattle = async (id, mode) => { 
     var prevTurn = {};
@@ -25,9 +35,11 @@ export const findBattle = async (id, mode) => {
                 console.log(doc.id, " => ", doc.data());
                 if(doc.data().date <= new Date(new Date().getTime() + 15 * 60000) && await getPresence(doc.data().user1) == "online") { //don't join open battle created more than 15 minutes ago & if user not online
                     if(mode != null && doc.data().user1 == mode && doc.data().opponentType == id) {
+                        onlineCheck(doc.id, id, doc.data().user1);
                         res({docId: doc.id, ...doc.data()});
                     }
                     if(mode == null && doc.data().opponentType == "random") {
+                        onlineCheck(doc.id, id, doc.data().user1);
                         res({docId: doc.id, ...doc.data()});
                     }
                 }
@@ -216,7 +228,6 @@ export const getTurns = async (dId, pId, type) => {
     // if(turn != false) {
     //     turn();
     // }
-    clearInterval(onlineCheck);
     console.log(dId, pId);
     return new Promise(async (res) => {
         turn = onSnapshot(doc(db, "battles", dId), async (doc) => {
@@ -224,16 +235,9 @@ export const getTurns = async (dId, pId, type) => {
             var lastTurn = doc.data().turns[doc.data().turns.length - 1];
             let opponent = doc.data().user1 == pId ? doc.data().user2 : doc.data().user1;
             console.log("opponent =>", opponent);
-            onlineCheck = setInterval(async () => { 
-                if(opponent != "" && await getPresence(opponent) == "offline") {
-                    turn(); 
-                    await sendWin(dId, pId);
-                    console.log("win");
-                    res("win");
-                }
-            }, 1000);
 
                 if(doc.data().winner == "") {
+
                     if(lastTurn != prevTurn) {
                         if(type == 1 && lastTurn.type != "start" && doc.data().turns.length > 2) {
                             console.log("Turn #" + doc.data().turns.length);
@@ -266,6 +270,7 @@ export const getTurns = async (dId, pId, type) => {
                                 console.log("Turn #" + doc.data().turns.length);
                                 prevTurn = lastTurn;
                                 prevTurns.add(prevTurn);
+                                onlineCheck(dId, pId, opponent);
                                 res(lastTurn);
                             }
                         }

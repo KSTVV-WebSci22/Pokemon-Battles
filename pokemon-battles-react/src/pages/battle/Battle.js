@@ -120,7 +120,13 @@ const Battle = () => {
         }, 1000)
     }, []);
 
-
+    useEffect(()=>{
+        return () => {
+            for(let i = 0; i < 1000; i++){
+                window.clearInterval(i);
+            }
+        }
+    }, []);
 
     const checkMove = async (pokemon) => {
         // Check moves list for current pokemon and level and method_id === 1
