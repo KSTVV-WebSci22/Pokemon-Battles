@@ -10,10 +10,14 @@ var turn = false;
 var prevTurn = {};
 var rounds = 0;
 var prevTurns = new Set();
+var check;
 
 const onlineCheck = (dId, pId, oId) => {
-    const check = setInterval(async () => { 
-        if(await getPresence(oId) == "offline") {
+     check = setInterval(async () => { 
+        if(window.location.pathname != '/battle') {
+            clearInterval(check);
+            return 0;
+        } else if(await getPresence(oId) == "offline") {
             await sendWin(dId, pId);
             console.log("win");
             clearInterval(check);
@@ -278,9 +282,11 @@ export const getTurns = async (dId, pId, type) => {
                 } else if(doc.data().winner == pId) {
                     turn(); 
                     console.log("win");
+                    clearInterval(check);
                     res("win");
                 } else if(doc.data().winner != pId) {
                     turn(); 
+                    clearInterval(check);
                     res("lose");
                 }
             
