@@ -10,9 +10,11 @@ import { collection, getDocs, where, query, updateDoc, doc } from "firebase/fire
 import { getMyFriends, getPresence, getUsername, getUser} from '../../util/users/Users'
 import { ClientContext } from '../../context/ClientContext';
 import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Friends = () => {
     const { setLoading } = useContext(ClientContext);
+    const navigate = useNavigate();
     const [friends, setFriends] = useState([]);
     
     useEffect(() => {setLoading(false)}, []);
@@ -53,18 +55,17 @@ const Friends = () => {
     
     }
 
-    useEffect(() => {
-        // getFriends(auth.currentUser.uid);
-        const item = async () => {
-            getMyFriends(auth.currentUser.uid)
-                .then((value)=>{
-                    setFriends(value)
-                })
-                .catch(err =>{console.log(err)})
-            
-            
+    useEffect(async () => {
+        if(auth.currentUser){
+            var tmpFriends = await getMyFriends(auth.currentUser.uid);
+            var a = [];
+            for(let x of tmpFriends){
+                a.push({Name: await getUsername(x), Online: await getPresence(x)});
+            };
+            setFriends(await a);
+        } else {
+            navigate("/");
         }
-        item()
     }, []);
 
 
@@ -81,13 +82,14 @@ const Friends = () => {
                                 <img src={add} alt="add"/> 
                             </div>
                         </div>
+                   {console.log(friends)}
                         <div id="friends-list">
                             <h3 className="friends-h">Online</h3>
                             {friends && friends.map((x, i) => {
-                                if(getPresence(x) === "online") {
+                                if(x.Online === "online") {
                                     return <><div key={i} className="menu-item friend-online">
                                                 <img className="profile-pic" src={ash} alt="ash"/>
-                                                {getUsername(x)}
+                                                {x.Name}
                                                 <button className="menu-item battle-btn" title="Battle"> 
                                                     <img src={fist} alt="fist"/> 
                                                     <img src={fist} alt="fist"/> 
@@ -96,15 +98,11 @@ const Friends = () => {
                                 }   
                             })}
                             <h3 className="friends-h">Offline</h3>
-                            {friends && friends.map(async (x, i) => {
-                                let status = await getPresence(x)
-                                let user = await getPresence(x)
-                                console.log(status)
-                                console.log(user)
-                                if(status === "offline") {
+                            {friends && friends.map((x, i) => {
+                                if(x.Online === "offline") {
                                     return <><div key={i} className="menu-item friend-offline">
                                                 <img className="profile-pic" src={ash} alt="ash"/>
-                                                {user}
+                                                {x.Name}
                                             </div></>  
                                 }   
                             })}

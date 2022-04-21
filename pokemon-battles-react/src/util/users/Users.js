@@ -145,9 +145,9 @@ export const getUsername = async(uid) => {
 export const getPresence = async(uid) => {
   var p;
   const snapshot = await get(ref(rdb, 'status/' + uid + '/state'));
-  p = snapshot.val()
+  p = snapshot.val();
+  console.log(p)
   return p
- 
 }
 
 //Get User Status
