@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import './Friends.css'
 import fist from '../welcome/fist.png'
 import ash from '../../img/people/ashketchum.png'
@@ -12,31 +12,14 @@ import { ClientContext } from '../../context/ClientContext';
 import { useContext } from 'react';
 
 const Friends = () => {
-    const { setSong, website, loading, setLoading } = useContext(ClientContext);
-    let [friends, setFriends] = useState([]);
+    const { setLoading } = useContext(ClientContext);
+    const [friends, setFriends] = useState([]);
     
     useEffect(() => {setLoading(false)}, []);
-
-    const getFriends = async (uid) => {
-        console.log("Getting Friends");
-        let friendsids = await getMyFriends(uid);
-        let list = [];
-        await friendsids.forEach(async function(friendid, index){
-            let status = await getPresence(friendid);
-            let username = await getUsername(friendid);
-            console.log("status: " + status);
-            list.push({name: username, presence: status});
-        });
-        console.log(list);
-        setFriends(list);
-        console.log(friends);
-      }
     
-
     const [addFriend, setAddFriend] = useState(false);
 
-  const AddFriend = async (uid) =>{
-      
+    const AddFriend = async (uid) =>{  
       
       setAddFriend(false);
      
@@ -70,6 +53,19 @@ const Friends = () => {
     
     }
 
+    useEffect(() => {
+        // getFriends(auth.currentUser.uid);
+        const item = async () => {
+            getMyFriends(auth.currentUser.uid)
+                .then((value)=>{
+                    setFriends(value)
+                })
+                .catch(err =>{console.log(err)})
+            
+            
+        }
+        item()
+    }, []);
 
 
     return (
@@ -77,7 +73,7 @@ const Friends = () => {
             <Back name="Back" to="/welcome" />
             {!addFriend ? 
                 <>
-                <div id="friends" className="content-item" onLoad={()=>{getFriends(auth.currentUser.uid)}}>
+                <div id="friends" className="content-item">
                     <div className="friends-grid">
                         <div className="add-friend-container">
                             <div id="add-friend" className="menu-item add-friend-btn" onClick={()=>{setAddFriend(true)}}>Add Friend
@@ -87,11 +83,11 @@ const Friends = () => {
                         </div>
                         <div id="friends-list">
                             <h3 className="friends-h">Online</h3>
-                            { friends && friends.map((x, i) => {
-                                if(x.online) {
+                            {friends && friends.map((x, i) => {
+                                if(getPresence(x) === "online") {
                                     return <><div key={i} className="menu-item friend-online">
                                                 <img className="profile-pic" src={ash} alt="ash"/>
-                                                {x.name}
+                                                {getUsername(x)}
                                                 <button className="menu-item battle-btn" title="Battle"> 
                                                     <img src={fist} alt="fist"/> 
                                                     <img src={fist} alt="fist"/> 
@@ -100,11 +96,15 @@ const Friends = () => {
                                 }   
                             })}
                             <h3 className="friends-h">Offline</h3>
-                            {friends && friends.map((x, i) => {
-                                if(!x.online) {
+                            {friends && friends.map(async (x, i) => {
+                                let status = await getPresence(x)
+                                let user = await getPresence(x)
+                                console.log(status)
+                                console.log(user)
+                                if(status === "offline") {
                                     return <><div key={i} className="menu-item friend-offline">
                                                 <img className="profile-pic" src={ash} alt="ash"/>
-                                                {x.name}
+                                                {user}
                                             </div></>  
                                 }   
                             })}

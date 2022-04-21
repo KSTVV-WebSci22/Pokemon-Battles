@@ -134,6 +134,7 @@ export const getUsername = async(uid) => {
   const user = doc(db, 'users/' + uid)
   const docData = await getDoc(user)
   if(docData.exists()) {
+    console.log(docData.data().username)
     return docData.data().username;
   } else {
     return false;
@@ -142,12 +143,11 @@ export const getUsername = async(uid) => {
 
 //Get Users online status
 export const getPresence = async(uid) => {
-  let status = "";
-  const starCountRef =  ref(rdb, 'status/' + uid + '/state');
-   onValue(starCountRef, async (snapshot) => {
-    status = snapshot.val();
-   });
-   return await status;
+  var p;
+  const snapshot = await get(ref(rdb, 'status/' + uid + '/state'));
+  p = snapshot.val()
+  return p
+ 
 }
 
 //Get User Status
