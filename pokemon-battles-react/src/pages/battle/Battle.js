@@ -221,7 +221,7 @@ const Battle = () => {
             }
             console.log("Me => ", me);
             newUser(op.docId, auth.currentUser.uid); 
-            if(takeTurn(op.docId, me)) {
+            if(takeTurn(op.docId, me, op.turns[0].userId)) {
                 console.log("Testing Take Turn")
                 setMyTurn(true);
             } else {
@@ -270,11 +270,13 @@ const Battle = () => {
                     setWon(true);
                     next("ENDGAME");
                     setMyTurn(false);
+                    res(true);
                 }
                 if(turn == "lose") {
                     setWon(false);
                     next("ENDGAME");
                     setMyTurn(false);
+                    res(true);
                 }
 
                 if(turn.type != 'start') {
@@ -357,7 +359,7 @@ const Battle = () => {
         turn.time = new Date().getTime();
         turn.pokemonLeft = hp.filter(x => x > 0).length;
         console.log("myturn =>", turn);
-        if(takeTurn(docId, turn)) {
+        if(takeTurn(docId, turn, myOpponent.userId)) {
             if(myTurn) {
                 setMyTurn(false);
                 setFainted(false);
@@ -654,7 +656,7 @@ const Battle = () => {
                     ) : (
                         <>
                             <p>{"You " + (won == true ? ("Win") : ("Lose"))}</p>
-                            {gamePrize()}
+                            {/*gamePrize()//commented out cause not finished*/} 
                         </>
                     )}
                 </>

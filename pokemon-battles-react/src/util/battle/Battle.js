@@ -10,6 +10,7 @@ var turn = false;
 var prevTurn = {};
 var rounds = 0;
 var prevTurns = new Set();
+var onlineCheck;
 
 export const findBattle = async (id, mode) => { 
     var prevTurn = {};
@@ -36,7 +37,7 @@ export const findBattle = async (id, mode) => {
     });
 }
 
-export const takeTurn = async (id, move) => { 
+export const takeTurn = async (id, move, opponent = null) => { 
     return new Promise(async (res) => {
         const turn = doc(db, "battles", id);
         await updateDoc(turn, {
@@ -215,12 +216,23 @@ export const getTurns = async (dId, pId, type) => {
     // if(turn != false) {
     //     turn();
     // }
+    clearInterval(onlineCheck);
     console.log(dId, pId);
     return new Promise(async (res) => {
         turn = onSnapshot(doc(db, "battles", dId), async (doc) => {
             console.log("Turnjh =>", doc.data());
             var lastTurn = doc.data().turns[doc.data().turns.length - 1];
-            
+            let opponent = doc.data().user1 == pId ? doc.data().user2 : doc.data().user1;
+            console.log("opponent =>", opponent);
+            onlineCheck = setInterval(async () => { 
+                if(opponent != "" && await getPresence(opponent) == "offline") {
+                    turn(); 
+                    await sendWin(dId, pId);
+                    console.log("win");
+                    res("win");
+                }
+            }, 1000);
+
                 if(doc.data().winner == "") {
                     if(lastTurn != prevTurn) {
                         if(type == 1 && lastTurn.type != "start" && doc.data().turns.length > 2) {
@@ -260,6 +272,7 @@ export const getTurns = async (dId, pId, type) => {
                     }
                 } else if(doc.data().winner == pId) {
                     turn(); 
+                    console.log("win");
                     res("win");
                 } else if(doc.data().winner != pId) {
                     turn(); 
