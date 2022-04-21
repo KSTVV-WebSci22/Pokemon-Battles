@@ -16,6 +16,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { getUser, addToWallet } from '../../util/users/Users';
 import axios from 'axios';
 
+
 //xstate machine
 const turnMachine = createMachine({
     id: "turn",
@@ -101,7 +102,7 @@ const Battle = () => {
     const [fainted, setFainted] = useState(false);
     const [showPokemon, setShowPokemon] = useState(true);
 
-    const { setSong, setLoading } = useContext(ClientContext);
+    const { setSong, setLoading, website } = useContext(ClientContext);
 
     let navigate = useNavigate();
     onAuthStateChanged(auth, (user) => {
@@ -128,7 +129,7 @@ const Battle = () => {
     }
 
     const checkEvolution = async (pokemon) => {
-        if(pokemon.current_level >= pokemon.evolve_level  && !evolved_species_id.isArray()){
+        if(pokemon.current_level >= pokemon.evolve_level  && !pokemon.evolved_species_id.isArray()){
             return await axios.get(`${website}/api/newPokemon/${pokemon.evolved_species_id}/${pokemon.current_level}`)
 			.then( response => {
 				let np = response.data
@@ -169,12 +170,12 @@ const Battle = () => {
                         x.base_experience += Math.ceil((100 - x.current_level) * .1)                            // Increase Base Experience
                         x.current_level += 1                                                // Add 1 to current level
                         checkEvolution(x)                // Check if pokemon can evolve
-                        checkMoves(x)
+                        // checkMoves(x)
                     }
                     
                 }
             });
-            updateUserBattleStats(3, 1, 0, updatedPokemon)
+            // updateUserBattleStats(3, 1, 0, updatedPokemon)
 
         } else {
             // Copy win but change out logic for loss
