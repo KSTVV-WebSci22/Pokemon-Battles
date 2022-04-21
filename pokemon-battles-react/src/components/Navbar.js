@@ -71,9 +71,9 @@ const Navbar = () => {
 
       </div>
       <div id="navbar-links" className='mt-2'>
-        <Link className="me-5" to={'/welcome'}>Home</Link>
-        <Link className="me-5" to={'/friends'}>Friends</Link>
-        <Link className="me-5" to={'/shop'}>Shop</Link>
+        <Link className="me-auto" to={'/welcome'}>Home</Link>
+        <Link className="me-auto" to={'/friends'}>Friends</Link>
+        <Link className="me-auto" to={'/shop'}>Shop</Link>
         <Link className="me-auto" to={'/profile'}>Profile</Link>
 
         <OverlayTrigger
