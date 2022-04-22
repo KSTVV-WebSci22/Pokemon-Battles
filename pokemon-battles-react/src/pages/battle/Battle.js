@@ -121,10 +121,9 @@ const Battle = () => {
     }, []);
 
     useEffect(()=>{
-        return () => {
-            for(let i = 0; i < 1000; i++){
-                window.clearInterval(i);
-            }
+        console.log("leave", docId);
+        for(let i = 0; i < 1000; i++){
+            window.clearInterval(i);
         }
     }, []);
 
@@ -198,7 +197,7 @@ const Battle = () => {
             });
             setMyHp(hp);
             res([mycPokemon.slice(0, 6)[0], hp]);
-        })
+        });
     }
 
     const newBattle = async (pokemon, hp) => {
@@ -551,11 +550,6 @@ const Battle = () => {
         <div id="battle" className='content'>
             <div className='battle content-item'>
             {/*when all data has been recieved stop loading*/}
-            {console.log(myPokemon.length > 0)}
-            {console.log(myOpponent != null )}
-            {console.log(docId != null)}
-            {console.log(myHp.length == myPokemon.length )}
-
             {myPokemon.length > 0 && myOpponent != null && docId != null && myHp.length == myPokemon.length ? (
                 <>
                     {setLoading(false)} 
