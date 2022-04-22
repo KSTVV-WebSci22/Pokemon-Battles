@@ -97,6 +97,18 @@ button {
   filter: brightness(0%);
 }
 
+
+#delete{
+  z-index: 1;
+  width: calc(20%);
+  margin-left: auto;
+}
+
+#delete:hover{
+  background-color: var(--yellow);
+}
+
+
 .battle-btn {
   width: calc(20%);
   background-color: var(--yellow);

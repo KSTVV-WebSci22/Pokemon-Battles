@@ -147,6 +147,17 @@ export const getMyFriends = async(uid) => {
   }
 }
 
+//Get Users Profile Pic
+export const getProfilePic = async(uid) => {
+  const user = doc(db, 'users/' + uid)
+  const docData = await getDoc(user)
+  if(docData.exists()) {
+    return docData.data().profilePic;
+  } else {
+    return false
+  }
+}
+
 //Get Users username
 export const getUsername = async(uid) => {
   const user = doc(db, 'users/' + uid)
