@@ -1,11 +1,12 @@
 
-import { doc, getDoc, updateDoc, setDoc, arrayUnion, getFirestore, increment, onSnapshot, serverTimestamp as fsTime } from "firebase/firestore";
+import { doc, query, where, collection, getDocs, getDoc, updateDoc, setDoc, increment, serverTimestamp as fsTime } from "firebase/firestore";
 
 
 
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth,  db, rdb } from "../Firebase";
 import { getDatabase, ref, onValue, push, onDisconnect, set, get, serverTimestamp} from "firebase/database";
+import { Alert } from "react-bootstrap";
 
 
 // Login with Google
@@ -84,14 +85,21 @@ const checkIfUserExists = async (user, name, email, profilePic) => {
 
 // Update Username
 export const updateUser = async (username) => {
-  const user = doc(db, 'users/', auth.currentUser.uid)
-  await updateDoc(user, {
-    username: username
-  }).then(() =>{
-    return true
-  }).catch(error => {
-    console.log(error);
-  });
+  const q = query(collection(db, "users"), where("username", "==", username));
+  const querySnapshot = await getDocs(q);
+  if(querySnapshot.size == 0){
+    const user = doc(db, 'users/', auth.currentUser.uid)
+    await updateDoc(user, {
+      username: username
+    }).then(() =>{
+      return true
+    }).catch(error => {
+      console.log(error);
+    });
+  }
+  else{
+    Alert("Username already in use!")
+ }
 }
 
 // Update Users Info

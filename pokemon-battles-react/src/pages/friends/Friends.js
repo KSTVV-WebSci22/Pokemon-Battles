@@ -124,6 +124,9 @@ const Friends = () => {
                                                     <img src={fist} alt="fist"/> 
                                                     <img src={fist} alt="fist"/> 
                                                 </button>
+                                                <button type="button" className="btn btn-danger btn-lg" id="delete" onClick={()=>{removeFriend(x.Name)}}>
+                                                 Remove
+                                                </button>
                                             </div></>
                                 }   
                             })}
@@ -134,7 +137,7 @@ const Friends = () => {
                                                 <img className="profile-pic" referrerPolicy="no-referrer" src={x.Pic} alt=""/>
                                                 {x.Name}
                                                 <button type="button" className="btn btn-danger btn-lg" id="delete" onClick={()=>{removeFriend(x.Name)}}>
-                                                 REMOVE
+                                                 Remove
                                                 </button>
                                             </div></>  
                                 }   
