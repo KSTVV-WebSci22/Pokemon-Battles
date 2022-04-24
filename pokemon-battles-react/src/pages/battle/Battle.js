@@ -436,7 +436,7 @@ const Battle = () => {
                         if(myPokemon[selectedPokemon].moves[i] != undefined) {
                             return (
                                 <div
-                                className="move"
+                                className="move2"
                                 key={x}
                                 onClick={() => next({ type: "MOVE", id: i })}
                                 >

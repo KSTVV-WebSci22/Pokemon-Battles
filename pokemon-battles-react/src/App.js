@@ -15,6 +15,7 @@ import SoundManager from './components/SoundManager';
 import SettingsButton from './components/SettingsButton';
 import Profile from './pages/profile/Profile';
 import Loading from './components/Loading';
+import BadPage from './pages/error/BadPage';
 
 function App() {
   const [mute, setMute] = useState(false)  
@@ -87,6 +88,7 @@ function App() {
               <Route path='/shop' element={<Shop/>} />
               <Route path='/settings' element={<Settings/>} />
               <Route path='/profile' element={<Profile/>} />
+              <Route path='*' element={<BadPage />} />
             </Routes>
           </Router>
         </>

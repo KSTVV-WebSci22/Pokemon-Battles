@@ -16,7 +16,7 @@ const Moves = (moveData) => {
     return ( 
         <>
             {move.type && 
-                <button className="moves" title={move.flavor_text}>
+                <button className="moves2" title={move.flavor_text}>
                     <div className="move-name">{move.name}</div>
                     <div 
                         className="move-info" 
