@@ -148,6 +148,7 @@ const Welcome = () => {
             </div>
             <input 
               type="text" 
+              maxlength={12}
               onChange={(e)=>{
                 setName(e.target.value)
               }}
