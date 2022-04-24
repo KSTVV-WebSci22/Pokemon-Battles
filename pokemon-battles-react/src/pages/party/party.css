@@ -4,3 +4,9 @@
   flex-direction: column;
   overflow-y: auto;
 }
+
+.party-pokemon-list {
+  width: 100%;
+  overflow-y: auto;
+  
+}

@@ -87,7 +87,7 @@
     overflow: hidden !important;
     padding: 1rem;
     max-width: 1080px;
-    padding-bottom: calc(4rem + 50px);
+    /* padding-bottom: calc(4rem + 50px); */
 }
 
 .sbutton {

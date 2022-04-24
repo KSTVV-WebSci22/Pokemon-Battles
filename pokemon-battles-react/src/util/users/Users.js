@@ -122,7 +122,22 @@ export const addPokemon = async (pokemon) => {
   }).catch(() =>{
     return false
   })
+}
 
+export const switchPokemon = async (index1, index2) => {
+  const user = doc(db, 'users/', auth.currentUser.uid)
+  let myPokemon = await getMyPokemon(auth.currentUser.uid)
+  // myPokemon.push(pokemon)
+  
+
+
+  await updateDoc(user, {
+    pokemon: myPokemon
+  }).then(()=>{
+    return true
+  }).catch(() =>{
+    return false
+  })
 }
 
 // Get Users Pokemons
