@@ -3,35 +3,57 @@ import { db } from "../Firebase";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../Firebase";
 import axios from 'axios';
+import { getPresence } from "../users/Users";
 
 const battles = collection(db, "battles");
 var turn = false;
 var prevTurn = {};
 var rounds = 0;
 var prevTurns = new Set();
+var check;
 
-//test find batlle
-export const findBattle = async (id) => { 
+const onlineCheck = (dId, pId, oId) => {
+     check = setInterval(async () => { 
+        if(window.location.pathname != '/battle') {
+            clearInterval(check);
+            return 0;
+        } else if(await getPresence(oId) == "offline") {
+            await sendWin(dId, pId);
+            console.log("win");
+            clearInterval(check);
+            return 0;
+        }
+    }, 3000);
+}
+
+export const findBattle = async (id, mode) => { 
     var prevTurn = {};
     var rounds = 0;
     console.log("find battle"); 
     const find = query(battles, where("user1", "!=", id), where("user2", "==", ""), where("status", "==", "started"));
     const docs = await getDocs(find);
     console.log(docs.docs.length);
-    return new Promise((res) => {
+    return new Promise(async (res) => {
         if(docs.docs.length > 0) {
-            docs.forEach((doc) => {
+            for (const [key, doc] of Object.entries(docs.docs)) {
                 console.log(doc.id, " => ", doc.data());
-                if(doc.data().date <= new Date(new Date().getTime() + 15 * 60000)) { //don't join open battle created more than 15 minutes ago
-                    res({docId: doc.id, ...doc.data()});
+                if(doc.data().date <= new Date(new Date().getTime() + 15 * 60000) && await getPresence(doc.data().user1) == "online") { //don't join open battle created more than 15 minutes ago & if user not online
+                    if(mode != null && doc.data().user1 == mode && doc.data().opponentType == id) {
+                        onlineCheck(doc.id, id, doc.data().user1);
+                        res({docId: doc.id, ...doc.data()});
+                    }
+                    if(mode == null && doc.data().opponentType == "random") {
+                        onlineCheck(doc.id, id, doc.data().user1);
+                        res({docId: doc.id, ...doc.data()});
+                    }
                 }
-            });
+            }
         }
         res(false);
     });
 }
 
-export const takeTurn = async (id, move) => { 
+export const takeTurn = async (id, move, opponent = null) => { 
     return new Promise(async (res) => {
         const turn = doc(db, "battles", id);
         await updateDoc(turn, {
@@ -215,8 +237,11 @@ export const getTurns = async (dId, pId, type) => {
         turn = onSnapshot(doc(db, "battles", dId), async (doc) => {
             console.log("Turnjh =>", doc.data());
             var lastTurn = doc.data().turns[doc.data().turns.length - 1];
-            
+            let opponent = doc.data().user1 == pId ? doc.data().user2 : doc.data().user1;
+            console.log("opponent =>", opponent);
+
                 if(doc.data().winner == "") {
+
                     if(lastTurn != prevTurn) {
                         if(type == 1 && lastTurn.type != "start" && doc.data().turns.length > 2) {
                             console.log("Turn #" + doc.data().turns.length);
@@ -245,19 +270,23 @@ export const getTurns = async (dId, pId, type) => {
                             }
                         } else if (type == 0 && lastTurn.type == "start") {
                             if(lastTurn.userId != pId) {
-                            turn();
-                            console.log("Turn #" + doc.data().turns.length);
-                            prevTurn = lastTurn;
-                            prevTurns.add(prevTurn);
-                            res(lastTurn);
+                                turn();
+                                console.log("Turn #" + doc.data().turns.length);
+                                prevTurn = lastTurn;
+                                prevTurns.add(prevTurn);
+                                onlineCheck(dId, pId, opponent);
+                                res(lastTurn);
                             }
                         }
                     }
                 } else if(doc.data().winner == pId) {
                     turn(); 
+                    console.log("win");
+                    clearInterval(check);
                     res("win");
                 } else if(doc.data().winner != pId) {
                     turn(); 
+                    clearInterval(check);
                     res("lose");
                 }
             
