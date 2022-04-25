@@ -16,7 +16,6 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { getUser, addToWallet } from '../../util/users/Users';
 import axios from 'axios';
 
-
 //xstate machine
 const turnMachine = createMachine({
     id: "turn",
@@ -121,7 +120,12 @@ const Battle = () => {
         }, 1000)
     }, []);
 
-
+    useEffect(()=>{
+        console.log("leave", docId);
+        for(let i = 0; i < 1000; i++){
+            window.clearInterval(i);
+        }
+    }, []);
 
     const checkMove = async (pokemon) => {
         // Check moves list for current pokemon and level and method_id === 1
@@ -193,11 +197,14 @@ const Battle = () => {
             });
             setMyHp(hp);
             res([mycPokemon.slice(0, 6)[0], hp]);
-        })
+        });
     }
 
     const newBattle = async (pokemon, hp) => {
-        const op = await findBattle(auth.currentUser.uid);
+        const location = window.location.search;
+        const param = new URLSearchParams(location).get("id");
+        console.log(param);
+        const op = await findBattle(auth.currentUser.uid, param);
         const myName = await getUser(auth.currentUser.uid); 
         var pokemonData = {...pokemon};
         delete pokemonData.moves;
@@ -219,7 +226,7 @@ const Battle = () => {
             }
             console.log("Me => ", me);
             newUser(op.docId, auth.currentUser.uid); 
-            if(takeTurn(op.docId, me)) {
+            if(takeTurn(op.docId, me, op.turns[0].userId)) {
                 console.log("Testing Take Turn")
                 setMyTurn(true);
             } else {
@@ -233,6 +240,7 @@ const Battle = () => {
                     user1: auth.currentUser.uid,
                     user2: "",
                     winner: "",
+                    opponentType: param == null ? "random" : param,
                     turns: [
                         {
                             hp: pokemonData.hp,
@@ -267,11 +275,13 @@ const Battle = () => {
                     setWon(true);
                     next("ENDGAME");
                     setMyTurn(false);
+                    res(true);
                 }
                 if(turn == "lose") {
                     setWon(false);
                     next("ENDGAME");
                     setMyTurn(false);
+                    res(true);
                 }
 
                 if(turn.type != 'start') {
@@ -354,7 +364,7 @@ const Battle = () => {
         turn.time = new Date().getTime();
         turn.pokemonLeft = hp.filter(x => x > 0).length;
         console.log("myturn =>", turn);
-        if(takeTurn(docId, turn)) {
+        if(takeTurn(docId, turn, myOpponent.userId)) {
             if(myTurn) {
                 setMyTurn(false);
                 setFainted(false);
@@ -436,7 +446,7 @@ const Battle = () => {
                         if(myPokemon[selectedPokemon].moves[i] != undefined) {
                             return (
                                 <div
-                                className="move"
+                                className="move2"
                                 key={x}
                                 onClick={() => next({ type: "MOVE", id: i })}
                                 >
@@ -540,11 +550,6 @@ const Battle = () => {
         <div id="battle" className='content'>
             <div className='battle content-item'>
             {/*when all data has been recieved stop loading*/}
-            {console.log(myPokemon.length > 0)}
-            {console.log(myOpponent != null )}
-            {console.log(docId != null)}
-            {console.log(myHp.length == myPokemon.length )}
-
             {myPokemon.length > 0 && myOpponent != null && docId != null && myHp.length == myPokemon.length ? (
                 <>
                     {setLoading(false)} 
@@ -651,7 +656,7 @@ const Battle = () => {
                     ) : (
                         <>
                             <p>{"You " + (won == true ? ("Win") : ("Lose"))}</p>
-                            {gamePrize()}
+                            {/*gamePrize()//commented out cause not finished*/} 
                         </>
                     )}
                 </>

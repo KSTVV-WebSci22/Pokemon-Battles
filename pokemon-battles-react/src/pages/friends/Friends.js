@@ -120,7 +120,7 @@ const Friends = () => {
                                     return <><div key={i} className="menu-item friend-online">
                                                 <img className="profile-pic" referrerPolicy="no-referrer" src={x.Pic} alt="friend"/>
                                                 {x.Name}
-                                                <button className="menu-item battle-btn" title="Battle"> 
+                                                <button className="menu-item battle-btn" title="Battle" onClick={() => {navigate("/battle?id=" + x.uid)}}> 
                                                     <img src={fist} alt="fist"/> 
                                                     <img src={fist} alt="fist"/> 
                                                 </button>

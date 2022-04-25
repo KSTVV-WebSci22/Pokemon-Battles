@@ -8,7 +8,7 @@ const PokemonStats = ({poke, showMoves}) => {
       if(m) {
         return (
           <div className="moves">
-            <div className='d-flex w-100'>
+            <div className=' w-100'>
               <div className="move">
                 {m.name}
                 <div className="power" style={{backgroundColor: `var(--${m.type.toLowerCase()})`}} >

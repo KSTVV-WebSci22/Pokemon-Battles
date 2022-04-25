@@ -40,7 +40,7 @@
   margin: 0;
   line-height: 30px;
   font-family: var(--pokemon);
-
+  color: var(--black);
 }
 
 .brand small {

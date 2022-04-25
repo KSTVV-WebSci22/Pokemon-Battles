@@ -3,8 +3,9 @@ import Back from '../../components/Back';
 import { useState, useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { ClientContext } from '../../context/ClientContext';
-import { Button, FloatingLabel, Form, Modal } from 'react-bootstrap';
-import { onDisconnect, goOffline, ref, set} from 'firebase/database';
+import { Button, FloatingLabel, Form, Modal, Row, Col } from 'react-bootstrap';
+import { ref, set} from 'firebase/database';
+import Navbar from '../../components/Navbar';
 
 // Firebase
 import { auth, rdb} from '../../util/Firebase';
@@ -12,6 +13,7 @@ import { signOut, onAuthStateChanged } from 'firebase/auth';
 
 // Firebase Users
 import { getUser, updateUser, getUserStatus } from '../../util/users/Users';
+
 
 const Profile = () => {
     let navigate = useNavigate();
@@ -22,7 +24,7 @@ const Profile = () => {
     const [editUsername, setEditUsername] = useState(false)
 
     // Context
-    const{ setSong } = useContext(ClientContext);
+    const{ setSong, setLoading } = useContext(ClientContext);
 
     const logout = () => {
         const userStatusDatabaseRef = ref(rdb, 'status/' + auth.currentUser.uid + '/state');
@@ -50,6 +52,7 @@ const Profile = () => {
               // User is Signed In
               setUID(user.uid);
               userInfo(user.uid);
+              setLoading(false)
             } else {
               // User is signed out
               navigate('/');
@@ -59,33 +62,34 @@ const Profile = () => {
     }, []);
 
     return ( 
-        <div className="content">
+        <div id="profile" className="content">
             <Back name={'Back'} to={"/welcome"} />
-            <div id="profile" className="content-item">
-
-                {/* Profile Pic */}
-                <img src={profilePic} alt="Profile" />
-
+            <div className="content-item">
+                <Navbar />
+                <div className='profile-info'>
+                
                 <div className="user-info">
-                    {/* Username */}
-                    <h4 className='mt-3'>Username:</h4>
-                    <h5>
-                        {username} 
+                    <img src={profilePic} alt="Profile"/>
+                    <h1>
+                        {username} <br/>
                         <Button 
                             className='btn-sm btn-danger'
                             onClick={()=>{setEditUsername(true)}}
                         >Edit</Button>
-                    </h5>
+                    </h1>
+                </div>
+
+                    {/* Username */}
+                    
 
                     {/* Email */}
                     <h4 className='mt-5'>Email:</h4>
                     <h5>{email}</h5>
-                </div>
 
                 <hr />
 
                 <button onClick={logout} className="sbutton">Logout</button>
-                
+                </div>
             </div>
 
             <Modal

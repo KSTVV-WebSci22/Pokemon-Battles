@@ -1,13 +1,4 @@
 #profile {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  background-color: rgba(0, 0, 0, 0.61);
-  width: calc(100% - 2rem);
-  height: calc(100% - 2rem);
-  border-radius: 1rem;
-  margin-top: 1rem;
   backdrop-filter: blur(10px);
 }
 
@@ -17,19 +8,23 @@
 
 #profile img { 
   border-radius: 4px;
+  float: left;
+  margin-right: 2rem;
 }
 
 .user-info {
   text-align: left;
-  width: 100%;
-  max-width: 500px;
-}
-
-.user-info .btn-sm {
-  float: right;
 }
 
 #profile hr {
   width: 100%;
   background-color: var(--yellow);
 }
+
+#profile .profile-info {
+  padding: 5px;
+  padding-top: 10px;
+  backdrop-filter: blur(10px);
+  text-align: left;
+}
+

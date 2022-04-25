@@ -12,7 +12,7 @@ const ShopItem = ({item}) => {
 	return (
 		<>
 		{item &&
-			<Col md={6}>
+			<Col xs={12} md={6}>
 				<Card className='shop-item'>
 					{/* shop item image */}
 					<Card.Img className='shop-item-img' variant='top' 

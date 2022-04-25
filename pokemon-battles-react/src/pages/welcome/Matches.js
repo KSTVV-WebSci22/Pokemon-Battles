@@ -30,14 +30,11 @@ const Matches = () => {
   return ( 
     <div id="matches">
       {user ? <>
-      <Row className=''>
-        <Col className='matches-border' xs={12}>
+    
           <FindMatch user={user} />
-        </Col>
-        <Col className='matches-border' xs={12}>
+        
           <WelcomeParty user={user}/>
-        </Col>
-      </Row>
+    
       </>:<></>}
     </div>
   );

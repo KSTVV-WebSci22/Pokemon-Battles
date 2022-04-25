@@ -1,23 +1,16 @@
 import './Welcome.css'
-import pikachu from './pikachu.png'
-import pokeball from './pokeball.png'
-import fist from './fist.png'
-import gym from '../../img/items/gym.png'
-import shopImg from './shop.png'
 import prof from '../../img/people/prof.png'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useEffect, useContext, useState } from 'react'
 import { ClientContext } from '../../context/ClientContext'
-import Loading from '../../components/Loading'
 import MainMenu from './MainMenu'
+import Typewriter from "typewriter-effect";
 
 // Firebase
-import { auth, db, rdb } from '../../util/Firebase'
-import { updateUser, getUser, addPokemon, getUserStatus } from '../../util/users/Users'
+import { auth } from '../../util/Firebase'
+import { updateUser, getUser, addPokemon } from '../../util/users/Users'
 import axios from 'axios'
-import { doc, getDoc, updateDoc, setDoc,   } from "firebase/firestore";
-import { GoogleAuthProvider, signInWithPopup, onAuthStateChanged  } from "firebase/auth";
-import { ref, onValue, push, onDisconnect, set, serverTimestamp } from "firebase/database";
+import { onAuthStateChanged  } from "firebase/auth";
 
 
 const Welcome = () => {
@@ -28,7 +21,6 @@ const Welcome = () => {
   const [newUser, setNewUser] = useState(true)
   const [stage, setStage] = useState(0)
   // const [loading, setLoading] = useState(true)
-  const [profilePic, setProfilePic] = useState()
   const [user, setUser] = useState(null);
   
   // First Pokemon
@@ -36,7 +28,7 @@ const Welcome = () => {
   const [firstQ, setFirstQ] = useState(null)
 
   // Context
-  const{ setSong, website, loading, setLoading } = useContext(ClientContext);
+  const{ setSong, website, setLoading } = useContext(ClientContext);
 
   // Authorized
   onAuthStateChanged(auth, (user) => {
@@ -121,6 +113,8 @@ const Welcome = () => {
     console.log(ready)
     userInfo()
   }
+
+
   
   return (
   <div className='content'>
@@ -130,19 +124,37 @@ const Welcome = () => {
         {/* Nickname */}
         { stage === 0 ? 
           <div id="new-user">
-            <h1 className='mb-5'>Welcome to the exciting world of Pokemon!</h1>
-            <p>My name is Prof. Oak and i'm here to help you become the #1 Pokemon Trainer! 
-              <br/>Let's not take too much time! Are you ready?! </p>
-            <img className="prof" src={prof} alt="professor" />
-            <h3 className='yellow-text'>Oh I forgot to ask! <br/>What should we call you?</h3>
+            <div className="mb-auto" id="new-user-title">
+              <h1 className='mt-1'>Welcome to the exciting world of Pokemon!</h1>
+              <p id="prof-oak-1">
+                <Typewriter
+                  onInit={(typewriter)=> {
+
+                  typewriter
+                  .pauseFor(2000)
+                  .changeDelay(75)
+                  .typeString("Hello!")
+                  .pauseFor(1000)
+                  .typeString(" My name is Prof. Oak and i'm here to help you become the #1 Pokemon Trainer!")
+                  .pauseFor(1000)
+                  .typeString(`<br/><br/>To start we first need to get you a pokemon!  Are you ready to meet your new best friend?`)
+                  .start();
+                  }}
+                  />
+              </p>
+              
+              <img className="prof" src={prof} alt="professor" />
+              <h3 className='yellow-text'>Oh I forgot to ask! <br/>What should we call you?</h3>
+            </div>
             <input 
               type="text" 
+              maxlength={12}
               onChange={(e)=>{
                 setName(e.target.value)
               }}
             /> <br/>
             {name.length < 6 ? 
-              <></>
+              <small>*must be 6 characters or more.</small>
               :
               <button 
                 onClick={()=>{
