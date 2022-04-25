@@ -35,7 +35,7 @@ const Navbar = () => {
        <> 
       <div id="navbar-content">
         <Link to='/profile'>
-          <img className='profile-pic' src={user.profilePic} alt="profile" />
+          <img className='profile-pic' referrerPolicy="no-referrer" src={user.profilePic} alt="profile" />
         </Link>
         <div className='brand'>
           <h1>{user.username}</h1>

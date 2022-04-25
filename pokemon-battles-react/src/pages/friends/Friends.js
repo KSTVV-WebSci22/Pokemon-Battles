@@ -7,10 +7,11 @@ import cancel from '../../img/components/cancel.png'
 import Back from '../../components/Back'
 import { auth, db, rdb } from '../../util/Firebase';
 import { collection, getDocs, where, query, updateDoc, doc } from "firebase/firestore";
-import { getMyFriends, getPresence, getUsername, getUser} from '../../util/users/Users'
+import { getMyFriends, getPresence, getUsername, getProfilePic} from '../../util/users/Users'
 import { ClientContext } from '../../context/ClientContext';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 
 const Friends = () => {
     const { setLoading } = useContext(ClientContext);
@@ -21,10 +22,38 @@ const Friends = () => {
     
     const [addFriend, setAddFriend] = useState(false);
 
+    //remove friend from friends list
+    const removeFriend = async (friend) => {
+        const uid = auth.currentUser.uid;
+        const q = query(collection(db, "users"), where("username", "==", friend));
+        const querySnapshot = await getDocs(q);
+        if(querySnapshot.size == 0){
+            alert("User not found");
+        }
+        else{
+            let indexes = [];
+            querySnapshot.forEach((doc) => {
+             indexes.push(doc.id);
+        });
+        let myfriends = await getMyFriends(uid)
+        let index = myfriends.indexOf(indexes[0]);
+        myfriends.splice(index, 1);
+        var userStatusFirestoreRef = doc(db, '/users/' + uid);
+      var uf = {
+       friends: myfriends
+      };
+      updateDoc(userStatusFirestoreRef, uf);
+        alert("Friend Removed");
+       }
+        
+        
+
+    }
+    
+    //add friend to friends list
     const AddFriend = async (uid) =>{  
-      
       setAddFriend(false);
-     
+      
       let ids = [];
       var input = document.getElementById("friend-input").value;
     
@@ -40,7 +69,7 @@ const Friends = () => {
           ids.push(doc.id);
       });
         let myfriends = await getMyFriends(uid)
-          if(myfriends.includes(ids[0])){
+          if(myfriends.includes(ids[0]) || ids[0] == uid){
             alert("User already added");
            }
            else{
@@ -50,6 +79,7 @@ const Friends = () => {
            friends: myfriends
           };
           updateDoc(userStatusFirestoreRef, uf);
+            alert("User added");
         }
      }
     
@@ -60,7 +90,7 @@ const Friends = () => {
             var tmpFriends = await getMyFriends(auth.currentUser.uid);
             var a = [];
             for(let x of tmpFriends){
-                a.push({Name: await getUsername(x), Online: await getPresence(x), uid: x});
+                a.push({Name: await getUsername(x), Online: await getPresence(x), Pic: await getProfilePic(x)});
             };
             setFriends(await a);
         } else {
@@ -88,11 +118,14 @@ const Friends = () => {
                             {friends && friends.map((x, i) => {
                                 if(x.Online === "online") {
                                     return <><div key={i} className="menu-item friend-online">
-                                                <img className="profile-pic" src={ash} alt="ash"/>
+                                                <img className="profile-pic" referrerPolicy="no-referrer" src={x.Pic} alt="friend"/>
                                                 {x.Name}
                                                 <button className="menu-item battle-btn" title="Battle" onClick={() => {navigate("/battle?id=" + x.uid)}}> 
                                                     <img src={fist} alt="fist"/> 
                                                     <img src={fist} alt="fist"/> 
+                                                </button>
+                                                <button type="button" className="btn btn-danger btn-lg" id="delete" onClick={()=>{removeFriend(x.Name)}}>
+                                                 Remove
                                                 </button>
                                             </div></>
                                 }   
@@ -101,8 +134,11 @@ const Friends = () => {
                             {friends && friends.map((x, i) => {
                                 if(x.Online === "offline") {
                                     return <><div key={i} className="menu-item friend-offline">
-                                                <img className="profile-pic" src={ash} alt="ash"/>
+                                                <img className="profile-pic" referrerPolicy="no-referrer" src={x.Pic} alt=""/>
                                                 {x.Name}
+                                                <button type="button" className="btn btn-danger btn-lg" id="delete" onClick={()=>{removeFriend(x.Name)}}>
+                                                 Remove
+                                                </button>
                                             </div></>  
                                 }   
                             })}
