@@ -176,13 +176,13 @@ const calculate = async (turn1, turn2, id) => {
                         result.turn1Hp = turn1.hp;
                         result.turn2Hp = 0;
                         result.turn2Pokemon = null;
-                        result.turn1Summary = "Opponent's " + turn2.pokemon.identifier + " fainted!";
+                        result.turn2Summary = "Opponent's " + turn2.pokemon.identifier + " fainted!";
                     } else if (turn1.hp - damage2 <= 0) {
                         turn1.pokemonLeft -= 1;
                         result.turn1Hp = 0;
                         result.turn2Hp = turn2.hp - damage1;
                         result.turn1Pokemon = null;
-                        result.turn1Summary = "Opponent's " + turn1.pokemon.identifier + " fainted!";
+                        result.turn1Summary = "Opponent's " + turn1.pokemon.identifier + " fainted!"; 
                     } else {
                         result.turn1Hp = turn1.hp - damage2;
                         result.turn2Hp = turn2.hp - damage1;
@@ -191,15 +191,15 @@ const calculate = async (turn1, turn2, id) => {
                     if (turn1.hp - damage2 <= 0) {
                         turn1.pokemonLeft -= 1;
                         result.turn1Hp = 0;
-                        result.turn2Hp = turn2.hp - damage1;
+                        result.turn2Hp = turn2.hp;
                         result.turn1Pokemon = null;
-                        result.turn1Summary = "Opponent's " + turn1.pokemon.identifier + " fainted!";
+                        result.turn1Summary = "Opponent's " + turn1.pokemon.identifier + " fainted!"; 
                     } else if (turn2.hp - damage1 <= 0) {
                         turn2.pokemonLeft -= 1;
-                        result.turn1Hp = turn1.hp;
+                        result.turn1Hp = turn1.hp - damage2;
                         result.turn2Hp = 0;
                         result.turn2Pokemon = null;
-                        result.turn1Summary = "Opponent's " + turn2.pokemon.identifier + " fainted!";
+                        result.turn2Summary = "Opponent's " + turn2.pokemon.identifier + " fainted!";
                     } else {
                         result.turn1Hp = turn1.hp - damage2;
                         result.turn2Hp = turn2.hp - damage1;
