@@ -1,4 +1,5 @@
-#INSTALL.md
+# INSTALL.md
+
 Clone repository
 
 First Terminal:
@@ -11,5 +12,6 @@ First Terminal:
 `node server` / `npm start` in backend folder
 
 Second Terminal:
+
 `cd pokemon-battles-react`
 `npm start` in pokemon-battles-react folder
