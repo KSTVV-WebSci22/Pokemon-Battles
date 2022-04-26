@@ -91,7 +91,7 @@ const Friends = () => {
             const name = await getUsername(x)
             if(name){
                 a.push({Name: name, Online: await getPresence(x), Pic: await getProfilePic(x)}); 
-            }
+            } 
         };
         setFriends(await a);
     }
