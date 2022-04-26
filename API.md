@@ -1,18 +1,18 @@
 # API.md
 
-app.get('/api/move/:id')
+<u>app.get('/api/move/:id')</u>
 
-- Returns information of a pokemon move with the specified id
+Returns information of a pokemon move with the specified id
+
 Information includes:
-
-Name, type, power, pp, damage class, flavor text
+- Name, type, power, pp, damage class, flavor text
 
 app.get('/api/pokemon/:id')
 
 Returns information of a pokemon with the specified id
-Information includes:
 
-Name, pre-evolution, next evolution, experience, type1 and type 2 id, rarity, obtain id
+Information includes:
+- Name, pre-evolution, next evolution, experience, type1 and type 2 id, rarity, obtain id
 
 app.get('/api/newPokemon/:id/:level')
 
