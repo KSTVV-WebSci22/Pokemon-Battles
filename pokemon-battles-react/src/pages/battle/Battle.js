@@ -158,30 +158,29 @@ const Battle = () => {
         
     }
 
-    const gamePrize = async () => {
-
+    const gamePrize = async (won) => {
         if(won){
-            var updatedPokemon = myPokemon   
-            updatedPokemon.map(x => {
-                x.final_win += 1                        // Add 1 to pokemons Win
-                if(x.current_level <= 100){
-                    x.current_experience += 10;         //            
-
-                    // If able to level up
+            addToWallet(3)
+            // var updatedPokemon = myPokemon   
+            // updatedPokemon.map(x => {
+            //     x.final_win += 1                    
+            //     if(x.current_level <= 100){
+            //         x.current_experience += 10;                
                     
-                    if(x.current_experience >= x.base_experience) {
-                        x.current_experience = x.current_experience - x.base_experience     // Carry over Experience
-                        x.base_experience += Math.ceil((100 - x.current_level) * .1)                            // Increase Base Experience
-                        x.current_level += 1                                                // Add 1 to current level
-                        checkEvolution(x)                // Check if pokemon can evolve
-                        // checkMoves(x)
-                    }
+            //         if(x.current_experience >= x.base_experience) {
+            //             x.current_experience = x.current_experience - x.base_experience     // Carry over Experience
+            //             x.base_experience += Math.ceil((100 - x.current_level) * .1)                            // Increase Base Experience
+            //             x.current_level += 1                                                // Add 1 to current level
+            //             // checkEvolution(x)
+            //             // checkMoves(x)
+            //         }
                     
-                }
-            });
+            //     }
+            // });
             // updateUserBattleStats(3, 1, 0, updatedPokemon)
 
         } else {
+            addToWallet(1)
             // Copy win but change out logic for loss
         }
     }
@@ -655,8 +654,8 @@ const Battle = () => {
                         </>
                     ) : (
                         <>
-                            <p>{"You " + (won == true ? ("Win") : ("Lose"))}</p>
-                            {/*gamePrize()//commented out cause not finished*/} 
+                            <p>{"You " + (won === true ? ("Win") : ("Lose"))}</p>
+                            {gamePrize(won)}
                         </>
                     )}
                 </>
