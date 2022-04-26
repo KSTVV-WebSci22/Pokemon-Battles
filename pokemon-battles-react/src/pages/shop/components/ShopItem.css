@@ -13,10 +13,20 @@
   flex-direction: column;
 }
 
+.shop-item .coin {
+  width: 2rem;
+}
+
 /* 655 x 575 img */
 .shop-item-img {
   width: 87.8px;
   height: 100px;
+}
+
+.shop-item button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 /* 
 .confirm-footer {

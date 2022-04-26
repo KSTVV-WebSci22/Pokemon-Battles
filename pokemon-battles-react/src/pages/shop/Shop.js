@@ -6,6 +6,7 @@ import { Row, Modal, Button } from 'react-bootstrap';
 import ShopItem from './components/ShopItem';
 import { ClientContext } from '../../context/ClientContext';
 import Back from '../../components/Back'
+import coin from '../../img/items/coin.png'
 
 // Firebase
 import { getUser, addPokemon, addToWallet } from '../../util/users/Users'
@@ -125,8 +126,8 @@ const Shop = () => {
 							backdrop="static"
 							centered
 						>
-						<Modal.Header closeButton>
-						<Modal.Title>Current Balance: {user.wallet} coins</Modal.Title>
+						<Modal.Header>
+						<Modal.Title>Current Balance: <img src={coin} alt="coin" />{user.wallet}</Modal.Title>
 						</Modal.Header>
 							<Modal.Body style={{
 										display: "flex",
@@ -135,14 +136,15 @@ const Shop = () => {
 									}}>
 								{/* Animation of pokemon */}
 								{/* Hide text when animation shows */}
-								{(animatePokemon && newPokemon) ?
+								{(animatePokemon && newPokemon) ? <>
+									<h3>{newPokemon}</h3>
 									<div className='modal-images'>
-										<img className='mystery-img' variant='top' 
+										<img className='mystery-img' variant='top' alt={newPokemon}
 											src={require(`../../img/shopitems/${shopItem.description}.png`)}/>
-										<img className='new-pokemon-img' variant='top'
+										<img className='new-pokemon-img' variant='top' 
 											src={require(`../../img/pokemon/${newPokemon}.png`)} alt={newPokemon}
 											/>
-									</div>
+									</div></>
 									:
 									<div>
 										Do you wish to purchase a

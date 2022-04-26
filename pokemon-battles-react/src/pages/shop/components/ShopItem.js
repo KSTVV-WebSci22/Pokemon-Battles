@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import './ShopItem.css';
 import { Card, Button, Col } from 'react-bootstrap';
 import { ClientContext } from '../../../context/ClientContext';
+import coin from '../../../img/items/coin.png'
 
 const ShopItem = ({item}) => {
 
@@ -20,7 +21,7 @@ const ShopItem = ({item}) => {
 					/>
 					<div className="shop-item-name">{item.name}</div>
 					<Button 
-						className="shop-item-purchase mt-auto mb-3"
+						className="mt-auto mb-3"
 						style={
 							{
 								border: 'None'
@@ -31,7 +32,7 @@ const ShopItem = ({item}) => {
 							setShopModal(true)
 						}}
 					>
-						{item.cost}
+						<img src={coin} alt="coin" className='coin me-1' /> {item.cost} 
 					</Button>
 				</Card>
 			</Col>
