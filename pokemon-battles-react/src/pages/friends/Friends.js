@@ -90,7 +90,7 @@ const Friends = () => {
         for(let x of tmpFriends){
             const name = await getUsername(x)
             if(name){
-                a.push({Name: name, Online: await getPresence(x), Pic: await getProfilePic(x)}); 
+                a.push({Name: name, Online: await getPresence(x), Pic: await getProfilePic(x), uid: x}); 
             } 
         };
         setFriends(await a);
