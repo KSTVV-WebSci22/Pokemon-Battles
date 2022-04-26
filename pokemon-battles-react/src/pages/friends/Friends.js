@@ -88,7 +88,10 @@ const Friends = () => {
         var tmpFriends = await getMyFriends(auth.currentUser.uid);
         var a = [];
         for(let x of tmpFriends){
-            a.push({Name: await getUsername(x), Online: await getPresence(x), Pic: await getProfilePic(x)});
+            const name = await getUsername(x)
+            if(name){
+                a.push({Name: name, Online: await getPresence(x), Pic: await getProfilePic(x)}); 
+            }
         };
         setFriends(await a);
     }

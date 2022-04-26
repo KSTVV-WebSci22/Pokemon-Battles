@@ -160,7 +160,8 @@ const Battle = () => {
 
     const gamePrize = async (won) => {
         if(won){
-            addToWallet(3)
+            console.log("WINNER")
+            // addToWallet(3)
             // var updatedPokemon = myPokemon   
             // updatedPokemon.map(x => {
             //     x.final_win += 1                    
@@ -180,7 +181,8 @@ const Battle = () => {
             // updateUserBattleStats(3, 1, 0, updatedPokemon)
 
         } else {
-            addToWallet(1)
+            console.log("LOSS")
+            // addToWallet(1)
             // Copy win but change out logic for loss
         }
     }
