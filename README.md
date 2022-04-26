@@ -28,17 +28,26 @@ Viano - 4/8
 - x state: when a pokemon dies -> go to switch -> move selection (currently it just switches to next alive pokemon)
 - new key/value in turn: Summary of turn
 
-**Kyle 4/12**
+Kyle 4/12
+
 Branch: shopUpdate
 
-### Backend: 
+Backend: 
+
 Made 2 endpoints in server to pass shop items to front end, and to pass pokemon id and name that was selected by probability ranges.
 
 New json file shopItems.json
 
-### Frontend:
+Frontend:
+
 util/users/User.js: addToWallet(value) updates user's wallet. Value can be negative. 
 
 user and setUser are now global variables in ClientContext, declared in App.js
 
-**warning** addToWallet doesn't check if balance goes below zero yet
+### Tasks:
+
+**Kyle:**
+**Sean:**
+**Tobey:**
+**Viano:**
+**Vishal:**
