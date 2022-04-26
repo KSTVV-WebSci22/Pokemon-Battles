@@ -55,7 +55,7 @@ const checkIfUserExists = async (user, name, email, profilePic) => {
       legalName: name, 
       email: email,
       profilePic: profilePic,
-      wallet: 50,
+      wallet: 60,
       friends: [],
       pokemon: [],
       backpack: [],
