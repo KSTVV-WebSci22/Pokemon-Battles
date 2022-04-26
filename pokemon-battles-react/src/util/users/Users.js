@@ -34,6 +34,44 @@ export const signInWithGoogle = async () => {
     })
 }
 
+export const getFRecords = async (uid) => {
+  var records = [];
+  const user = doc(db, 'users/' + uid)
+  const docData = await getDoc(user)
+  const f = docData.data().friends
+  //console.log(f);
+  for(const id of f) {
+    console.log(id);
+    var d = await getUser(id)
+    console.log(d);
+    var record = {
+      user: d.username,
+      win: d.win,
+      loss: d.loss
+    }
+    records.push(record)
+  }
+  records.sort((a,b) => (a.win < b.win) ? 1 : (a.win === b.win) ? ((a.loss > b.loss) ? 1 : (a.loss === b.loss) ? ((a.user > b.user) ? 1 : -1): -1) : -1);
+  return records;
+}
+
+export const getAllRecords = async () => {
+  var records = [];
+  const users = await getDocs(collection(db, 'users'));
+  users.forEach((doc) => {
+    //console.log(doc.data());    
+    var r = {
+      user: doc.data().username,
+      win: doc.data().win,
+      loss: doc.data().loss
+    }
+    records.push(r);
+    //console.log(doc.data().username, " => ", doc.data().win +' '+ doc.data().loss);
+  });
+  records.sort((a,b) => (a.win < b.win) ? 1 : (a.win === b.win) ? ((a.loss > b.loss) ? 1 : (a.loss === b.loss) ? ((a.user > b.user) ? 1 : -1): -1) : -1);
+  return records;
+}
+
 // Get User
 export const getUser = async (uid) => {
   const user = doc(db, 'users/' + uid)
