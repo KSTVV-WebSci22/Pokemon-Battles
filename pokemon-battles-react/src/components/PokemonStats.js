@@ -1,7 +1,23 @@
 import './PokemonStats.css';
 import { Form } from 'react-bootstrap';
+import { updatePokemonList } from '../util/users/Users'
 
-const PokemonStats = ({poke, showMoves}) => {
+
+const PokemonStats = ({poke, showMoves, list, index, updateList}) => {
+
+  const swapPokemon = async (indexB) => {
+    var arr = list
+    var temp = arr[index];
+    arr[index] = arr[indexB];
+    arr[indexB] = temp;
+
+    const updated = await updatePokemonList(arr)
+    console.log(updated)
+    if (updated) {
+      console.log(updated)
+      updateList()
+    }
+  };
 
   const getMoves = (move) => {
     return move.map(m => {
@@ -72,11 +88,18 @@ const PokemonStats = ({poke, showMoves}) => {
             <div className='fw-bold mt-2 yellow-text pokemon-stats-moves'>
               Moves
               <span className='float-end'>
-                <Form.Select size="sm">
+                <Form.Select 
+                  size="sm"
+                  onChange={(e)=>{
+                    swapPokemon(e.target.value)
+                  }}
+                >
                   <option selected disabled>Swap with</option>
-                  <option>Charmander (5)</option>
-                  <option>Charmander (5)</option>
-                  <option>Charmander (5)</option>
+                  {list && list.map((item, key) => {
+                    return (
+                      <option value={key}>{item.current_level} {item.identifier}</option>
+                    )
+                  })}
                 </Form.Select>
               </span>
             </div> 

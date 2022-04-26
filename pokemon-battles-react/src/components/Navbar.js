@@ -2,7 +2,8 @@ import './Navbar.css'
 import { Link, useNavigate } from 'react-router-dom'
 import { useState, useEffect, useContext } from 'react'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
-
+import coin from '../img/items/coin.png'
+import backpack from '../img/items/backpack.png'
 // Firebase
 
 import { getUser, getUserStatus } from '../util/users/Users'
@@ -68,8 +69,7 @@ const Navbar = () => {
       <div id="navbar-links" className='mt-2'>
         <Link className="me-3" to={'/welcome'}>Home</Link>
         <Link className="me-3" to={'/friends'}>Friends</Link>
-        <Link className="me-3" to={'/shop'}>Shop</Link>
-        <Link className="me-auto" to={'/profile'}>Profile</Link>
+        <Link className="me-auto" to={'/shop'}>Shop</Link>
 
         <OverlayTrigger
           key='navbar-backpack'
@@ -81,7 +81,8 @@ const Navbar = () => {
           }
         >
           <Link className='navbar-wallet' to={'/backpack'}>
-          <span className='backpack'>🎒0</span> <span className='navbar-coin'>🪙</span>{user.wallet}
+          <span className='navbar-backpack me-1'><img src={backpack} />0</span> 
+          <span className='navbar-coin'><img src={coin} /></span>{user.wallet}
           </Link>
         </OverlayTrigger>
       </div>

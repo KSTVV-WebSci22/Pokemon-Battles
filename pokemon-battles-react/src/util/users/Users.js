@@ -93,7 +93,7 @@ const checkIfUserExists = async (user, name, email, profilePic) => {
       legalName: name, 
       email: email,
       profilePic: profilePic,
-      wallet: 10,
+      wallet: 60,
       friends: [],
       pokemon: [],
       backpack: [],
@@ -168,6 +168,16 @@ export const addPokemon = async (pokemon) => {
   }).catch(() =>{
     return false
   })
+}
+
+// Update Pokemon List with existing Pokemon
+export const updatePokemonList = async (pokemonList) => {
+  const user = doc(db, 'users/', auth.currentUser.uid)
+  await updateDoc(user, {
+    pokemon: pokemonList
+  })
+  
+  return true
 }
 
 export const switchPokemon = async (index1, index2) => {

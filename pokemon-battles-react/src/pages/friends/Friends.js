@@ -1,17 +1,16 @@
 import { useState, useEffect } from 'react';
 import './Friends.css'
 import fist from '../welcome/fist.png'
-import ash from '../../img/people/ashketchum.png'
 import add from '../../img/components/add.png'
 import cancel from '../../img/components/cancel.png'
 import Back from '../../components/Back'
-import { auth, db, rdb } from '../../util/Firebase';
+import { auth, db, } from '../../util/Firebase';
 import { collection, getDocs, where, query, updateDoc, doc } from "firebase/firestore";
 import { getMyFriends, getPresence, getUsername, getProfilePic} from '../../util/users/Users'
 import { ClientContext } from '../../context/ClientContext';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import Navbar from '../../components/Navbar';
 
 const Friends = () => {
     const { setLoading } = useContext(ClientContext);
@@ -60,7 +59,7 @@ const Friends = () => {
       const q = query(collection(db, "users"), where("username", "==", input));
       const querySnapshot = await getDocs(q);
       if(querySnapshot.size == 0){
-          alert("User not found");
+          friendsList()
       }
       else{
           console.log("user found");
@@ -79,20 +78,28 @@ const Friends = () => {
            friends: myfriends
           };
           updateDoc(userStatusFirestoreRef, uf);
-            alert("User added");
+            friendsList()
         }
      }
     
     }
 
-    useEffect(async () => {
+    const friendsList = async () => {
+        var tmpFriends = await getMyFriends(auth.currentUser.uid);
+        var a = [];
+        for(let x of tmpFriends){
+            const name = await getUsername(x)
+            if(name){
+                a.push({Name: name, Online: await getPresence(x), Pic: await getProfilePic(x)}); 
+            } 
+        };
+        setFriends(await a);
+    }
+
+    useEffect( () => {
+        
         if(auth.currentUser){
-            var tmpFriends = await getMyFriends(auth.currentUser.uid);
-            var a = [];
-            for(let x of tmpFriends){
-                a.push({Name: await getUsername(x), Online: await getPresence(x), Pic: await getProfilePic(x)});
-            };
-            setFriends(await a);
+            friendsList()
         } else {
             navigate("/");
         }
@@ -105,6 +112,8 @@ const Friends = () => {
             {!addFriend ? 
                 <>
                 <div id="friends" className="content-item">
+                    <Navbar />
+
                     <div className="friends-grid">
                         <div className="add-friend-container">
                             <div id="add-friend" className="menu-item add-friend-btn" onClick={()=>{setAddFriend(true)}}>Add Friend
@@ -112,34 +121,39 @@ const Friends = () => {
                                 <img src={add} alt="add"/> 
                             </div>
                         </div>
-                   {console.log(friends)}
                         <div id="friends-list">
                             <h3 className="friends-h">Online</h3>
                             {friends && friends.map((x, i) => {
                                 if(x.Online === "online") {
-                                    return <><div key={i} className="menu-item friend-online">
-                                                <img className="profile-pic" referrerPolicy="no-referrer" src={x.Pic} alt="friend"/>
-                                                {x.Name}
-                                                <button className="menu-item battle-btn" title="Battle" onClick={() => {navigate("/battle?id=" + x.uid)}}> 
-                                                    <img src={fist} alt="fist"/> 
-                                                    <img src={fist} alt="fist"/> 
-                                                </button>
-                                                <button type="button" className="btn btn-danger btn-lg" id="delete" onClick={()=>{removeFriend(x.Name)}}>
-                                                 Remove
-                                                </button>
-                                            </div></>
+                                    return(
+                                        <div key={i} className="friend-online">
+                                            <img className="profile-pic" referrerPolicy="no-referrer" src={x.Pic} alt="friend"/>
+                                            <span className='ps-3 me-auto'>{x.Name}</span>
+                                            <button 
+                                                onClick={() => {navigate("/battle?id=" + x.uid)}}
+                                                className="sbutton"
+                                            > 
+                                                <img src={fist} alt="fist"/> 
+                                            </button>
+                                            <button type="button" className="btn btn-danger btn-lg delete" onClick={()=>{removeFriend(x.Name)}}>
+                                                X
+                                            </button>
+                                        </div>
+                                    )
                                 }   
                             })}
                             <h3 className="friends-h">Offline</h3>
                             {friends && friends.map((x, i) => {
                                 if(x.Online === "offline") {
-                                    return <><div key={i} className="menu-item friend-offline">
-                                                <img className="profile-pic" referrerPolicy="no-referrer" src={x.Pic} alt=""/>
-                                                {x.Name}
-                                                <button type="button" className="btn btn-danger btn-lg" id="delete" onClick={()=>{removeFriend(x.Name)}}>
-                                                 Remove
-                                                </button>
-                                            </div></>  
+                                    return(
+                                        <div key={i} className="friend-online friend-offline">
+                                            <img className="profile-pic" referrerPolicy="no-referrer" src={x.Pic} alt="friend"/>
+                                            <span className='ps-3 me-auto'>{x.Name}</span>
+                                            <button type="button" className="btn btn-danger btn-lg delete" onClick={()=>{removeFriend(x.Name)}}>
+                                                X
+                                            </button>
+                                        </div>
+                                    )
                                 }   
                             })}
                         </div>

@@ -26,11 +26,7 @@ const Party = () => {
     setLoading(false)
   }, []);
 
-  const swapPokemon = async (arr, indexA, indexB) => {
-    var temp = pokemon[indexA];
-    arr[indexA] = arr[indexB];
-    arr[indexB] = temp;
-  };
+
 
 
   return (
@@ -40,20 +36,20 @@ const Party = () => {
       <Navbar />
       <Row className="party-pokemon-list">
         <h3 xs={12} className='yellow-text'>Your Party</h3>
-        {pokemon && pokemon.slice(0,6).map((poke) => {
+        {pokemon && pokemon.slice(0,6).map((poke, index) => {
           return (
             <Col xs={12} md={6} lg={4}>
-              <PokemonStats poke={poke} showMoves={true}/>
+              <PokemonStats poke={poke} showMoves={true} list={pokemon} index={index} updateList={getList}/>
             </Col>
           )
         })}
 
         <h3 xs={12} className='yellow-text'>Pokemon in Storage</h3>
 
-        {pokemon && pokemon.slice(6).map((poke) => {
+        {pokemon && pokemon.slice(6).map((poke, index) => {
           return (
             <Col xs={12} md={6} lg={4}>
-              <PokemonStats poke={poke} showMoves={true}/>
+              <PokemonStats poke={poke} showMoves={true} list={pokemon} index={index + 6}/>
             </Col>
           )
         })}

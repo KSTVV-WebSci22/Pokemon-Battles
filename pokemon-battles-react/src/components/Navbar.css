@@ -150,6 +150,10 @@
   transition: all ease .25s;
 }
 
+.navbar-coin img, .navbar-backpack img {
+  width: 25px;
+}
+
 .navbar-wallet:hover {
   filter: grayscale(1);
   transform: scale(1.1);
