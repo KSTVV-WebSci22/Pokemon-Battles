@@ -124,6 +124,16 @@ export const addPokemon = async (pokemon) => {
   })
 }
 
+// Update Pokemon List with existing Pokemon
+export const updatePokemonList = async (pokemonList) => {
+  const user = doc(db, 'users/', auth.currentUser.uid)
+  await updateDoc(user, {
+    pokemon: pokemonList
+  })
+  
+  return true
+}
+
 export const switchPokemon = async (index1, index2) => {
   const user = doc(db, 'users/', auth.currentUser.uid)
   let myPokemon = await getMyPokemon(auth.currentUser.uid)
