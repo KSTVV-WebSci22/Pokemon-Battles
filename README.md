@@ -47,7 +47,11 @@ user and setUser are now global variables in ClientContext, declared in App.js
 ### Tasks:
 
 **Kyle:**
+
 **Sean:**
+
 **Tobey:**
+
 **Viano:**
+
 **Vishal:**
