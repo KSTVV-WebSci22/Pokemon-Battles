@@ -3,11 +3,11 @@
 Clone repository
 
 First Terminal:
-`Cd backend`
-`Npm install` in backend folder
+`cd backend`
+`npm install` in backend folder
 
-`Cd pokemon-battles-react`
-`Npm install` in pokemon-battles-react folder
+`cd pokemon-battles-react`
+`npm install` in pokemon-battles-react folder
 
 `node server` / `npm start` in backend folder
 
