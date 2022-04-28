@@ -44,11 +44,11 @@ util/users/User.js: addToWallet(value) updates user's wallet. Value can be negat
 
 user and setUser are now global variables in ClientContext, declared in App.js
 
-Vishal 4/18
+Vishal - 4/18
 -Added Online Presence System
 -Error Checking for Online Presence
 -Friends Page Functionality
--Usernam Error Checking
+-Username Error Checking
 
 ### Tasks:
 
